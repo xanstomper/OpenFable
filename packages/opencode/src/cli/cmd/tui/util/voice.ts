@@ -292,7 +292,7 @@ const VoiceControlSchema = z.object({
 export type VoiceAction = z.infer<typeof VoiceActionSchema>
 export type VoiceControlResult = z.infer<typeof VoiceControlSchema>
 
-const VOICE_CONTROL_SYSTEM_PROMPT = `你是 MiMoCode（AI 编程助手）的语音输入助手。用户通过语音向输入框口述消息，这些消息将发送给 Code Agent 执行编程任务。用户可能使用中文或英文。
+const VOICE_CONTROL_SYSTEM_PROMPT = `你是 OpenFable（AI 编程助手）的语音输入助手。用户通过语音向输入框口述消息，这些消息将发送给 Code Agent 执行编程任务。用户可能使用中文或英文。
 
 ## 核心原则
 用户说的绝大多数内容是**给 Code Agent 的指令或描述**，必须原样转录为输入框内容。只有以下三种情况属于语音控制指令：

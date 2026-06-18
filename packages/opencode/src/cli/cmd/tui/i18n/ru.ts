@@ -29,7 +29,7 @@ export const dict = {
   "tui.home.placeholder.example.todo": "Исправь TODO в кодовой базе",
   "tui.home.placeholder.example.stack": "Какой технологический стек у этого проекта?",
   "tui.home.placeholder.example.tests": "Почини сломанные тесты",
-  "tui.home.agreement.prefix": "Используя MiMoCode, вы соглашаетесь с нашими ",
+  "tui.home.agreement.prefix": "Используя OpenFable, вы соглашаетесь с нашими ",
   "tui.home.agreement.terms": "Условиями использования",
   "tui.home.agreement.separator": " и ",
   "tui.home.agreement.privacy": "Политикой конфиденциальности",
@@ -62,7 +62,7 @@ export const dict = {
   "tui.tips.redo":
     "Используйте {highlight}/redo{/highlight}, чтобы вернуть ранее отменённые сообщения и изменения",
   "tui.tips.share":
-    "Выполните {highlight}/share{/highlight}, чтобы получить публичную ссылку на диалог на opencode.ai",
+    "Выполните {highlight}/share{/highlight}, чтобы получить публичную ссылку на диалог на github.com/xanstomper/OpenFable-Code",
   "tui.tips.drag_drop": "Перетащите изображения или PDF в терминал, чтобы добавить их в контекст",
   "tui.tips.paste_image":
     "Нажмите {highlight}Ctrl+V{/highlight}, чтобы вставить изображение из буфера обмена в строку ввода",
@@ -127,7 +127,7 @@ export const dict = {
   "tui.tips.mcp_config":
     "Настройте локальные или удалённые MCP-серверы в разделе {highlight}mcp{/highlight} конфига",
   "tui.tips.mcp_oauth":
-    "MiMoCode автоматически обрабатывает OAuth для удалённых MCP-серверов с авторизацией",
+    "OpenFable автоматически обрабатывает OAuth для удалённых MCP-серверов с авторизацией",
   "tui.tips.custom_command":
     "Добавляйте файлы {highlight}.md{/highlight} в {highlight}.openfable/command/{/highlight} для повторно используемых пользовательских команд",
   "tui.tips.command_args":
@@ -145,12 +145,12 @@ export const dict = {
   "tui.tips.bash_ask":
     'Настройте {highlight}"git push": "ask"{/highlight}, чтобы запрашивать подтверждение перед push',
   "tui.tips.formatter":
-    "MiMoCode автоматически форматирует файлы с помощью prettier, gofmt, ruff и других инструментов",
+    "OpenFable автоматически форматирует файлы с помощью prettier, gofmt, ruff и других инструментов",
   "tui.tips.disable_formatter":
     'Установите {highlight}"formatter": false{/highlight}, чтобы отключить всё авто-форматирование',
   "tui.tips.custom_formatter":
     "Определяйте собственные команды форматирования по расширениям файлов в конфиге",
-  "tui.tips.lsp": "MiMoCode использует LSP-серверы для интеллектуального анализа кода",
+  "tui.tips.lsp": "OpenFable использует LSP-серверы для интеллектуального анализа кода",
   "tui.tips.custom_tool":
     "Создавайте файлы {highlight}.ts{/highlight} в {highlight}.openfable/tools/{/highlight}, чтобы определить новые LLM-инструменты",
   "tui.tips.tool_scripts":
@@ -160,7 +160,7 @@ export const dict = {
   "tui.tips.plugin_notify":
     "Используйте плагины, чтобы отправлять системные уведомления при завершении сессий",
   "tui.tips.plugin_protect":
-    "Создайте плагин, который запретит MiMoCode читать чувствительные файлы",
+    "Создайте плагин, который запретит OpenFable читать чувствительные файлы",
   "tui.tips.run":
     "Используйте {highlight}openfable run{/highlight} для неинтерактивных скриптов",
   "tui.tips.continue":
@@ -170,7 +170,7 @@ export const dict = {
   "tui.tips.format_json":
     "Используйте {highlight}--format json{/highlight} для машинно-читаемого вывода в скриптах",
   "tui.tips.serve":
-    "Запустите {highlight}openfable serve{/highlight} для headless-доступа к API MiMoCode",
+    "Запустите {highlight}openfable serve{/highlight} для headless-доступа к API OpenFable",
   "tui.tips.attach_server":
     "Используйте {highlight}openfable run --attach{/highlight}, чтобы подключиться к запущенному серверу",
   "tui.tips.upgrade":
@@ -180,7 +180,7 @@ export const dict = {
   "tui.tips.agent_create":
     "Выполните {highlight}openfable agent create{/highlight}, чтобы создать агента в пошаговом режиме",
   "tui.tips.github_trigger":
-    "Используйте {highlight}/opencode{/highlight} в issue/PR на GitHub, чтобы запускать AI-действия",
+    "Используйте {highlight}/openfable{/highlight} в issue/PR на GitHub, чтобы запускать AI-действия",
   "tui.tips.github_install":
     "Выполните {highlight}openfable github install{/highlight}, чтобы настроить GitHub-workflow",
   "tui.tips.github_oc":
@@ -233,7 +233,7 @@ export const dict = {
   "tui.tips.username_toggle":
     "Переключайте отображение имени пользователя через палитру команд ({highlight}Ctrl+P{/highlight})",
   "tui.tips.docker":
-    "Выполните {highlight}docker run -it --rm ghcr.io/anomalyco/opencode{/highlight} для контейнерного запуска",
+    "Выполните {highlight}docker run -it --rm ghcr.io/anomalyco/openfable{/highlight} для контейнерного запуска",
   "tui.tips.zen":
     "Используйте {highlight}/connect{/highlight} с OpenFable Code для подобранных и протестированных моделей",
   "tui.tips.agents_md":
@@ -293,7 +293,7 @@ export const dict = {
   "tui.command.provider.connect.title": "Подключить провайдера",
   "tui.command.provider.logout.title": "Выйти",
   "tui.command.console.org.switch.title": "Сменить организацию",
-  "tui.command.opencode.status.title": "Посмотреть статус",
+  "tui.command.openfable.status.title": "Посмотреть статус",
   "tui.command.theme.switch.title": "Сменить тему",
   "tui.command.logo.switch.title": "Сменить дизайн логотипа",
   "tui.dialog.logo.title": "Дизайн логотипа",
@@ -341,7 +341,7 @@ export const dict = {
   "tui.toast.update_available.confirm": "Доступна новая версия v{{version}}. Обновить сейчас?",
   "tui.toast.update_available.updating": "Обновление до v{{version}}...",
   "tui.toast.update_available.failed": "Не удалось обновить",
-  "tui.toast.update_available.success": "Обновлено до MiMoCode v{{version}}. Пожалуйста, перезапустите приложение.",
+  "tui.toast.update_available.success": "Обновлено до OpenFable v{{version}}. Пожалуйста, перезапустите приложение.",
   "tui.toast.updated.title": "Автообновление выполнено",
   "tui.toast.updated.message": "Патч применён автоматически: v{{version}}. Перезапустите для использования новой версии. Отключите через autoupdate: false в конфигурации.",
   "tui.sidebar.instructions": "Инструкции",

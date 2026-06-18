@@ -107,7 +107,7 @@ const cli = yargs(args)
     Heap.start()
 
     process.env.AGENT = "1"
-    process.env.MIMOCODE = "1"
+    process.env.OPENFABLE_INTERNAL = "1"
     process.env.OPENFABLE_PID = String(process.pid)
 
     Log.Default.info("openfable", {

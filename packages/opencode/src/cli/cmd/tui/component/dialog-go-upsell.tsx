@@ -8,7 +8,7 @@ import { Link } from "@tui/ui/link"
 import { GoLogo } from "./logo"
 import { BgPulse, type BgPulseMask } from "./bg-pulse"
 
-const GO_URL = "https://opencode.ai/go"
+const GO_URL = "https://github.com/xanstomper/OpenFable-Code"
 const PAD_X = 3
 const PAD_TOP_OUTER = 1
 
@@ -100,11 +100,11 @@ export function DialogGoUpsell(props: DialogGoUpsellProps) {
           <box flexDirection="row">
             <text fg={theme.textMuted}>Subscribe to </text>
             <text attributes={TextAttributes.BOLD} fg={theme.textMuted}>
-              OpenCode Go
+              OpenFable
             </text>
-            <text fg={theme.textMuted}> for reliable access to the</text>
+            <text fg={theme.textMuted}> provides reliable access to the</text>
           </box>
-          <text fg={theme.textMuted}>best open-source models, starting at $5/month.</text>
+          <text fg={theme.textMuted}>best open-source models through 75+ providers.</text>
         </box>
         <box alignItems="center" gap={1} paddingBottom={1}>
           <box ref={(item: BoxRenderable) => (logoBox = item)}>

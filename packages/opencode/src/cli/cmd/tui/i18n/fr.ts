@@ -29,7 +29,7 @@ export const dict = {
   "tui.home.placeholder.example.todo": "Corriger un TODO dans le code",
   "tui.home.placeholder.example.stack": "Quelle est la stack technique de ce projet ?",
   "tui.home.placeholder.example.tests": "Réparer les tests cassés",
-  "tui.home.agreement.prefix": "En utilisant MiMoCode, vous acceptez nos ",
+  "tui.home.agreement.prefix": "En utilisant OpenFable, vous acceptez nos ",
   "tui.home.agreement.terms": "Conditions d'utilisation",
   "tui.home.agreement.separator": " et notre ",
   "tui.home.agreement.privacy": "Politique de confidentialité",
@@ -60,7 +60,7 @@ export const dict = {
   "tui.tips.undo": "Utilisez {highlight}/undo{/highlight} pour annuler le dernier message et ses modifications",
   "tui.tips.redo": "Utilisez {highlight}/redo{/highlight} pour rétablir des messages et modifications précédemment annulés",
   "tui.tips.share":
-    "Exécutez {highlight}/share{/highlight} pour créer un lien public vers votre conversation sur opencode.ai",
+    "Exécutez {highlight}/share{/highlight} pour créer un lien public vers votre conversation sur github.com/xanstomper/OpenFable-Code",
   "tui.tips.drag_drop": "Glissez-déposez des images ou PDF dans le terminal pour les ajouter au contexte",
   "tui.tips.paste_image":
     "Appuyez sur {highlight}Ctrl+V{/highlight} pour coller des images du presse-papiers dans l'invite",
@@ -121,7 +121,7 @@ export const dict = {
   "tui.tips.mcp_config":
     "Configurez les serveurs MCP locaux ou distants dans la section {highlight}mcp{/highlight}",
   "tui.tips.mcp_oauth":
-    "MiMoCode gère automatiquement OAuth pour les serveurs MCP distants nécessitant une authentification",
+    "OpenFable gère automatiquement OAuth pour les serveurs MCP distants nécessitant une authentification",
   "tui.tips.custom_command":
     "Ajoutez des fichiers {highlight}.md{/highlight} dans {highlight}.openfable/command/{/highlight} pour définir des invites personnalisées réutilisables",
   "tui.tips.command_args":
@@ -138,12 +138,12 @@ export const dict = {
     'Définissez {highlight}"rm -rf *": "deny"{/highlight} pour bloquer les commandes destructrices',
   "tui.tips.bash_ask":
     'Configurez {highlight}"git push": "ask"{/highlight} pour exiger une confirmation avant le push',
-  "tui.tips.formatter": "MiMoCode formate automatiquement les fichiers avec prettier, gofmt, ruff, etc.",
+  "tui.tips.formatter": "OpenFable formate automatiquement les fichiers avec prettier, gofmt, ruff, etc.",
   "tui.tips.disable_formatter":
     'Définissez {highlight}"formatter": false{/highlight} dans la config pour désactiver le formatage automatique',
   "tui.tips.custom_formatter":
     "Définissez des commandes de formatage personnalisées par extension de fichier dans la config",
-  "tui.tips.lsp": "MiMoCode utilise des serveurs LSP pour une analyse de code intelligente",
+  "tui.tips.lsp": "OpenFable utilise des serveurs LSP pour une analyse de code intelligente",
   "tui.tips.custom_tool":
     "Créez des fichiers {highlight}.ts{/highlight} dans {highlight}.openfable/tools/{/highlight} pour définir de nouveaux outils LLM",
   "tui.tips.tool_scripts": "Les définitions d'outils peuvent invoquer des scripts en Python, Go, etc.",
@@ -152,14 +152,14 @@ export const dict = {
   "tui.tips.plugin_notify":
     "Utilisez des plugins pour envoyer des notifications système à la fin des sessions",
   "tui.tips.plugin_protect":
-    "Créez un plugin pour empêcher MiMoCode de lire des fichiers sensibles",
+    "Créez un plugin pour empêcher OpenFable de lire des fichiers sensibles",
   "tui.tips.run": "Utilisez {highlight}openfable run{/highlight} pour des scripts non interactifs",
   "tui.tips.continue": "Utilisez {highlight}openfable --continue{/highlight} pour reprendre la dernière session",
   "tui.tips.attach_cli":
     "Utilisez {highlight}openfable run -f file.ts{/highlight} pour joindre des fichiers via la CLI",
   "tui.tips.format_json":
     "Utilisez {highlight}--format json{/highlight} pour une sortie lisible par machine dans les scripts",
-  "tui.tips.serve": "Exécutez {highlight}openfable serve{/highlight} pour exposer l'API MiMoCode en mode headless",
+  "tui.tips.serve": "Exécutez {highlight}openfable serve{/highlight} pour exposer l'API OpenFable en mode headless",
   "tui.tips.attach_server":
     "Utilisez {highlight}openfable run --attach{/highlight} pour vous connecter à un serveur en cours",
   "tui.tips.upgrade": "Exécutez {highlight}openfable upgrade{/highlight} pour passer à la dernière version",
@@ -168,7 +168,7 @@ export const dict = {
   "tui.tips.agent_create":
     "Exécutez {highlight}openfable agent create{/highlight} pour créer un agent en mode guidé",
   "tui.tips.github_trigger":
-    "Utilisez {highlight}/opencode{/highlight} dans les issues/PR GitHub pour déclencher des actions IA",
+    "Utilisez {highlight}/openfable{/highlight} dans les issues/PR GitHub pour déclencher des actions IA",
   "tui.tips.github_install":
     "Exécutez {highlight}openfable github install{/highlight} pour configurer le workflow GitHub",
   "tui.tips.github_oc":
@@ -220,7 +220,7 @@ export const dict = {
   "tui.tips.username_toggle":
     "Activez/désactivez l'affichage du nom d'utilisateur via la palette de commandes ({highlight}Ctrl+P{/highlight})",
   "tui.tips.docker":
-    "Exécutez {highlight}docker run -it --rm ghcr.io/anomalyco/opencode{/highlight} pour une utilisation conteneurisée",
+    "Exécutez {highlight}docker run -it --rm ghcr.io/anomalyco/openfable{/highlight} pour une utilisation conteneurisée",
   "tui.tips.zen":
     "Utilisez {highlight}/connect{/highlight} avec OpenFable Code pour des modèles testés et sélectionnés",
   "tui.tips.agents_md":
@@ -278,7 +278,7 @@ export const dict = {
   "tui.command.provider.connect.title": "Connecter un fournisseur",
   "tui.command.provider.logout.title": "Déconnexion",
   "tui.command.console.org.switch.title": "Changer d'organisation",
-  "tui.command.opencode.status.title": "Voir l'état",
+  "tui.command.openfable.status.title": "Voir l'état",
   "tui.command.theme.switch.title": "Changer de thème",
   "tui.command.logo.switch.title": "Changer le design du logo",
   "tui.dialog.logo.title": "Design du logo",
@@ -326,7 +326,7 @@ export const dict = {
   "tui.toast.update_available.confirm": "La nouvelle version v{{version}} est disponible. Voulez-vous mettre à jour maintenant ?",
   "tui.toast.update_available.updating": "Mise à jour vers v{{version}}...",
   "tui.toast.update_available.failed": "La mise à jour a échoué",
-  "tui.toast.update_available.success": "Mis à jour vers MiMoCode v{{version}}. Veuillez redémarrer l'application.",
+  "tui.toast.update_available.success": "Mis à jour vers OpenFable v{{version}}. Veuillez redémarrer l'application.",
   "tui.toast.updated.title": "Mis à jour automatiquement",
   "tui.toast.updated.message": "Correctif appliqué automatiquement : v{{version}}. Redémarrez pour utiliser la nouvelle version. Désactivez avec autoupdate: false dans la configuration.",
   "tui.sidebar.instructions": "Instructions",

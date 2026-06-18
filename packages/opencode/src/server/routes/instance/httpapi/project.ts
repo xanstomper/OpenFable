@@ -15,7 +15,7 @@ export const ProjectApi = HttpApi.make("project")
           OpenApi.annotations({
             identifier: "project.list",
             summary: "List all projects",
-            description: "Get a list of projects that have been opened with OpenCode.",
+            description: "Get a list of projects that have been opened with OpenFable.",
           }),
         ),
         HttpApiEndpoint.get("current", `${root}/current`, {
@@ -24,7 +24,7 @@ export const ProjectApi = HttpApi.make("project")
           OpenApi.annotations({
             identifier: "project.current",
             summary: "Get current project",
-            description: "Retrieve the currently active project that OpenCode is working with.",
+            description: "Retrieve the currently active project that OpenFable is working with.",
           }),
         ),
       )

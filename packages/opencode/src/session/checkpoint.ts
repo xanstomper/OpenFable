@@ -543,7 +543,7 @@ export const layer: Layer.Layer<
 
       // Compute boundary for last_checkpoint_message_id bookkeeping. Layer 6
       // (Task 16): role-aware adjustment to ensure tool_use/tool_result pairs
-      // and same-message.id thinking blocks aren't split. OpenCode's ToolPart
+      // and same-message.id thinking blocks aren't split. OpenFable's ToolPart
       // carries both use (input) and result (output) on the SAME message, so
       // we project each ToolPart to both a tool_use and a tool_result block —
       // pairing is intrinsically satisfied today and the algorithm acts as a

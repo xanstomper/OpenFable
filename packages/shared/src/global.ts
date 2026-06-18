@@ -6,7 +6,7 @@ import { Context, Effect, Layer } from "effect"
 const APP = "openfable"
 
 export type ResolvedPaths = {
-  mode: "mimocode_home" | "xdg"
+  mode: "openfable_home" | "xdg"
   root?: string
   data: string
   cache: string
@@ -23,7 +23,7 @@ export type ResolvedPaths = {
  *
  * @throws if OPENFABLE_HOME is set but not an absolute path
  */
-export function resolveMimocodeHome(env: NodeJS.ProcessEnv = process.env): ResolvedPaths {
+export function resolveOpenfableHome(env: NodeJS.ProcessEnv = process.env): ResolvedPaths {
   const home = env.OPENFABLE_HOME
   if (home) {
     if (!path.isAbsolute(home)) {
@@ -32,7 +32,7 @@ export function resolveMimocodeHome(env: NodeJS.ProcessEnv = process.env): Resol
       )
     }
     return {
-      mode: "mimocode_home",
+      mode: "openfable_home",
       root: home,
       data: path.join(home, "data"),
       cache: path.join(home, "cache"),
@@ -50,7 +50,7 @@ export function resolveMimocodeHome(env: NodeJS.ProcessEnv = process.env): Resol
 }
 
 export namespace Global {
-  export class Service extends Context.Service<Service, Interface>()("@opencode/Global") {}
+  export class Service extends Context.Service<Service, Interface>()("@openfable/Global") {}
 
   export interface Interface {
     readonly home: string
@@ -66,7 +66,7 @@ export namespace Global {
     Service,
     Effect.gen(function* () {
       const home = process.env.HOME || process.env.USERPROFILE || os.homedir()
-      const { data, cache, config, state } = yield* Effect.sync(() => resolveMimocodeHome())
+      const { data, cache, config, state } = yield* Effect.sync(() => resolveOpenfableHome())
       const bin = path.join(cache, "bin")
       const log = path.join(data, "log")
 

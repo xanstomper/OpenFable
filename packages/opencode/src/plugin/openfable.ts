@@ -90,7 +90,7 @@ export async function MimoAuthPlugin(_input: PluginInput): Promise<Hooks> {
       const openfable = input.provider.openfable
       xiaomi.name ??= "OpenFable"
       xiaomi.api ??= "https://api.xiaomimimo.com/v1"
-      // Disable upstream OpenCode hosted providers so they don't silently
+      // Disable upstream OpenFable hosted providers so they don't silently
       // auto-load their free/public tier (opencode autoloads zero-cost models
       // with apiKey "public" when no key is configured). Previously set by the
       // free channel; moved here so it applies in every build (the free channel

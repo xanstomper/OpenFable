@@ -588,7 +588,7 @@ describe("session.agent-resolution", () => {
   }, 30000)
 })
 
-// F37: subagent context isolation. Mimocode's spawnSubagent shares
+// F37: subagent context isolation. OpenFable's spawnSubagent shares
 // sessionID with the parent and slices via agent_id. Without filtering
 // at the prompt-build call site (prompt.ts → runLoop →
 // filterCompactedEffect), a subagent's LLM call would receive the

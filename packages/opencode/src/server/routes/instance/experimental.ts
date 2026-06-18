@@ -109,7 +109,7 @@ export const ExperimentalRoutes = lazy(() =>
       "/console/switch",
       describeRoute({
         summary: "Switch active Console org",
-        description: "Persist a new active Console account/org selection for the current local OpenCode state.",
+        description: "Persist a new active Console account/org selection for the current local OpenFable state.",
         operationId: "experimental.console.switchOrg",
         responses: {
           200: {

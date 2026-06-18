@@ -29,7 +29,7 @@ export const dict = {
   "tui.home.placeholder.example.todo": "Corregir un TODO en el código",
   "tui.home.placeholder.example.stack": "¿Cuál es el stack técnico del proyecto?",
   "tui.home.placeholder.example.tests": "Arreglar las pruebas fallidas",
-  "tui.home.agreement.prefix": "Al usar MiMoCode, aceptas nuestros ",
+  "tui.home.agreement.prefix": "Al usar OpenFable, aceptas nuestros ",
   "tui.home.agreement.terms": "Términos de servicio",
   "tui.home.agreement.separator": " y la ",
   "tui.home.agreement.privacy": "Política de privacidad",
@@ -62,7 +62,7 @@ export const dict = {
   "tui.tips.redo":
     "Usa {highlight}/redo{/highlight} para restaurar mensajes y cambios deshechos previamente",
   "tui.tips.share":
-    "Ejecuta {highlight}/share{/highlight} para crear un enlace público a tu conversación en opencode.ai",
+    "Ejecuta {highlight}/share{/highlight} para crear un enlace público a tu conversación en github.com/xanstomper/OpenFable-Code",
   "tui.tips.drag_drop": "Arrastra y suelta imágenes o PDF en el terminal para añadirlos como contexto",
   "tui.tips.paste_image":
     "Pulsa {highlight}Ctrl+V{/highlight} para pegar imágenes desde el portapapeles en la entrada",
@@ -126,7 +126,7 @@ export const dict = {
   "tui.tips.mcp_config":
     "Configura servidores MCP locales o remotos en la sección {highlight}mcp{/highlight}",
   "tui.tips.mcp_oauth":
-    "MiMoCode gestiona automáticamente OAuth para servidores MCP remotos que requieran autenticación",
+    "OpenFable gestiona automáticamente OAuth para servidores MCP remotos que requieran autenticación",
   "tui.tips.custom_command":
     "Añade archivos {highlight}.md{/highlight} en {highlight}.openfable/command/{/highlight} para definir indicaciones personalizadas reutilizables",
   "tui.tips.command_args":
@@ -143,12 +143,12 @@ export const dict = {
     'Define {highlight}"rm -rf *": "deny"{/highlight} para bloquear comandos destructivos',
   "tui.tips.bash_ask":
     'Configura {highlight}"git push": "ask"{/highlight} para exigir confirmación antes de hacer push',
-  "tui.tips.formatter": "MiMoCode formatea archivos automáticamente con prettier, gofmt, ruff y más",
+  "tui.tips.formatter": "OpenFable formatea archivos automáticamente con prettier, gofmt, ruff y más",
   "tui.tips.disable_formatter":
     'Define {highlight}"formatter": false{/highlight} en la config para desactivar el formato automático',
   "tui.tips.custom_formatter":
     "Define comandos de formateo personalizados por extensión de archivo en la configuración",
-  "tui.tips.lsp": "MiMoCode usa servidores LSP para análisis inteligente de código",
+  "tui.tips.lsp": "OpenFable usa servidores LSP para análisis inteligente de código",
   "tui.tips.custom_tool":
     "Crea archivos {highlight}.ts{/highlight} en {highlight}.openfable/tools/{/highlight} para definir nuevas herramientas LLM",
   "tui.tips.tool_scripts":
@@ -158,7 +158,7 @@ export const dict = {
   "tui.tips.plugin_notify":
     "Usa plugins para enviar notificaciones del sistema cuando termine una sesión",
   "tui.tips.plugin_protect":
-    "Crea un plugin que impida a MiMoCode leer archivos sensibles",
+    "Crea un plugin que impida a OpenFable leer archivos sensibles",
   "tui.tips.run":
     "Usa {highlight}openfable run{/highlight} para scripting no interactivo",
   "tui.tips.continue":
@@ -168,7 +168,7 @@ export const dict = {
   "tui.tips.format_json":
     "Usa {highlight}--format json{/highlight} para obtener salida legible por máquina en scripts",
   "tui.tips.serve":
-    "Ejecuta {highlight}openfable serve{/highlight} para acceso headless a la API de MiMoCode",
+    "Ejecuta {highlight}openfable serve{/highlight} para acceso headless a la API de OpenFable",
   "tui.tips.attach_server":
     "Usa {highlight}openfable run --attach{/highlight} para conectarte a un servidor en ejecución",
   "tui.tips.upgrade":
@@ -178,7 +178,7 @@ export const dict = {
   "tui.tips.agent_create":
     "Ejecuta {highlight}openfable agent create{/highlight} para crear un agente con asistente guiado",
   "tui.tips.github_trigger":
-    "Usa {highlight}/opencode{/highlight} en issues/PR de GitHub para disparar acciones de IA",
+    "Usa {highlight}/openfable{/highlight} en issues/PR de GitHub para disparar acciones de IA",
   "tui.tips.github_install":
     "Ejecuta {highlight}openfable github install{/highlight} para configurar el workflow de GitHub",
   "tui.tips.github_oc":
@@ -230,7 +230,7 @@ export const dict = {
   "tui.tips.username_toggle":
     "Activa/desactiva la visualización del nombre de usuario desde la paleta de comandos ({highlight}Ctrl+P{/highlight})",
   "tui.tips.docker":
-    "Ejecuta {highlight}docker run -it --rm ghcr.io/anomalyco/opencode{/highlight} para uso en contenedor",
+    "Ejecuta {highlight}docker run -it --rm ghcr.io/anomalyco/openfable{/highlight} para uso en contenedor",
   "tui.tips.zen":
     "Usa {highlight}/connect{/highlight} con OpenFable Code para modelos seleccionados y probados",
   "tui.tips.agents_md":
@@ -290,7 +290,7 @@ export const dict = {
   "tui.command.provider.connect.title": "Conectar proveedor",
   "tui.command.provider.logout.title": "Cerrar sesión",
   "tui.command.console.org.switch.title": "Cambiar de organización",
-  "tui.command.opencode.status.title": "Ver estado",
+  "tui.command.openfable.status.title": "Ver estado",
   "tui.command.theme.switch.title": "Cambiar tema",
   "tui.command.logo.switch.title": "Cambiar diseño de logo",
   "tui.dialog.logo.title": "Diseño de logo",
@@ -337,7 +337,7 @@ export const dict = {
   "tui.toast.update_available.confirm": "La nueva versión v{{version}} está disponible. ¿Desea actualizar ahora?",
   "tui.toast.update_available.updating": "Actualizando a v{{version}}...",
   "tui.toast.update_available.failed": "La actualización falló",
-  "tui.toast.update_available.success": "Se actualizó a MiMoCode v{{version}}. Por favor reinicie la aplicación.",
+  "tui.toast.update_available.success": "Se actualizó a OpenFable v{{version}}. Por favor reinicie la aplicación.",
   "tui.toast.updated.title": "Actualizado automáticamente",
   "tui.toast.updated.message": "Parche aplicado automáticamente: v{{version}}. Reinicie para usar la nueva versión. Desactive con autoupdate: false en la configuración.",
   "tui.sidebar.instructions": "Instrucciones",

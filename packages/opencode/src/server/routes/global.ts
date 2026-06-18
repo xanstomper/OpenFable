@@ -87,7 +87,7 @@ export const GlobalRoutes = lazy(() =>
       "/health",
       describeRoute({
         summary: "Get health",
-        description: "Get health information about the OpenCode server.",
+        description: "Get health information about the OpenFable server.",
         operationId: "global.health",
         responses: {
           200: {
@@ -108,7 +108,7 @@ export const GlobalRoutes = lazy(() =>
       "/event",
       describeRoute({
         summary: "Get global events",
-        description: "Subscribe to global events from the OpenCode system using server-sent events.",
+        description: "Subscribe to global events from the OpenFable system using server-sent events.",
         operationId: "global.event",
         responses: {
           200: {
@@ -151,7 +151,7 @@ export const GlobalRoutes = lazy(() =>
       "/config",
       describeRoute({
         summary: "Get global configuration",
-        description: "Retrieve the current global OpenCode configuration settings and preferences.",
+        description: "Retrieve the current global OpenFable configuration settings and preferences.",
         operationId: "global.config.get",
         responses: {
           200: {
@@ -172,7 +172,7 @@ export const GlobalRoutes = lazy(() =>
       "/config",
       describeRoute({
         summary: "Update global configuration",
-        description: "Update global OpenCode configuration settings and preferences.",
+        description: "Update global OpenFable configuration settings and preferences.",
         operationId: "global.config.update",
         responses: {
           200: {
@@ -197,7 +197,7 @@ export const GlobalRoutes = lazy(() =>
       "/dispose",
       describeRoute({
         summary: "Dispose instance",
-        description: "Clean up and dispose all OpenCode instances, releasing all resources.",
+        description: "Clean up and dispose all OpenFable instances, releasing all resources.",
         operationId: "global.dispose",
         responses: {
           200: {

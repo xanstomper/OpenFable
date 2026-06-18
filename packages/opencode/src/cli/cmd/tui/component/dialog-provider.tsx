@@ -364,22 +364,21 @@ function ApiMethod(props: ApiMethodProps) {
           opencode: (
             <box gap={1}>
               <text fg={theme.textMuted}>
-                OpenCode Zen gives you access to all the best coding models at the cheapest prices with a single API
-                key.
+                OpenFable provides access to a wide range of coding models. Configure your provider in the settings.
               </text>
               <text fg={theme.text}>
-                Go to <span style={{ fg: theme.primary }}>https://opencode.ai/zen</span> to get a key
+                Visit <span style={{ fg: theme.primary }}>https://github.com/xanstomper/OpenFable-Code</span> for more info
               </text>
             </box>
           ),
           "opencode-go": (
             <box gap={1}>
               <text fg={theme.textMuted}>
-                OpenCode Go is a $10 per month subscription that provides reliable access to popular open coding models
-                with generous usage limits.
+                OpenFable supports 75+ providers and multiple model backends. Connect your preferred provider to get
+                started.
               </text>
               <text fg={theme.text}>
-                Go to <span style={{ fg: theme.primary }}>https://opencode.ai/zen</span> and enable OpenCode Go
+                Use <span style={{ fg: theme.primary }}>/connect</span> in the terminal to set up a provider
               </text>
             </box>
           ),
