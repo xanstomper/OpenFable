@@ -3,7 +3,6 @@ import { APICallError } from "ai"
 import { parseAPICallError } from "../../src/provider/error"
 import { ProviderID } from "../../src/provider/schema"
 
-const openfable = ProviderID.make("xiaomi")
 const openfable = ProviderID.make("openfable")
 const openai = ProviderID.make("openai")
 
@@ -22,7 +21,7 @@ function apiError(opts: { message: string; statusCode?: number; responseBody?: s
 describe("provider error message", () => {
   test("maps OpenFable 421 moderation block (HTTP 400) to a friendly message with param detail", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "Moderation Block",
         statusCode: 400,
@@ -38,7 +37,7 @@ describe("provider error message", () => {
 
   test("maps OpenFable 441 risk control to a friendly message", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "Severe Violation",
         statusCode: 400,
@@ -62,7 +61,7 @@ describe("provider error message", () => {
 
   test("appends param detail when message is generic (Param Incorrect)", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "Param Incorrect",
         statusCode: 400,
@@ -76,7 +75,7 @@ describe("provider error message", () => {
 
   test("does not duplicate when param equals message", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "Invalid Token",
         statusCode: 401,
@@ -113,7 +112,7 @@ describe("provider error message", () => {
 
   test("non-JSON response body does not corrupt a distinct SDK message", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({ message: "Connection failed", statusCode: 500, responseBody: "upstream timeout" }),
     })
     expect(parsed.type).toBe("api_error")
@@ -122,7 +121,7 @@ describe("provider error message", () => {
 
   test("uses the body message + param when SDK message is the generic status text", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "Bad Request",
         statusCode: 400,
@@ -134,7 +133,7 @@ describe("provider error message", () => {
 
   test("still detects context overflow from error.code", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "Request failed",
         statusCode: 400,
@@ -146,7 +145,7 @@ describe("provider error message", () => {
 
   test("empty SDK message falls back to structured body message", () => {
     const parsed = parseAPICallError({
-      providerID: xiaomi,
+      providerID: openfable,
       error: apiError({
         message: "",
         statusCode: 402,

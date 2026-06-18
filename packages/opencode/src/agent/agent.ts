@@ -112,7 +112,7 @@ export const layer = Layer.effect(
         const agents: Record<string, Info> = {
           build: {
             name: "build",
-            color: "#fb8147",
+            color: "#4287F5",
             description: "Executes tools based on configured permissions.",
             options: {},
             permission: Permission.merge(
@@ -133,7 +133,7 @@ export const layer = Layer.effect(
             ? {
                 max: {
                   name: "max",
-                  color: "#e85d75",
+                  color: "#5A9CF8",
                   description:
                     "Max mode (experimental). Runs N parallel reasoning candidates each step and executes the best one. Same permissions as build.",
                   options: {},
@@ -207,7 +207,7 @@ export const layer = Layer.effect(
           },
           explore: {
             name: "explore",
-            color: "#f5c9b0",
+            color: "#93C5FD",
             permission: Permission.merge(
               defaults,
               Permission.fromConfig({

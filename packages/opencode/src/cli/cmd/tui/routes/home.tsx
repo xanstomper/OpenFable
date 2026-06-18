@@ -95,9 +95,9 @@ export function Home() {
             when={plainTerminal}
             fallback={
               <TuiPluginRuntime.Slot name="home_logo" mode="replace">
-                <Show when={logoKey()} keyed>
-                  {(k) => <Logo shape={logos[k]} sweep />}
-                </Show>
+                  <Show when={logoKey()} keyed>
+                    {(k) => <Logo shape={logos[k]} idle sweep />}
+                  </Show>
               </TuiPluginRuntime.Slot>
             }
           >

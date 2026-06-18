@@ -4,30 +4,30 @@
     "darkStep6": "#3c3c3c",
     "darkStep11": "#808080",
     "darkStep12": "#eeeeee",
-    "darkSecondary": "#EE7948",
+    "darkSecondary": "#5A9CF8",
     "darkAccent": "#FFF7F1",
     "darkRed": "#e06c75",
-    "darkOrange": "#EC5B2B",
-    "darkBlue": "#6ba1e6",
+    "darkBlue": "#4287F5",
+    "darkBlueMuted": "#6ba1e6",
     "darkCyan": "#56b6c2",
     "darkYellow": "#e5c07b",
     "darkPanelBg": "#2a1a1599",
     "lightStep6": "#d4d4d4",
     "lightStep11": "#8a8a8a",
     "lightStep12": "#1a1a1a",
-    "lightSecondary": "#EE7948",
-    "lightAccent": "#c94d24",
+    "lightSecondary": "#5A9CF8",
+    "lightAccent": "#2563EB",
     "lightRed": "#d1383d",
-    "lightOrange": "#EC5B2B",
-    "lightBlue": "#0062d1",
+    "lightBlue": "#4287F5",
+    "lightBlueMuted": "#0062d1",
     "lightCyan": "#318795",
     "lightYellow": "#b0851f",
     "lightPanelBg": "#fff5f099"
   },
   "theme": {
     "primary": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "secondary": {
       "dark": "darkSecondary",
@@ -42,12 +42,12 @@
       "light": "lightRed"
     },
     "warning": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
-    },
-    "success": {
       "dark": "darkBlue",
       "light": "lightBlue"
+    },
+    "success": {
+      "dark": "darkBlueMuted",
+      "light": "lightBlueMuted"
     },
     "info": {
       "dark": "darkCyan",
@@ -82,8 +82,8 @@
       "light": "lightPanelBg"
     },
     "border": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "borderActive": {
       "dark": "darkSecondary",
@@ -94,8 +94,8 @@
       "light": "lightStep6"
     },
     "diffAdded": {
-      "dark": "darkBlue",
-      "light": "lightBlue"
+      "dark": "darkBlueMuted",
+      "light": "lightBlueMuted"
     },
     "diffRemoved": {
       "dark": "#c53b53",
@@ -110,8 +110,8 @@
       "light": "#7086b5"
     },
     "diffHighlightAdded": {
-      "dark": "darkBlue",
-      "light": "lightBlue"
+      "dark": "darkBlueMuted",
+      "light": "lightBlueMuted"
     },
     "diffHighlightRemoved": {
       "dark": "#e26a75",
@@ -143,20 +143,20 @@
       "light": "lightStep12"
     },
     "markdownHeading": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "markdownLink": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "markdownLinkText": {
       "dark": "darkCyan",
       "light": "lightCyan"
     },
     "markdownCode": {
-      "dark": "darkBlue",
-      "light": "lightBlue"
+      "dark": "darkBlueMuted",
+      "light": "lightBlueMuted"
     },
     "markdownBlockQuote": {
       "dark": "darkAccent",
@@ -168,23 +168,23 @@
     },
     "markdownStrong": {
       "dark": "darkSecondary",
-      "light": "lightOrange"
+      "light": "lightBlue"
     },
     "markdownHorizontalRule": {
       "dark": "darkStep11",
       "light": "lightStep11"
     },
     "markdownListItem": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "markdownListEnumeration": {
       "dark": "darkCyan",
       "light": "lightCyan"
     },
     "markdownImage": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "markdownImageText": {
       "dark": "darkCyan",
@@ -199,8 +199,8 @@
       "light": "lightStep11"
     },
     "syntaxKeyword": {
-      "dark": "darkOrange",
-      "light": "lightOrange"
+      "dark": "darkBlue",
+      "light": "lightBlue"
     },
     "syntaxFunction": {
       "dark": "darkSecondary",
@@ -211,12 +211,12 @@
       "light": "lightRed"
     },
     "syntaxString": {
-      "dark": "darkBlue",
-      "light": "lightBlue"
+      "dark": "darkBlueMuted",
+      "light": "lightBlueMuted"
     },
     "syntaxNumber": {
       "dark": "darkAccent",
-      "light": "lightOrange"
+      "light": "lightBlue"
     },
     "syntaxType": {
       "dark": "darkYellow",

@@ -1,0 +1,30 @@
+diff --git a/node_modules/@opentui/solid/jsx-runtime.js b/jsx-runtime.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..cccde5ad6dd02b2a8e2c43f1afea615ea607acd0
+--- /dev/null
++++ b/jsx-runtime.js
+@@ -0,0 +1 @@
++export { Fragment, jsx, jsxs, jsxDEV } from "solid-js/h/jsx-runtime"
+diff --git a/package.json b/package.json
+index 759c1b8f2c7da368c4acb91855e2ad1aec05612a..f934ede3773be0b2b0f3bd85f2e99cfde8fb38b0 100644
+--- a/package.json
++++ b/package.json
+@@ -29,8 +29,16 @@
+       "types": "./scripts/runtime-plugin-support.d.ts",
+       "import": "./scripts/runtime-plugin-support.ts"
+     },
+-    "./jsx-runtime": "./jsx-runtime.d.ts",
+-    "./jsx-dev-runtime": "./jsx-runtime.d.ts"
++    "./jsx-runtime": {
++      "types": "./jsx-runtime.d.ts",
++      "import": "./jsx-runtime.js",
++      "default": "./jsx-runtime.js"
++    },
++    "./jsx-dev-runtime": {
++      "types": "./jsx-runtime.d.ts",
++      "import": "./jsx-runtime.js",
++      "default": "./jsx-runtime.js"
++    }
+   },
+   "dependencies": {
+     "@babel/core": "7.28.0",

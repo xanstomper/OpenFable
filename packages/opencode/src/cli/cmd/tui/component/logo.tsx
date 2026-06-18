@@ -904,7 +904,7 @@ export function Logo(props: { shape?: LogoShape; ink?: RGBA; idle?: boolean; swe
     }
   }
 
-  const OPENFABLE_ORANGE = RGBA.fromInts(251, 129, 71)
+  const OPENFABLE_BLUE = RGBA.fromInts(66, 135, 245)
   const OPENFABLE_GRAY = RGBA.fromInts(160, 160, 160)
 
   return (
@@ -920,25 +920,17 @@ export function Logo(props: { shape?: LogoShape; ink?: RGBA; idle?: boolean; swe
       />
       <For each={ctx.shape.left}>
         {(line, index) => {
-          const labelRow = index() === 0
-          if (labelRow) {
-            return (
-              <box flexDirection="row" gap={1}>
-                <text fg={OPENFABLE_GRAY} selectable={false}>{line}</text>
-                <text fg={OPENFABLE_GRAY} selectable={false}>{ctx.shape.right[index()]}</text>
-              </box>
-            )
-          }
+          const rowInk = index() === 0 ? OPENFABLE_GRAY : props.ink ?? OPENFABLE_BLUE
           return (
             <box flexDirection="row" gap={1}>
               <box flexDirection="row">
-                {renderLine(line, index(), props.ink ?? OPENFABLE_ORANGE, true, 0, frame(), dusk(), idleState())}
+                {renderLine(line, index(), rowInk, true, 0, frame(), dusk(), idleState())}
               </box>
               <box flexDirection="row">
                 {renderLine(
                   ctx.shape.right[index()],
                   index(),
-                  props.ink ?? OPENFABLE_GRAY,
+                  index() === 0 ? OPENFABLE_GRAY : props.ink ?? OPENFABLE_GRAY,
                   true,
                   ctx.LEFT + GAP,
                   frame(),

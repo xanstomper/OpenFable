@@ -24,7 +24,9 @@ target
 .scripts
 .direnv/
 
-# Local dev files
+# External reference repos (cloned for study; not source)
+references/
+
 opencode-dev
 UPCOMING_CHANGELOG.md
 logs/

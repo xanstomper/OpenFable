@@ -5,3 +5,12 @@ export { SessionShareTable } from "../share/share.sql"
 export { WorkspaceTable } from "../control-plane/workspace.sql"
 export { WorkflowRunTable } from "../workflow/workflow.sql"
 export { HistoryFtsTable } from "../history/fts.sql"
+export {
+  MythosStateTable,
+  MythosWorkflowTable,
+  DOXEntryTable,
+  DOXContractTable,
+  CognitiveCheckpointTable,
+  CognitiveClaimTable,
+  MythosModelCacheTable,
+} from "../mythos/mythos.sql"

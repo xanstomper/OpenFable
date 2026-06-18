@@ -17,12 +17,15 @@ import { Glob } from "@openfable/shared/util/glob"
 import { Log } from "../util"
 import { Discovery } from "./discovery"
 import { extractComposeBundle } from "./compose/extract"
+import { SkillMacroFramework } from "./macro"
+import type { SkillDefinition, SkillStep } from "./macro"
 
 const log = Log.create({ service: "skill" })
 const EXTERNAL_DIRS = [".claude", ".agents", ".codex", ".opencode"]
 const EXTERNAL_SKILL_PATTERN = "skills/**/SKILL.md"
 const OPENFABLE_SKILL_PATTERN = "{skill,skills}/**/SKILL.md"
 const SKILL_PATTERN = "**/SKILL.md"
+const MACRO_SKILL_PATTERN = "**/*.skill.{json,yaml,yml}"
 
 export const Info = z.object({
   name: z.string(),
@@ -30,6 +33,7 @@ export const Info = z.object({
   location: z.string(),
   content: z.string(),
   hidden: z.boolean().optional(),
+  macro: z.custom<SkillDefinition>().optional(),
 })
 export type Info = z.infer<typeof Info>
 
@@ -75,6 +79,43 @@ export interface Interface {
 }
 
 const add = Effect.fnUntraced(function* (state: State, match: string, bus: Bus.Interface) {
+  const isMacro = match.endsWith(".skill.json") || match.endsWith(".skill.yaml") || match.endsWith(".skill.yml")
+
+  if (isMacro) {
+    const macro = yield* Effect.try({
+      try: () => SkillMacroFramework.parseFile(match),
+      catch: (err) => err,
+    }).pipe(
+      Effect.catch(
+        Effect.fnUntraced(function* (err) {
+          log.error("failed to load macro skill", { skill: match, err })
+          return undefined
+        }),
+      ),
+    )
+
+    if (!macro) return
+
+    if (state.skills[macro.name]) {
+      log.warn("duplicate skill name", {
+        name: macro.name,
+        existing: state.skills[macro.name].location,
+        duplicate: match,
+      })
+    }
+
+    state.dirs.add(path.dirname(match))
+    state.skills[macro.name] = {
+      name: macro.name,
+      description: macro.description,
+      location: match,
+      content: `# Macro Skill: ${macro.name}\n\n${macro.description}\n\nTrigger: ${macro.trigger}\n\nSteps:\n${macro.steps.map((s: SkillStep) => `- ${s.id} (${s.type}): ${JSON.stringify(s.config)}`).join("\n")}`,
+      hidden: false,
+      macro,
+    }
+    return
+  }
+
   const md = yield* Effect.tryPromise({
     try: () => ConfigMarkdown.parse(match),
     catch: (err) => err,
@@ -154,6 +195,8 @@ const discoverSkills = Effect.fnUntraced(function* (
 ) {
   const state: ScanState = { matches: new Set(), dirs: new Set() }
 
+  const scanMacro = (root: string, scope?: string) => scan(state, root, MACRO_SKILL_PATTERN, { scope })
+
   // Extract compose skills to disk first (user skills with same name override)
   if (!Flag.OPENFABLE_DISABLE_COMPOSE_SKILLS) {
     const composeSkillRoot = yield* extractComposeBundle(fsys).pipe(
@@ -161,6 +204,7 @@ const discoverSkills = Effect.fnUntraced(function* (
     )
     if (composeSkillRoot && (yield* fsys.isDir(composeSkillRoot))) {
       yield* scan(state, composeSkillRoot, SKILL_PATTERN, { scope: "compose" })
+      yield* scanMacro(composeSkillRoot, "compose")
     }
   }
 
@@ -176,6 +220,7 @@ const discoverSkills = Effect.fnUntraced(function* (
       const root = path.join(Global.Path.home, dir)
       if (!(yield* fsys.isDir(root))) continue
       yield* scan(state, root, EXTERNAL_SKILL_PATTERN, { dot: true, scope: "global" })
+      yield* scanMacro(root, "global")
     }
 
     const upDirs = yield* fsys
@@ -184,12 +229,14 @@ const discoverSkills = Effect.fnUntraced(function* (
 
     for (const root of upDirs) {
       yield* scan(state, root, EXTERNAL_SKILL_PATTERN, { dot: true, scope: "project" })
+      yield* scanMacro(root, "project")
     }
   }
 
   const configDirs = yield* config.directories()
   for (const dir of configDirs) {
     yield* scan(state, dir, OPENFABLE_SKILL_PATTERN)
+    yield* scanMacro(dir)
   }
 
   const cfg = yield* config.get()
@@ -202,12 +249,14 @@ const discoverSkills = Effect.fnUntraced(function* (
     }
 
     yield* scan(state, dir, SKILL_PATTERN)
+    yield* scanMacro(dir)
   }
 
   for (const url of cfg.skills?.urls ?? []) {
     const pulledDirs = yield* discovery.pull(url)
     for (const dir of pulledDirs) {
       yield* scan(state, dir, SKILL_PATTERN)
+      yield* scanMacro(dir)
     }
   }
 

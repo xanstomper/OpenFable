@@ -88,8 +88,8 @@ export async function MimoAuthPlugin(_input: PluginInput): Promise<Hooks> {
       input.provider ??= {}
       input.provider.openfable ??= {}
       const openfable = input.provider.openfable
-      xiaomi.name ??= "OpenFable"
-      xiaomi.api ??= "https://api.xiaomimimo.com/v1"
+      openfable.name ??= "OpenFable"
+      openfable.api ??= "https://api.xiaomimimo.com/v1"
       // Disable upstream OpenFable hosted providers so they don't silently
       // auto-load their free/public tier (opencode autoloads zero-cost models
       // with apiKey "public" when no key is configured). Previously set by the

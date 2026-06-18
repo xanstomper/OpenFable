@@ -4,6 +4,8 @@ import { Database, eq } from "../storage"
 import { Log } from "../util"
 import { MemoryFtsTable } from "./fts.sql"
 import { parsePath, parseCcPath, parseCcFrontmatterType, type MemoryLocator } from "./paths"
+import { fingerprint } from "./dedup"
+import { EntityStore, extractEntities } from "./entity-store"
 
 const log = Log.create({ service: "memory.reconcile" })
 
@@ -48,18 +50,18 @@ export async function indexFromDisk(
   loc: MemoryLocator,
   bodyType: "openfable" | "cc",
   oldFingerprint?: string,
+  entityStore?: EntityStore,
 ): Promise<"hit" | "updated" | "skipped"> {
   const stat = await fs.stat(absPath).catch((e: NodeJS.ErrnoException) => {
     if (e.code === "ENOENT") return null
     throw e
   })
   if (!stat) return "skipped"
-  const fingerprint = `${stat.size}-${stat.mtimeMs}`
-  if (oldFingerprint === fingerprint) return "hit"
+  const fp = fingerprint(stat.size, stat.mtimeMs)
+  if (oldFingerprint === fp) return "hit"
 
   const body = await Bun.file(absPath).text()
 
-  // For CC files, derive type from frontmatter; openfable files keep loc.type from path.
   const finalType =
     bodyType === "cc" ? (parseCcFrontmatterType(body) ?? "free") : loc.type
 
@@ -72,7 +74,7 @@ export async function indexFromDisk(
         scope_id: loc.scope_id,
         type: finalType,
         body,
-        fingerprint,
+        fingerprint: fp,
         last_indexed_at: Date.now(),
       })
       .onConflictDoUpdate({
@@ -82,21 +84,25 @@ export async function indexFromDisk(
           scope_id: loc.scope_id,
           type: finalType,
           body,
-          fingerprint,
+          fingerprint: fp,
           last_indexed_at: Date.now(),
         },
       })
       .run(),
   )
+
+  if (entityStore) {
+    const entities = extractEntities(body)
+    entityStore.indexEntities(absPath, entities)
+  }
+
   return "updated"
 }
 
 export async function reconcileMemory(
   roots: { openfable: string; cc?: string },
+  opts?: { entityStore?: EntityStore },
 ): Promise<{ indexed: number; pruned: number }> {
-  // Collect disk paths from BOTH roots before pruning. If we pruned per-root,
-  // enabling CC indexing on a fresh run would prune all openfable rows (and vice
-  // versa) because each walk's set is missing the other root's paths.
   const mimoFiles = new Set(await walkMemoryDir(roots.openfable))
   const ccFiles = roots.cc ? new Set(await walkCcRoot(roots.cc)) : new Set<string>()
   const diskPaths = new Set<string>([...mimoFiles, ...ccFiles])
@@ -110,16 +116,15 @@ export async function reconcileMemory(
     ).map((r) => [r.path, r.fingerprint]),
   )
 
-  // Direction B: prune dead FTS rows (any path not in either walk).
   let pruned = 0
   for (const p of indexed.keys()) {
     if (!diskPaths.has(p)) {
       Database.use((db) => db.delete(MemoryFtsTable).where(eq(MemoryFtsTable.path, p)).run())
+      opts?.entityStore?.removeByPath(p)
       pruned++
     }
   }
 
-  // Direction A: index disk files. Pick parser by which walk produced the path.
   let indexedCount = 0
   for (const p of mimoFiles) {
     const loc = parsePath(p)
@@ -127,7 +132,7 @@ export async function reconcileMemory(
       log.warn("path outside memory layout, skipping", { path: p })
       continue
     }
-    const result = await indexFromDisk(p, loc, "openfable", indexed.get(p))
+    const result = await indexFromDisk(p, loc, "openfable", indexed.get(p), opts?.entityStore)
     if (result === "updated") indexedCount++
   }
   for (const p of ccFiles) {
@@ -136,7 +141,7 @@ export async function reconcileMemory(
       log.warn("CC path failed to parse, skipping", { path: p })
       continue
     }
-    const result = await indexFromDisk(p, loc, "cc", indexed.get(p))
+    const result = await indexFromDisk(p, loc, "cc", indexed.get(p), opts?.entityStore)
     if (result === "updated") indexedCount++
   }
 

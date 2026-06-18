@@ -13,6 +13,7 @@ import type { Agent } from "@/agent/agent"
 import type { MessageV2 } from "./message-v2"
 import { Plugin } from "@/plugin"
 import { SystemPrompt } from "./system"
+import { getContext as RepoMapContext } from "./repo-map-context"
 import { Flag } from "@/flag/flag"
 import { Permission } from "@/permission"
 import { PermissionID } from "@/permission/schema"
@@ -32,10 +33,56 @@ import * as OtelTracer from "@effect/opentelemetry/Tracer"
 import { ActorRegistry } from "@/actor/registry"
 import { Memory } from "@/memory"
 import { isRetryableTransientError } from "./retry"
+import { Verifier } from "@/verification/run-until-green"
 
 const log = Log.create({ service: "llm" })
 export const OUTPUT_TOKEN_MAX = ProviderTransform.OUTPUT_TOKEN_MAX
 type Result = Awaited<ReturnType<typeof streamText>>
+
+const MYTHOS_PROMPT = [
+  "<mythos_framework version=\"1.0.0\">",
+  "",
+  "Your reasoning architecture implements a Recurrent-Depth Transformer (RDT) pattern:",
+  "- Prelude: encode input, identify constraints, frame the problem space",
+  "- Recurrent Block: iterate silently up to 4 times in latent reasoning space before outputting tokens",
+  "- Coda: refine final output, verify against the original request",
+  "",
+  "You maintain stable hidden state across reasoning iterations.",
+  "You converge when confidence threshold is met, then emit your answer.",
+  "You do not output intermediate reasoning steps as tokens.",
+  "",
+  "### DOX Protocol",
+  "- AGENTS.md files are binding work contracts for their subtrees",
+  "- Read the nearest AGENTS.md before editing files in that directory tree",
+  "- Walk from repo root to target path, reading every AGENTS.md along the route",
+  "- Update affected AGENTS.md after meaningful edits",
+  "",
+  "### Cognitive Protocol",
+  "- Classify claims: Verified / Observed / Inferred / Speculative / Unknown",
+  "- Checkpoint decisions, rejected approaches, and blocked items when context grows",
+  "- When an approach fails twice, identify the last verified state and reset",
+  "- Define success criteria before starting execution",
+  "- Surface findings when cumulative weight exceeds threshold",
+  "",
+  "### Safety Boundaries",
+  "- Refuse malicious code, weapon-enabling content, CSAM, harmful substances, self-harm guidance",
+  "- Refuse reproducing copyrighted material beyond short quotes",
+  "- Keep refusals brief, warm, and constructive",
+  "- Do not rationalise unsafe requests by assuming benign intent",
+  "",
+  "</mythos_framework>",
+  "",
+  "---",
+].join("\n")
+
+function buildMythosPrompt(agentName: string, model: string, provider: string): string {
+  return [
+    `<mythos_wrapper model="${model}" provider="${provider}" agent="${agentName}">`,
+    "",
+    MYTHOS_PROMPT,
+    `</mythos_wrapper>`,
+  ].join("\n")
+}
 
 /**
  * Match transient errors that the PERSISTENT_RETRY layer should retry.
@@ -239,11 +286,34 @@ const live: Layer.Layer<
       sessionID: string
       agentID?: string
     }) {
-      const system: string[] = []
+      const mythosWrapper = buildMythosPrompt(input.agent.name, input.model.id ?? input.model.providerID, input.model.providerID)
+      const system: string[] = [mythosWrapper]
+
+      // Inject aider-style repo-map context for large-context models (e.g., Claude Opus 4.8).
+      const repoMapContext = yield* Effect.tryPromise({
+        try: () => RepoMapContext(input.model),
+        catch: () => "",
+      }).pipe(Effect.orElseSucceed(() => ""))
+      if (repoMapContext) system.push(repoMapContext)
+
+      // Inject specialized agent prompt if agent ID is provided
+      let agentPrompt = input.agent.prompt
+      if (input.agentID) {
+        try {
+          const specialized = yield* Effect.promise(() => import("@/agent/specialized"))
+          const agentConfig = specialized.AGENT_CONFIGS[input.agentID as keyof typeof specialized.AGENT_CONFIGS]
+          if (agentConfig?.systemPrompt) {
+            agentPrompt = agentConfig.systemPrompt
+          }
+        } catch {
+          // Agent config not available, use default prompt
+        }
+      }
+
       system.push(
         [
           // use agent prompt otherwise provider prompt
-          ...(input.agent.prompt ? [input.agent.prompt] : SystemPrompt.provider(input.model)),
+          ...(agentPrompt ? [agentPrompt] : SystemPrompt.provider(input.model)),
           // any custom prompt passed into this call
           ...input.system,
           // any custom prompt from last user message
@@ -290,6 +360,31 @@ const live: Layer.Layer<
         const rest = system.slice(1)
         system.length = 0
         system.push(header, rest.join("\n"))
+      }
+
+      // Apply token budget optimization if available
+      try {
+        const tokenBudget = yield* Effect.promise(() => import("@/token-budget/compiler"))
+        const compiler = new tokenBudget.TokenBudgetCompiler(100_000)
+        const items = system.map((content: string, idx: number) => ({
+          content,
+          tokens: Math.ceil(content.length / 4),
+          score: idx === 0 ? 100 : 50,
+          cached: idx === 0,
+          pinned: idx === 0,
+          hash: `sys-${idx}`,
+          source: `system-${idx}`,
+        }))
+        const result = compiler.compile(items, input.model.id ?? "local")
+        if (result.droppedCount > 0) {
+          log.info("token budget optimization applied", {
+            dropped: result.droppedCount,
+          })
+          system.length = 0
+          system.push(...result.items.map((item: any) => item.content))
+        }
+      } catch {
+        // Token budget optimization is optional, continue without it
       }
 
       return system
@@ -730,6 +825,35 @@ export function hasToolCalls(messages: ModelMessage[]): boolean {
     }
   }
   return false
+}
+
+/**
+ * Run verification loop after editor changes
+ * Returns verification result with diagnostics if any
+ */
+export async function runVerification(projectDir: string, config?: {
+  buildCommand?: string
+  typeCheckCommand?: string
+  lintCommand?: string
+  testCommand?: string
+  timeout?: number
+}): Promise<{
+  green: boolean
+  diagnostics: Array<{ file: string; line: number; message: string; kind: string }>
+  duration: number
+}> {
+  const verifier = new Verifier(config)
+  const { result, duration } = await verifier.runAll(projectDir)
+  return {
+    green: result.green,
+    diagnostics: result.diagnostics.map(d => ({
+      file: d.file,
+      line: d.line,
+      message: d.message,
+      kind: d.kind,
+    })),
+    duration,
+  }
 }
 
 export * as LLM from "./llm"

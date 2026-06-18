@@ -5,6 +5,8 @@ import { Effect } from "effect"
 import * as Stream from "effect/Stream"
 import { Ripgrep } from "../file/ripgrep"
 import { Skill } from "../skill"
+import { SkillMacroFramework } from "../skill/macro"
+import type { SkillDefinition, SkillContext } from "../skill/macro"
 import * as Tool from "./tool"
 import DESCRIPTION from "./skill.txt"
 
@@ -36,6 +38,26 @@ export const SkillTool = Tool.define(
             always: [params.name],
             metadata: {},
           })
+
+          if (info.macro) {
+            const macro = info.macro
+            const framework = new SkillMacroFramework(path.dirname(info.location), { autoLoad: false })
+            framework.registerSkill(macro)
+
+            const context: SkillContext = {
+              variables: {},
+              history: [],
+              workDir: path.dirname(info.location),
+            }
+
+            const result = yield* Effect.promise(() => framework.execute(macro.name, context))
+
+            return {
+              title: `Executed macro skill: ${info.name}`,
+              output: result.output,
+              metadata: { name: info.name, dir: path.dirname(info.location) },
+            }
+          }
 
           const dir = path.dirname(info.location)
           const base = pathToFileURL(dir).href

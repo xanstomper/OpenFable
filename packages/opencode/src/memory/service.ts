@@ -6,6 +6,11 @@ import { Database } from "../storage"
 import { Config } from "../config"
 import { reconcileMemory } from "./reconcile"
 import { buildFtsQuery } from "./fts-query"
+import { EntityStore } from "./entity-store"
+import { hybridSearch, type ScoredResult } from "./hybrid-scorer"
+import { extractFacts, type ExtractedFact } from "./extract"
+import { contentHash } from "./dedup"
+import type { LanguageModelV3 } from "@ai-sdk/provider"
 
 type SearchRow = {
   path: string
@@ -28,6 +33,19 @@ export interface Interface {
   }) => Effect.Effect<
     Array<{ path: string; snippet: string; score: number; scope: string; scope_id: string; type: string }>
   >
+  readonly hybridSearch: (input: {
+    query: string
+    scope?: string
+    scope_id?: string
+    type?: string
+    limit?: number
+  }) => Effect.Effect<ScoredResult[]>
+  readonly entityStore: () => EntityStore
+  readonly extractFacts: (
+    messages: Array<{ role: string; content: string }>,
+    model: LanguageModelV3,
+  ) => Effect.Effect<ExtractedFact[]>
+  readonly isDuplicate: (body: string) => Effect.Effect<boolean>
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/Memory") {}
@@ -39,6 +57,8 @@ export const layer: Layer.Layer<Service, never, Config.Service> = Layer.effect(
     const root = path.join(Global.Path.data, "memory")
     const ccBase = path.join(os.homedir(), ".claude", "projects")
 
+    const entityStore = new EntityStore()
+
     const rootEff = Effect.fn("Memory.root")(function* () {
       return root
     })
@@ -46,7 +66,7 @@ export const layer: Layer.Layer<Service, never, Config.Service> = Layer.effect(
     const reconcile = Effect.fn("Memory.reconcile")(function* () {
       const cfg = yield* config.get()
       const cc = cfg.memory?.cc_index ? ccBase : undefined
-      return yield* Effect.promise(() => reconcileMemory({ openfable: root, cc }))
+      return yield* Effect.promise(() => reconcileMemory({ openfable: root, cc }, { entityStore }))
     })
 
     const search = Effect.fn("Memory.search")(function* (input: {
@@ -56,33 +76,18 @@ export const layer: Layer.Layer<Service, never, Config.Service> = Layer.effect(
       type?: string
       limit?: number
     }) {
-      // Lazy reconcile before search (covers off-tool writes); honour config flag.
       const cfg = yield* config.get()
       if (cfg.checkpoint?.memory_reconcile_on_search ?? true) {
         const cc = cfg.memory?.cc_index ? ccBase : undefined
-        yield* Effect.promise(() => reconcileMemory({ openfable: root, cc }))
+        yield* Effect.promise(() => reconcileMemory({ openfable: root, cc }, { entityStore }))
       }
 
       const limit = input.limit ?? 10
-      // Build a token-level FTS5 query: punctuation becomes separators,
-      // each alphanumeric run becomes a phrase-quoted literal, OR-joined.
-      // See packages/opencode/src/memory/fts-query.ts for the rationale.
       const ftsQuery = buildFtsQuery(input.query)
       if (!ftsQuery) return []
 
-      // OR-join means a doc matching only a common word (e.g. every
-      // checkpoint.md matches "checkpoint") still matches, but BM25 ranks it
-      // far below a doc matching several rare query words. We drop the
-      // common-word noise with a RELATIVE floor: keep results scoring at
-      // least `ratio` of the top hit's score. Relative (not absolute)
-      // because BM25 magnitudes are corpus-size-dependent — in a tiny corpus
-      // every score collapses toward 0 (low IDF), so any fixed absolute floor
-      // would wrongly wipe real hits. The #1 result is ALWAYS kept (a match
-      // is a match even when BM25 can't discriminate). Default 0.15.
-      // Configurable; 0 disables (keep all matches).
       const floorRatio = cfg.checkpoint?.memory_search_score_floor ?? 0.15
 
-      // Construct WHERE clauses for scope/scope_id/type filtering
       const conditions: string[] = []
       const params: string[] = []
       if (input.scope) {
@@ -111,12 +116,9 @@ export const layer: Layer.Layer<Service, never, Config.Service> = Layer.effect(
         LIMIT ?
       `
 
-      // Over-fetch (3x, capped) so the relative floor can trim common-word
-      // noise without starving the list when there ARE enough real hits.
       const fetchLimit = Math.min(limit * 3, 50)
       const rows = Database.Client().$client.query(sql).all(ftsQuery, ...params, fetchLimit) as SearchRow[]
 
-      // FTS5 bm25() returns lower = better; convert to higher = better for caller
       const mapped = rows.map((r) => ({
         path: r.path,
         snippet: r.snippet,
@@ -126,17 +128,47 @@ export const layer: Layer.Layer<Service, never, Config.Service> = Layer.effect(
         type: r.type,
       }))
       if (mapped.length === 0) return []
-      // Rows are ORDER BY score (best first), so mapped[0] is the top hit.
-      // Always keep it; drop trailing rows below `floorRatio` of its score.
       const topScore = mapped[0].score
       const cutoff = floorRatio > 0 ? topScore * floorRatio : -Infinity
       return mapped.filter((r, i) => i === 0 || r.score >= cutoff).slice(0, limit)
+    })
+
+    const hybridSearchFn = Effect.fn("Memory.hybridSearch")(function* (input: {
+      query: string
+      scope?: string
+      scope_id?: string
+      type?: string
+      limit?: number
+    }) {
+      const cfg = yield* config.get()
+      if (cfg.checkpoint?.memory_reconcile_on_search ?? true) {
+        const cc = cfg.memory?.cc_index ? ccBase : undefined
+        yield* Effect.promise(() => reconcileMemory({ openfable: root, cc }, { entityStore }))
+      }
+      return hybridSearch(input, entityStore)
+    })
+
+    const extractFactsFn = Effect.fn("Memory.extractFacts")(function* (
+      messages: Array<{ role: string; content: string }>,
+      model: LanguageModelV3,
+    ) {
+      return yield* Effect.promise(() => extractFacts(messages, model))
+    })
+
+    const isDuplicateFn = Effect.fn("Memory.isDuplicate")(function* (body: string) {
+      const hash = contentHash(body)
+      const rows = Database.Client().$client.query("SELECT 1 FROM memory_fts WHERE body = ? LIMIT 1").all(body)
+      return rows.length > 0
     })
 
     return Service.of({
       root: rootEff,
       reconcile,
       search,
+      hybridSearch: hybridSearchFn,
+      entityStore: () => entityStore,
+      extractFacts: extractFactsFn,
+      isDuplicate: isDuplicateFn,
     })
   }),
 )

@@ -9,11 +9,22 @@ export function isMacNativeTerminal(input?: { platform?: NodeJS.Platform; termPr
   )
 }
 
+export function hasTrueColor(): boolean {
+  const ct = process.env.COLORTERM ?? ""
+  const term = process.env.TERM ?? ""
+  if (ct.includes("truecolor") || ct.includes("24bit")) return true
+  if (term.endsWith("-direct")) return true
+  if (term.endsWith("-truecolor")) return true
+  return false
+}
+
 export function isPlainTerminal(input?: { platform?: NodeJS.Platform; termProgram?: string; plain?: string }) {
   const plain = input?.plain ?? process.env.OPENFABLE_TUI_PLAIN
   if (plain === "false" || plain === "0") return false
   if (plain === "true" || plain === "1") return true
-  return isMacNativeTerminal(input)
+  if (isMacNativeTerminal(input)) return true
+  if (!hasTrueColor()) return true
+  return false
 }
 
 function parse(color: string): RGBA | null {
