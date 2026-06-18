@@ -130,7 +130,7 @@ const recordStart = (input: {
   /** The per-agent timeout for this run, persisted so a subsequent resume
    * (especially via TUI / API where the caller doesn't know the original
    * launch parameters) can read it back instead of silently defaulting to
-   * unbounded — which would let a wedged mimo TTFT stall the run forever. */
+   * unbounded — which would let a wedged openfable TTFT stall the run forever. */
   agentTimeoutMs?: number
 }) =>
   Effect.sync(() =>

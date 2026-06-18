@@ -1,6 +1,6 @@
 import { Global } from "@/global"
 import { Filesystem } from "@/util"
-import { Flock } from "@mimo-ai/shared/util/flock"
+import { Flock } from "@openfable/shared/util/flock"
 import { rename, rm } from "fs/promises"
 import { createSignal, type Setter } from "solid-js"
 import { createStore, unwrap } from "solid-js/store"

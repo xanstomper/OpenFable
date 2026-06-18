@@ -1,4 +1,4 @@
-import { Resource } from "@mimo-ai/console-resource"
+import { Resource } from "@openfable/console-resource"
 
 async function login() {
   const url = Resource.SALESFORCE_INSTANCE_URL.value.replace(/\/$/, "")

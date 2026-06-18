@@ -88,7 +88,7 @@ const AgentCreateCommand = cmd({
             scope = scopeResult
           }
           targetPath = path.join(
-            scope === "global" ? Global.Path.config : path.join(Instance.worktree, ".mimocode"),
+            scope === "global" ? Global.Path.config : path.join(Instance.worktree, ".openfable"),
             "agent",
           )
         }

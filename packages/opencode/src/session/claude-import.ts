@@ -1,8 +1,8 @@
 import path from "path"
 import { existsSync } from "fs"
 import { readFile } from "fs/promises"
-import { Slug } from "@mimo-ai/shared/util/slug"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Slug } from "@openfable/shared/util/slug"
+import { Glob } from "@openfable/shared/util/glob"
 import { Global } from "../global"
 import { Log, Filesystem } from "../util"
 import { Database, eq, and, inArray } from "../storage"
@@ -254,7 +254,7 @@ export async function run(opts?: { force?: boolean }) {
       }
 
       // Only reuse a prior import's session if that session still exists. If the
-      // user deleted it in mimocode, drop the stale mapping and import fresh —
+      // user deleted it in openfable, drop the stale mapping and import fresh —
       // otherwise the update would touch zero rows and the inserts below would
       // fail the message→session foreign key.
       let existingUpdated: number | undefined
@@ -296,7 +296,7 @@ export async function run(opts?: { force?: boolean }) {
 
         if (existing) {
           // Remove only the rows this importer previously created — never the
-          // user's mimocode-native continuation messages in the same session.
+          // user's openfable-native continuation messages in the same session.
           // Legacy rows (imported before message_ids tracking) fall back to a
           // full session wipe, matching the original Claude-only contents.
           if (existing.message_ids?.length) {
@@ -307,7 +307,7 @@ export async function run(opts?: { force?: boolean }) {
           } else {
             tx.delete(MessageTable).where(eq(MessageTable.session_id, sessionId)).run()
           }
-          // Preserve mimocode-owned metadata on re-sync: keep any user rename
+          // Preserve openfable-owned metadata on re-sync: keep any user rename
           // (don't reset title — the Claude title is the immutable first prompt),
           // and never move time_updated backward past native activity.
           tx.update(SessionTable)

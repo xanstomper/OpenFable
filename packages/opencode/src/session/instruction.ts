@@ -5,7 +5,7 @@ import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/unstable/
 import { Config } from "@/config"
 import { InstanceState } from "@/effect"
 import { Flag } from "@/flag/flag"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { withTransientReadRetry } from "@/util/effect-http-client"
 import { Global } from "../global"
 import { Log } from "../util"
@@ -16,7 +16,7 @@ const log = Log.create({ service: "instruction" })
 
 const FILES = [
   "AGENTS.md",
-  ...(Flag.MIMOCODE_DISABLE_CLAUDE_CODE_PROMPT ? [] : ["CLAUDE.md"]),
+  ...(Flag.OPENFABLE_DISABLE_CLAUDE_CODE_PROMPT ? [] : ["CLAUDE.md"]),
   "CONTEXT.md", // deprecated
 ]
 
@@ -26,11 +26,11 @@ const CLAUDE_FALLBACK_MAX_CHARS = 500
 
 function globalFiles() {
   const files = []
-  if (Flag.MIMOCODE_CONFIG_DIR) {
-    files.push(path.join(Flag.MIMOCODE_CONFIG_DIR, "AGENTS.md"))
+  if (Flag.OPENFABLE_CONFIG_DIR) {
+    files.push(path.join(Flag.OPENFABLE_CONFIG_DIR, "AGENTS.md"))
   }
   files.push(path.join(Global.Path.config, "AGENTS.md"))
-  if (!Flag.MIMOCODE_DISABLE_CLAUDE_CODE_PROMPT) {
+  if (!Flag.OPENFABLE_DISABLE_CLAUDE_CODE_PROMPT) {
     files.push(path.join(os.homedir(), ".claude", "CLAUDE.md"))
   }
   return files
@@ -86,19 +86,19 @@ export const layer: Layer.Layer<Service, never, AppFileSystem.Service | Config.S
 
       const relative = Effect.fnUntraced(function* (instruction: string) {
         const ctx = yield* InstanceState.context
-        if (!Flag.MIMOCODE_DISABLE_PROJECT_CONFIG) {
+        if (!Flag.OPENFABLE_DISABLE_PROJECT_CONFIG) {
           return yield* fs
             .globUp(instruction, ctx.directory, ctx.worktree)
             .pipe(Effect.catch(() => Effect.succeed([] as string[])))
         }
-        if (!Flag.MIMOCODE_CONFIG_DIR) {
+        if (!Flag.OPENFABLE_CONFIG_DIR) {
           log.warn(
-            `Skipping relative instruction "${instruction}" - no MIMOCODE_CONFIG_DIR set while project config is disabled`,
+            `Skipping relative instruction "${instruction}" - no OPENFABLE_CONFIG_DIR set while project config is disabled`,
           )
           return []
         }
         return yield* fs
-          .globUp(instruction, Flag.MIMOCODE_CONFIG_DIR, Flag.MIMOCODE_CONFIG_DIR)
+          .globUp(instruction, Flag.OPENFABLE_CONFIG_DIR, Flag.OPENFABLE_CONFIG_DIR)
           .pipe(Effect.catch(() => Effect.succeed([] as string[])))
       })
 
@@ -127,12 +127,12 @@ export const layer: Layer.Layer<Service, never, AppFileSystem.Service | Config.S
         const paths = new Set<string>()
 
         // The first project-level match wins so we don't stack AGENTS.md/CLAUDE.md from every ancestor.
-        if (!Flag.MIMOCODE_DISABLE_PROJECT_CONFIG) {
+        if (!Flag.OPENFABLE_DISABLE_PROJECT_CONFIG) {
           const agents = yield* fs.findUp("AGENTS.md", ctx.directory, ctx.worktree)
           if (agents.length > 0) {
             agents.forEach((item) => paths.add(path.resolve(item)))
             // A sparse AGENTS.md likely doesn't carry the full project guidance, so pull in CLAUDE.md too.
-            if (!Flag.MIMOCODE_DISABLE_CLAUDE_CODE_PROMPT) {
+            if (!Flag.OPENFABLE_DISABLE_CLAUDE_CODE_PROMPT) {
               const content = (yield* Effect.forEach(agents, read, { concurrency: 8 })).join("").trim()
               if (content.length < CLAUDE_FALLBACK_MAX_CHARS) {
                 const claude = yield* fs.findUp("CLAUDE.md", ctx.directory, ctx.worktree)

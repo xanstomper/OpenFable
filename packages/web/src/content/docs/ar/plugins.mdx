@@ -128,7 +128,7 @@ export const MyPlugin = async ({ project, client, $, directory, worktree }) => {
 بالنسبة لإضافات TypeScript، يمكنك استيراد الأنواع من حزمة الإضافة:
 
 ```ts title="my-plugin.ts" {1}
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const MyPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -279,7 +279,7 @@ export const InjectEnvPlugin = async () => {
 يمكن للإضافات أيضا إضافة أدوات مخصصة إلى opencode:
 
 ```ts title=".opencode/plugins/custom-tools.ts"
-import { type Plugin, tool } from "@mimo-ai/plugin"
+import { type Plugin, tool } from "@openfable/plugin"
 
 export const CustomToolsPlugin: Plugin = async (ctx) => {
   return {
@@ -335,7 +335,7 @@ export const MyPlugin = async ({ client }) => {
 خصّص السياق الذي يتم تضمينه عند ضغط جلسة:
 
 ```ts title=".opencode/plugins/compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CompactionPlugin: Plugin = async (ctx) => {
   return {
@@ -359,7 +359,7 @@ Include any state that should persist across compaction:
 يمكنك أيضا استبدال موجّه الضغط بالكامل عبر ضبط `output.prompt`:
 
 ```ts title=".opencode/plugins/custom-compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CustomCompactionPlugin: Plugin = async (ctx) => {
   return {

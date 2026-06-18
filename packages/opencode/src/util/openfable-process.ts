@@ -1,12 +1,12 @@
-export const MIMOCODE_RUN_ID = "MIMOCODE_RUN_ID"
-export const MIMOCODE_PROCESS_ROLE = "MIMOCODE_PROCESS_ROLE"
+export const OPENFABLE_RUN_ID = "OPENFABLE_RUN_ID"
+export const OPENFABLE_PROCESS_ROLE = "OPENFABLE_PROCESS_ROLE"
 
 export function ensureRunID() {
-  return (process.env[MIMOCODE_RUN_ID] ??= crypto.randomUUID())
+  return (process.env[OPENFABLE_RUN_ID] ??= crypto.randomUUID())
 }
 
 export function ensureProcessRole(fallback: "main" | "worker") {
-  return (process.env[MIMOCODE_PROCESS_ROLE] ??= fallback)
+  return (process.env[OPENFABLE_PROCESS_ROLE] ??= fallback)
 }
 
 export function ensureProcessMetadata(fallback: "main" | "worker") {

@@ -9,7 +9,7 @@ import { Instance } from "../project/instance"
 import { lazy } from "@/util/lazy"
 import { Language, type Node } from "web-tree-sitter"
 
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { fileURLToPath } from "url"
 import { Flag } from "@/flag/flag"
 import { Shell } from "@/shell/shell"
@@ -24,7 +24,7 @@ import { ChildProcessSpawner } from "effect/unstable/process/ChildProcessSpawner
 import * as BashInteractive from "./bash-interactive"
 
 const MAX_METADATA_LENGTH = 30_000
-const DEFAULT_TIMEOUT = Flag.MIMOCODE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS || 2 * 60 * 1000
+const DEFAULT_TIMEOUT = Flag.OPENFABLE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS || 2 * 60 * 1000
 const PS = new Set(["powershell", "pwsh"])
 const CWD = new Set(["cd", "push-location", "set-location"])
 const FILES = new Set([

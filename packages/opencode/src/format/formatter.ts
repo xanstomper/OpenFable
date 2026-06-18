@@ -90,7 +90,7 @@ export const oxfmt: Info = {
   },
   extensions: [".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".mts", ".cts"],
   async enabled(context) {
-    if (!Flag.MIMOCODE_EXPERIMENTAL_OXFMT) return false
+    if (!Flag.OPENFABLE_EXPERIMENTAL_OXFMT) return false
     const items = await Filesystem.findUp("package.json", context.directory, context.worktree)
     for (const item of items) {
       const json = await Filesystem.readJson<{

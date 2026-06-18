@@ -1,4 +1,4 @@
-import { sampledChecksum } from "@mimo-ai/shared/util/encode"
+import { sampledChecksum } from "@openfable/shared/util/encode"
 import {
   DEFAULT_VIRTUAL_FILE_METRICS,
   type DiffLineAnnotation,

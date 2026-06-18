@@ -15,7 +15,7 @@ export async function bootstrap<T>(directory: string, cb: () => Promise<T>) {
         return await cb()
       } finally {
         // Give detached background checkpoint writers a chance to finish
-        // before teardown. Headless `mimo run` would otherwise exit right
+        // before teardown. Headless `openfable run` would otherwise exit right
         // after the main response, killing any forked writer mid-LLM-call
         // and leaving zero checkpoint files on disk.
         //

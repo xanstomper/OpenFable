@@ -11,7 +11,7 @@ export function isInlineScript(nameOrScript: string): boolean {
 }
 
 // Walk from `start` up to `stop` (the worktree root), checking
-// .mimocode/workflows/<name>.js then .claude/workflows/<name>.js at each level.
+// .openfable/workflows/<name>.js then .claude/workflows/<name>.js at each level.
 // First hit wins, nearest-first (project dir overrides a higher-level one) —
 // mirrors how skills/commands resolve named user files. Returns the script body
 // or null if no file matches (the caller turns null into a thrown, fail-loud
@@ -21,7 +21,7 @@ const SAFE_NAME = /^[A-Za-z0-9._-]+$/
 
 export async function resolveWorkflowScript(name: string, start: string, stop: string): Promise<string | null> {
   if (!SAFE_NAME.test(name)) throw new Error(`invalid workflow name: ${JSON.stringify(name)}`)
-  const subdirs = [".mimocode/workflows", ".claude/workflows"]
+  const subdirs = [".openfable/workflows", ".claude/workflows"]
   for (const found of await collectUp(name, subdirs, start, stop)) {
     return Filesystem.readText(found)
   }

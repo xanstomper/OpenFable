@@ -5,8 +5,8 @@ import z from "zod"
 import { Bus } from "@/bus"
 import { zod, ZodOverride } from "@/util/effect-zod"
 import { Log } from "../util"
-import { NamedError } from "@mimo-ai/shared/util/error"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { NamedError } from "@openfable/shared/util/error"
+import { Glob } from "@openfable/shared/util/glob"
 import { configEntryNameFromPath } from "./entry-name"
 import { InvalidError } from "./error"
 import * as ConfigMarkdown from "./markdown"
@@ -143,7 +143,7 @@ export async function load(dir: string) {
     })
     if (!md) continue
 
-    const patterns = ["/.mimocode/agent/", "/.mimocode/agents/", "/agent/", "/agents/"]
+    const patterns = ["/.openfable/agent/", "/.openfable/agents/", "/agent/", "/agents/"]
     const name = configEntryNameFromPath(item, patterns)
 
     const config = {

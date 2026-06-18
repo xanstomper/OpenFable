@@ -1,4 +1,4 @@
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Glob } from "@openfable/shared/util/glob"
 
 const FOLDERS = new Set([
   "node_modules",

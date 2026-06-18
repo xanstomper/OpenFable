@@ -4,17 +4,17 @@ import path from "path"
 import { pathToFileURL } from "url"
 import { tmpdir } from "../fixture/fixture"
 
-const disableDefault = process.env.MIMOCODE_DISABLE_DEFAULT_PLUGINS
-process.env.MIMOCODE_DISABLE_DEFAULT_PLUGINS = "1"
+const disableDefault = process.env.OPENFABLE_DISABLE_DEFAULT_PLUGINS
+process.env.OPENFABLE_DISABLE_DEFAULT_PLUGINS = "1"
 
 const { Flag } = await import("../../src/flag/flag")
 const { Plugin } = await import("../../src/plugin/index")
 const { Workspace } = await import("../../src/control-plane/workspace")
 const { Instance } = await import("../../src/project/instance")
 
-const experimental = Flag.MIMOCODE_EXPERIMENTAL_WORKSPACES
+const experimental = Flag.OPENFABLE_EXPERIMENTAL_WORKSPACES
 
-Flag.MIMOCODE_EXPERIMENTAL_WORKSPACES = true
+Flag.OPENFABLE_EXPERIMENTAL_WORKSPACES = true
 
 afterEach(async () => {
   await Instance.disposeAll()
@@ -22,12 +22,12 @@ afterEach(async () => {
 
 afterAll(() => {
   if (disableDefault === undefined) {
-    delete process.env.MIMOCODE_DISABLE_DEFAULT_PLUGINS
+    delete process.env.OPENFABLE_DISABLE_DEFAULT_PLUGINS
   } else {
-    process.env.MIMOCODE_DISABLE_DEFAULT_PLUGINS = disableDefault
+    process.env.OPENFABLE_DISABLE_DEFAULT_PLUGINS = disableDefault
   }
 
-  Flag.MIMOCODE_EXPERIMENTAL_WORKSPACES = experimental
+  Flag.OPENFABLE_EXPERIMENTAL_WORKSPACES = experimental
 })
 
 describe("plugin.workspace", () => {
@@ -63,7 +63,7 @@ describe("plugin.workspace", () => {
         )
 
         await Bun.write(
-          path.join(dir, "mimocode.json"),
+          path.join(dir, "openfable.json"),
           JSON.stringify(
             {
               $schema: "https://opencode.ai/config.json",

@@ -6,8 +6,8 @@ import { Installation } from "../installation"
 import { Flag } from "../flag/flag"
 import { lazy } from "@/util/lazy"
 import { Filesystem } from "../util"
-import { Flock } from "@mimo-ai/shared/util/flock"
-import { Hash } from "@mimo-ai/shared/util/hash"
+import { Flock } from "@openfable/shared/util/flock"
+import { Hash } from "@openfable/shared/util/hash"
 
 // Try to import bundled snapshot (generated at build time)
 // Falls back to undefined in dev mode when snapshot doesn't exist
@@ -108,7 +108,7 @@ export const Provider = z.object({
 export type Provider = z.infer<typeof Provider>
 
 function url() {
-  return Flag.MIMOCODE_MODELS_URL || "https://models.dev"
+  return Flag.OPENFABLE_MODELS_URL || "https://models.dev"
 }
 
 function fresh() {
@@ -128,16 +128,16 @@ const fetchApi = async () => {
 }
 
 export const Data = lazy(async () => {
-  const result = await Filesystem.readJson(Flag.MIMOCODE_MODELS_PATH ?? filepath).catch(() => {})
+  const result = await Filesystem.readJson(Flag.OPENFABLE_MODELS_PATH ?? filepath).catch(() => {})
   if (result) return result
   // @ts-ignore
   const snapshot = await import("./models-snapshot.js")
     .then((m) => m.snapshot as Record<string, unknown>)
     .catch(() => undefined)
   if (snapshot) return snapshot
-  if (Flag.MIMOCODE_DISABLE_MODELS_FETCH) return {}
+  if (Flag.OPENFABLE_DISABLE_MODELS_FETCH) return {}
   return Flock.withLock(`models-dev:${filepath}`, async () => {
-    const result = await Filesystem.readJson(Flag.MIMOCODE_MODELS_PATH ?? filepath).catch(() => {})
+    const result = await Filesystem.readJson(Flag.OPENFABLE_MODELS_PATH ?? filepath).catch(() => {})
     if (result) return result
     const result2 = await fetchApi()
     if (result2.ok) {
@@ -169,7 +169,7 @@ export async function refresh(force = false) {
   })
 }
 
-if (!Flag.MIMOCODE_DISABLE_MODELS_FETCH && !process.argv.includes("--get-yargs-completions")) {
+if (!Flag.OPENFABLE_DISABLE_MODELS_FETCH && !process.argv.includes("--get-yargs-completions")) {
   void refresh()
   setInterval(
     async () => {

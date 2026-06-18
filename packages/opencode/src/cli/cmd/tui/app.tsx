@@ -18,7 +18,7 @@ import { win32DisableProcessedInput, win32InstallCtrlCGuard } from "./win32"
 import { Flag } from "@/flag/flag"
 import semver from "semver"
 import { DialogProvider, useDialog } from "@tui/ui/dialog"
-import { DialogMimoLogin } from "@tui/component/dialog-mimo-login"
+import { DialogOpenFableLogin } from "@tui/component/dialog-openfable-login"
 import { ErrorComponent } from "@tui/component/error-component"
 import { PluginRouteMissing } from "@tui/component/plugin-route-missing"
 import { ProjectProvider } from "@tui/context/project"
@@ -73,7 +73,7 @@ import type { EventSource } from "./context/sdk"
 import { DialogVariant } from "./component/dialog-variant"
 
 function rendererConfig(_config: TuiConfig.Info, plainTerminal: boolean): CliRendererConfig {
-  const mouseEnabled = !plainTerminal && !Flag.MIMOCODE_DISABLE_MOUSE && (_config.mouse ?? true)
+  const mouseEnabled = !plainTerminal && !Flag.OPENFABLE_DISABLE_MOUSE && (_config.mouse ?? true)
 
   return {
     externalOutputMode: "passthrough",
@@ -279,7 +279,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
     })
 
   useKeyboard((evt) => {
-    if (!Flag.MIMOCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT) return
+    if (!Flag.OPENFABLE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT) return
     const sel = renderer.getSelection()
     if (!sel) return
 
@@ -327,7 +327,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
 
   // Update terminal window title based on current route and session
   createEffect(() => {
-    if (!terminalTitleEnabled() || Flag.MIMOCODE_DISABLE_TERMINAL_TITLE) return
+    if (!terminalTitleEnabled() || Flag.OPENFABLE_DISABLE_TERMINAL_TITLE) return
 
     if (route.data.type === "home") {
       renderer.setTerminalTitle("MiMoCode")
@@ -444,7 +444,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
       title: t("tui.command.workflow.list.title"),
       value: "workflow.list",
       category: "session",
-      enabled: Flag.MIMOCODE_EXPERIMENTAL_WORKFLOW_TOOL,
+      enabled: Flag.OPENFABLE_EXPERIMENTAL_WORKFLOW_TOOL,
       slash: {
         name: "workflows",
       },
@@ -613,7 +613,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         name: "login",
       },
       onSelect: () => {
-        dialog.replace(() => <DialogMimoLogin />)
+        dialog.replace(() => <DialogOpenFableLogin />)
       },
       category: "provider",
     },
@@ -625,7 +625,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         name: "connect",
       },
       onSelect: () => {
-        dialog.replace(() => <DialogMimoLogin />)
+        dialog.replace(() => <DialogOpenFableLogin />)
       },
       category: "provider",
     },
@@ -772,7 +772,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         aliases: ["docs"],
       },
       onSelect: () => {
-        open("https://mimo.xiaomi.com/coder/docs").catch(() => {})
+        open("https://github.com/xanstomper/OpenFable-Code/coder/docs").catch(() => {})
         dialog.clear()
       },
       category: "system",
@@ -1099,7 +1099,7 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         // When copy-on-mousedown is enabled, prefer copying an active selection;
         // fall through to paste when there is nothing selected.
         if (
-          Flag.MIMOCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT &&
+          Flag.OPENFABLE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT &&
           Selection.copy(renderer, toast, t("tui.toast.copied_to_clipboard"))
         ) {
           evt.preventDefault()
@@ -1112,12 +1112,12 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         evt.stopPropagation()
       }}
       onMouseUp={
-        Flag.MIMOCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT
+        Flag.OPENFABLE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT
           ? undefined
           : () => Selection.copy(renderer, toast, t("tui.toast.copied_to_clipboard"))
       }
     >
-      <Show when={Flag.MIMOCODE_SHOW_TTFD}>
+      <Show when={Flag.OPENFABLE_SHOW_TTFD}>
         <TimeToFirstDraw />
       </Show>
       <Show when={ready()}>

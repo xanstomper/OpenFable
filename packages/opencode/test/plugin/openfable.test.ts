@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import crypto from "crypto"
-import { MimoAuthPlugin } from "../../src/plugin/mimo"
-import type { PluginInput } from "@mimo-ai/plugin"
+import { MimoAuthPlugin } from "../../src/plugin/openfable"
+import type { PluginInput } from "@openfable/plugin"
 
 function encrypt(recipientPkBase64: string, payload: string): string {
   const recipientPublicKey = crypto.createPublicKey({
@@ -41,12 +41,12 @@ const fakeInput = {
 
 describe("MimoAuthPlugin", () => {
   describe("config hook", () => {
-    test("registers mimo provider with correct name", async () => {
+    test("registers OpenFable provider with correct name", async () => {
       const hooks = await MimoAuthPlugin(fakeInput)
       const cfg: any = {}
       await hooks.config!(cfg)
-      expect(cfg.provider.xiaomi.name).toBe("MiMo")
-      expect(cfg.provider.xiaomi.api).toBeTruthy()
+      expect(cfg.provider.openfable.name).toBe("OpenFable")
+      expect(cfg.provider.openfable.api).toBeTruthy()
     })
 
     test("registers all expected models", async () => {
@@ -55,21 +55,21 @@ describe("MimoAuthPlugin", () => {
       await hooks.config!(cfg)
       // The plugin only sets name and api; models are not registered by the plugin
       // (they come from the provider registry). Verify the provider is created.
-      expect(cfg.provider.xiaomi).toBeDefined()
-      expect(cfg.provider.xiaomi.name).toBe("MiMo")
+      expect(cfg.provider.openfable).toBeDefined()
+      expect(cfg.provider.openfable.name).toBe("OpenFable")
     })
 
     test("does not overwrite existing config", async () => {
       const hooks = await MimoAuthPlugin(fakeInput)
       const cfg: any = { provider: { xiaomi: { name: "Custom", api: "https://custom.api" } } }
       await hooks.config!(cfg)
-      expect(cfg.provider.xiaomi.name).toBe("Custom")
-      expect(cfg.provider.xiaomi.api).toBe("https://custom.api")
+      expect(cfg.provider.openfable.name).toBe("Custom")
+      expect(cfg.provider.openfable.api).toBe("https://custom.api")
     })
   })
 
   describe("auth hook structure", () => {
-    test("registers auth for mimo provider", async () => {
+    test("registers auth for OpenFable provider", async () => {
       const hooks = await MimoAuthPlugin(fakeInput)
       expect(hooks.auth).toBeDefined()
       expect(hooks.auth!.provider).toBe("xiaomi")
@@ -93,8 +93,8 @@ describe("MimoAuthPlugin", () => {
       expect(url.pathname).toContain("/authorize")
       expect(url.searchParams.get("pk")).toBeTruthy()
       expect(url.searchParams.get("redirect_uri")).toBeTruthy()
-      expect(url.searchParams.get("kn")).toBe("mimocode")
-      expect(url.searchParams.get("key_name")).toMatch(/^mimo-code-cli-key-/)
+      expect(url.searchParams.get("kn")).toBe("openfable")
+      expect(url.searchParams.get("key_name")).toMatch(/^openfable-code-cli-key-/)
 
       await result.callback("invalid").catch(() => {})
     })
@@ -219,11 +219,11 @@ describe("MimoAuthPlugin", () => {
   })
 
   describe("chat.headers hook", () => {
-    test("adds X-Mimo-Source header for mimo provider", async () => {
+    test("adds X-OpenFable-Source header for OpenFable provider", async () => {
       const hooks = await MimoAuthPlugin(fakeInput)
       const output = { headers: {} as Record<string, string> }
       await hooks["chat.headers"]!({ model: { providerID: "xiaomi" } } as any, output as any)
-      expect(output.headers["X-Mimo-Source"]).toBe("mimocode-cli")
+      expect(output.headers["X-OpenFable-Source"]).toBe("openfable-cli")
     })
 
     test("does not add header for other providers", async () => {
@@ -232,7 +232,7 @@ describe("MimoAuthPlugin", () => {
       for (const providerID of providers) {
         const output = { headers: {} as Record<string, string> }
         await hooks["chat.headers"]!({ model: { providerID } } as any, output as any)
-        expect(output.headers["X-Mimo-Source"]).toBeUndefined()
+        expect(output.headers["X-OpenFable-Source"]).toBeUndefined()
       }
     })
   })

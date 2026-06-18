@@ -318,7 +318,7 @@ export class Import extends HeyApiClient {
   /**
    * Import external sessions
    *
-   * Import sessions from external AI tools (Claude Code, Codex, opencode) into mimocode. Idempotent; pass force to re-sync. Per-source failures are not thrown as HTTP errors — they are collected into the corresponding stats.errors[] while other sources continue.
+   * Import sessions from external AI tools (Claude Code, Codex, opencode) into openfable. Idempotent; pass force to re-sync. Per-source failures are not thrown as HTTP errors — they are collected into the corresponding stats.errors[] while other sources continue.
    */
   public run<ThrowOnError extends boolean = false>(
     parameters?: {

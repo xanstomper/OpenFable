@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "version": "0.1.1",
-  "name": "@mimo-ai/shared",
+  "name": "@openfable/shared",
   "type": "module",
   "license": "MIT",
   "publishConfig": {

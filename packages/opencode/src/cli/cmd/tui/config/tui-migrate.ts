@@ -29,13 +29,13 @@ interface MigrateInput {
 }
 
 /**
- * Migrates tui-specific keys (theme, keybinds, tui) from mimocode.json files
+ * Migrates tui-specific keys (theme, keybinds, tui) from openfable.json files
  * into dedicated tui.json files. Migration is performed per-directory and
  * skips only locations where a tui.json already exists.
  */
 export async function migrateTuiConfig(input: MigrateInput) {
-  const mimocode = await mimocodeFiles(input)
-  for (const file of mimocode) {
+  const openfable = await mimocodeFiles(input)
+  for (const file of openfable) {
     const source = await Filesystem.readText(file).catch((error) => {
       log.warn("failed to read config for tui migration", { path: file, error })
       return undefined
@@ -133,13 +133,13 @@ async function backupAndStripLegacy(file: string, source: string) {
 
 async function mimocodeFiles(input: { directories: string[]; cwd: string }) {
   const files = [
-    ...ConfigPaths.fileInDirectory(Global.Path.config, "mimocode"),
-    ...(await Filesystem.findUp(["mimocode.json", "mimocode.jsonc"], input.cwd, undefined, { rootFirst: true })),
+    ...ConfigPaths.fileInDirectory(Global.Path.config, "openfable"),
+    ...(await Filesystem.findUp(["openfable.json", "openfable.jsonc"], input.cwd, undefined, { rootFirst: true })),
   ]
   for (const dir of unique(input.directories)) {
-    files.push(...ConfigPaths.fileInDirectory(dir, "mimocode"))
+    files.push(...ConfigPaths.fileInDirectory(dir, "openfable"))
   }
-  if (Flag.MIMOCODE_CONFIG) files.push(Flag.MIMOCODE_CONFIG)
+  if (Flag.OPENFABLE_CONFIG) files.push(Flag.OPENFABLE_CONFIG)
 
   const existing = await Promise.all(
     unique(files).map(async (file) => {

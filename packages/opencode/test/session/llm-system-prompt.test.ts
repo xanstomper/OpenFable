@@ -146,7 +146,7 @@ describe("session.llm system prompt — memory-instructions guard", () => {
 
     await using tmp = await tmpdir({
       init: async (dir) => {
-        await Bun.write(path.join(dir, "mimocode.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
+        await Bun.write(path.join(dir, "openfable.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
       },
     })
 
@@ -203,7 +203,7 @@ describe("session.llm system prompt — memory-instructions guard", () => {
 
     await using tmp = await tmpdir({
       init: async (dir) => {
-        await Bun.write(path.join(dir, "mimocode.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
+        await Bun.write(path.join(dir, "openfable.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
       },
     })
 
@@ -287,7 +287,7 @@ describe("session.llm system prompt — memory-instructions guard", () => {
 
     await using tmp = await tmpdir({
       init: async (dir) => {
-        await Bun.write(path.join(dir, "mimocode.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
+        await Bun.write(path.join(dir, "openfable.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
       },
     })
 
@@ -345,7 +345,7 @@ describe("session.llm system prompt — memory-instructions guard", () => {
 
     await using tmp = await tmpdir({
       init: async (dir) => {
-        await Bun.write(path.join(dir, "mimocode.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
+        await Bun.write(path.join(dir, "openfable.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
       },
     })
 
@@ -425,7 +425,7 @@ describe("session.llm system prompt — memory-instructions guard", () => {
 
     await using tmp = await tmpdir({
       init: async (dir) => {
-        await Bun.write(path.join(dir, "mimocode.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
+        await Bun.write(path.join(dir, "openfable.json"), tmpConfig(providerID, `${server.url.origin}/v1`))
       },
     })
 

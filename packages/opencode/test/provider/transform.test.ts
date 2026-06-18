@@ -147,12 +147,12 @@ describe("ProviderTransform.maxOutputTokens", () => {
     release_date: "2026-01-01",
   }
 
-  test("uses 128K for mimo provider models", () => {
+  test("uses 128K for OpenFable provider models", () => {
     expect(
       ProviderTransform.maxOutputTokens({
         ...baseModel,
-        id: ModelID.make("mimo-auto"),
-        providerID: ProviderID.make("mimo"),
+        id: ModelID.make("openfable-auto"),
+        providerID: ProviderID.make("openfable"),
       }),
     ).toBe(128_000)
   })
@@ -161,13 +161,13 @@ describe("ProviderTransform.maxOutputTokens", () => {
     expect(
       ProviderTransform.maxOutputTokens({
         ...baseModel,
-        id: ModelID.make("mimo-coder"),
+        id: ModelID.make("openfable-coder"),
         providerID: ProviderID.make("xiaomi"),
       }),
     ).toBe(128_000)
   })
 
-  test("keeps the default cap for non-mimo models", () => {
+  test("keeps the default cap for non-OpenFable models", () => {
     expect(ProviderTransform.maxOutputTokens({ ...baseModel, limit: { context: 1_000_000, output: 64_000 } })).toBe(
       32_000,
     )
@@ -1635,7 +1635,7 @@ describe("ProviderTransform.message - strip openai metadata when store=false", (
       providerID: "opencode",
       api: {
         id: "opencode-test",
-        url: "https://api.mimocode.ai",
+        url: "https://api.openfable.ai",
         npm: "@ai-sdk/openai-compatible",
       },
     }
@@ -1669,7 +1669,7 @@ describe("ProviderTransform.message - strip openai metadata when store=false", (
       providerID: "opencode",
       api: {
         id: "opencode-test",
-        url: "https://api.mimocode.ai",
+        url: "https://api.openfable.ai",
         npm: "@ai-sdk/openai-compatible",
       },
     }

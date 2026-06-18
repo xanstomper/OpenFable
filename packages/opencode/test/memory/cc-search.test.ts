@@ -41,16 +41,16 @@ async function setupCcFile(ccBase: string, slug: string, name: string, body: str
 const noLazyReconcile = { checkpoint: { memory_reconcile_on_search: false } }
 
 describe("memory.search with cc scope", () => {
-  it.live("ranks CC and mimo hits in one result list", () =>
+  it.live("ranks CC and OpenFable hits in one result list", () =>
     provideTmpdirInstance(
       () =>
         Effect.gen(function* () {
           const memory = yield* Memory.Service
-          const mimoRoot = yield* memory.root()
-          yield* Effect.promise(() => fs.rm(mimoRoot, { recursive: true, force: true }))
-          yield* Effect.promise(() => fs.mkdir(path.join(mimoRoot, "global"), { recursive: true }))
+          const openfableRoot = yield* memory.root()
+          yield* Effect.promise(() => fs.rm(openfableRoot, { recursive: true, force: true }))
+          yield* Effect.promise(() => fs.mkdir(path.join(openfableRoot, "global"), { recursive: true }))
           yield* Effect.promise(() =>
-            fs.writeFile(path.join(mimoRoot, "global", "m.md"), "distinctivetoken from mimo"),
+            fs.writeFile(path.join(openfableRoot, "global", "m.md"), "distinctivetoken from openfable"),
           )
 
           const ccBase = yield* Effect.promise(() => tmpCcBase())
@@ -67,7 +67,7 @@ distinctivetoken from CC`,
             ),
           )
 
-          yield* Effect.promise(() => reconcileMemory({ mimo: mimoRoot, cc: ccBase }))
+          yield* Effect.promise(() => reconcileMemory({ openfable: openfableRoot, cc: ccBase }))
 
           const results = yield* memory.search({ query: "distinctivetoken" })
           expect(results.length).toBe(2)
@@ -83,10 +83,10 @@ distinctivetoken from CC`,
       () =>
         Effect.gen(function* () {
           const memory = yield* Memory.Service
-          const mimoRoot = yield* memory.root()
-          yield* Effect.promise(() => fs.rm(mimoRoot, { recursive: true, force: true }))
-          yield* Effect.promise(() => fs.mkdir(path.join(mimoRoot, "global"), { recursive: true }))
-          yield* Effect.promise(() => fs.writeFile(path.join(mimoRoot, "global", "m.md"), "tokenz"))
+          const openfableRoot = yield* memory.root()
+          yield* Effect.promise(() => fs.rm(openfableRoot, { recursive: true, force: true }))
+          yield* Effect.promise(() => fs.mkdir(path.join(openfableRoot, "global"), { recursive: true }))
+          yield* Effect.promise(() => fs.writeFile(path.join(openfableRoot, "global", "m.md"), "tokenz"))
 
           const ccBase = yield* Effect.promise(() => tmpCcBase())
           yield* Effect.promise(() =>
@@ -97,7 +97,7 @@ metadata:
 tokenz`),
           )
 
-          yield* Effect.promise(() => reconcileMemory({ mimo: mimoRoot, cc: ccBase }))
+          yield* Effect.promise(() => reconcileMemory({ openfable: openfableRoot, cc: ccBase }))
 
           const ccOnly = yield* memory.search({ query: "tokenz", scope: "cc" })
           expect(ccOnly.length).toBe(1)
@@ -116,8 +116,8 @@ tokenz`),
       () =>
         Effect.gen(function* () {
           const memory = yield* Memory.Service
-          const mimoRoot = yield* memory.root()
-          yield* Effect.promise(() => fs.rm(mimoRoot, { recursive: true, force: true }))
+          const openfableRoot = yield* memory.root()
+          yield* Effect.promise(() => fs.rm(openfableRoot, { recursive: true, force: true }))
 
           const ccBase = yield* Effect.promise(() => tmpCcBase())
           yield* Effect.promise(() =>
@@ -135,7 +135,7 @@ metadata:
 sharedterm b`),
           )
 
-          yield* Effect.promise(() => reconcileMemory({ mimo: mimoRoot, cc: ccBase }))
+          yield* Effect.promise(() => reconcileMemory({ openfable: openfableRoot, cc: ccBase }))
 
           const fb = yield* memory.search({ query: "sharedterm", type: "feedback" })
           expect(fb.length).toBe(1)

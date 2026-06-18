@@ -28,8 +28,8 @@ export const { use: useRoute, provider: RouteProvider } = createSimpleContext({
   init: (props: { initialRoute?: Route }) => {
     const [store, setStore] = createStore<Route>(
       props.initialRoute ??
-        (process.env["MIMOCODE_ROUTE"]
-          ? JSON.parse(process.env["MIMOCODE_ROUTE"])
+        (process.env["OPENFABLE_ROUTE"]
+          ? JSON.parse(process.env["OPENFABLE_ROUTE"])
           : {
               type: "home",
             }),

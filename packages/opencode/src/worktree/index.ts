@@ -1,5 +1,5 @@
 import z from "zod"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import { Global } from "../global"
 import { Instance } from "../project/instance"
 import { InstanceBootstrap } from "../project/bootstrap"
@@ -8,7 +8,7 @@ import { Database, eq } from "../storage"
 import { ProjectTable } from "../project/project.sql"
 import type { ProjectID } from "../project/schema"
 import { Log } from "../util"
-import { Slug } from "@mimo-ai/shared/util/slug"
+import { Slug } from "@openfable/shared/util/slug"
 import { errorMessage } from "../util/error"
 import { BusEvent } from "@/bus/bus-event"
 import { GlobalBus } from "@/bus/global"
@@ -16,7 +16,7 @@ import { Git } from "@/git"
 import { Effect, Layer, Path, Scope, Context, Stream } from "effect"
 import { ChildProcess, ChildProcessSpawner } from "effect/unstable/process"
 import { NodePath } from "@effect/platform-node"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { BootstrapRuntime } from "@/effect/bootstrap-runtime"
 import * as CrossSpawnSpawner from "@/effect/cross-spawn-spawner"
 import { InstanceState } from "@/effect"
@@ -203,7 +203,7 @@ export const layer: Layer.Layer<
       const ctx = yield* InstanceState.context
       for (const attempt of Array.from({ length: MAX_NAME_ATTEMPTS }, (_, i) => i)) {
         const name = base ? (attempt === 0 ? base : `${base}-${Slug.create()}`) : Slug.create()
-        const branch = `mimocode/${name}`
+        const branch = `openfable/${name}`
         const directory = pathSvc.join(root, name)
 
         if (yield* fs.exists(directory).pipe(Effect.orDie)) continue

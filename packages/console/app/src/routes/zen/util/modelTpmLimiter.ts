@@ -1,5 +1,5 @@
-import { and, Database, eq, inArray, sql } from "@mimo-ai/console-core/drizzle/index.js"
-import { ModelTpmRateLimitTable } from "@mimo-ai/console-core/schema/ip.sql.js"
+import { and, Database, eq, inArray, sql } from "@openfable/console-core/drizzle/index.js"
+import { ModelTpmRateLimitTable } from "@openfable/console-core/schema/ip.sql.js"
 import { UsageInfo } from "./provider/provider"
 
 export function createModelTpmLimiter(providers: { id: string; model: string; tpmLimit?: number }[]) {

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test"
 import * as fs from "fs/promises"
 import * as path from "path"
-import type { ActorMatcher, ActorPreStopInput, ActorStopOutput, PluginInput } from "@mimo-ai/plugin"
+import type { ActorMatcher, ActorPreStopInput, ActorStopOutput, PluginInput } from "@openfable/plugin"
 import { CheckpointSplitoverPlugin } from "../../src/plugin/checkpoint-splitover"
 import { matchesActor } from "../../src/plugin/matcher"
 import * as CheckpointContext from "../../src/session/checkpoint-context"

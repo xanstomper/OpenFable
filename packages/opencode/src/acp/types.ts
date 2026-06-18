@@ -1,5 +1,5 @@
 import type { McpServer } from "@agentclientprotocol/sdk"
-import type { OpencodeClient } from "@mimo-ai/sdk/v2"
+import type { OpencodeClient } from "@openfable/sdk/v2"
 import type { ProviderID, ModelID } from "../provider/schema"
 
 export interface ACPSessionState {

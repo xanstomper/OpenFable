@@ -146,7 +146,7 @@ describe("Permission.disabled for task tool", () => {
 
 // Integration tests that load permissions from real config files
 describe("permission.task with real config files", () => {
-  test("loads task permissions from mimocode.json config", async () => {
+  test("loads task permissions from openfable.json config", async () => {
     await using tmp = await tmpdir({
       git: true,
       config: {

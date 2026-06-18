@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "@mimo-ai/script",
+  "name": "@openfable/script",
   "license": "MIT",
   "publishConfig": {
     "access": "public"

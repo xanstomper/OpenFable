@@ -10,7 +10,7 @@ import { TuiInfo } from "./tui-schema"
 import { Flag } from "@/flag/flag"
 import { isRecord } from "@/util/record"
 import { Global } from "@/global"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { CurrentWorkingDirectory } from "./cwd"
 import { ConfigPlugin } from "@/config/plugin"
 import { ConfigKeybinds } from "@/config/keybinds"
@@ -90,12 +90,12 @@ async function mergeFile(acc: Acc, file: string, ctx: { directory: string }) {
 }
 
 const loadState = Effect.fn("TuiConfig.loadState")(function* (ctx: { directory: string }) {
-  // Every config dir we may read from: global config dir, any `.mimocode`
-  // folders between cwd and home, and MIMOCODE_CONFIG_DIR.
+  // Every config dir we may read from: global config dir, any `.openfable`
+  // folders between cwd and home, and OPENFABLE_CONFIG_DIR.
   const directories = yield* ConfigPaths.directories(ctx.directory)
   yield* Effect.promise(() => migrateTuiConfig({ directories, cwd: ctx.directory }))
 
-  const projectFiles = Flag.MIMOCODE_DISABLE_PROJECT_CONFIG ? [] : yield* ConfigPaths.files("tui", ctx.directory)
+  const projectFiles = Flag.OPENFABLE_DISABLE_PROJECT_CONFIG ? [] : yield* ConfigPaths.files("tui", ctx.directory)
 
   const acc: Acc = {
     result: {},
@@ -106,9 +106,9 @@ const loadState = Effect.fn("TuiConfig.loadState")(function* (ctx: { directory: 
     yield* Effect.promise(() => mergeFile(acc, file, ctx)).pipe(Effect.orDie)
   }
 
-  // 2. Explicit MIMOCODE_TUI_CONFIG override, if set.
-  if (Flag.MIMOCODE_TUI_CONFIG) {
-    const configFile = Flag.MIMOCODE_TUI_CONFIG
+  // 2. Explicit OPENFABLE_TUI_CONFIG override, if set.
+  if (Flag.OPENFABLE_TUI_CONFIG) {
+    const configFile = Flag.OPENFABLE_TUI_CONFIG
     yield* Effect.promise(() => mergeFile(acc, configFile, ctx)).pipe(Effect.orDie)
     log.debug("loaded custom tui config", { path: configFile })
   }
@@ -118,13 +118,13 @@ const loadState = Effect.fn("TuiConfig.loadState")(function* (ctx: { directory: 
     yield* Effect.promise(() => mergeFile(acc, file, ctx)).pipe(Effect.orDie)
   }
 
-  // 4. `.mimocode` directories (and MIMOCODE_CONFIG_DIR) discovered while
+  // 4. `.openfable` directories (and OPENFABLE_CONFIG_DIR) discovered while
   // walking up the tree. Also returned below so callers can install plugin
   // dependencies from each location.
-  const dirs = unique(directories).filter((dir) => dir.endsWith(".mimocode") || dir === Flag.MIMOCODE_CONFIG_DIR)
+  const dirs = unique(directories).filter((dir) => dir.endsWith(".openfable") || dir === Flag.OPENFABLE_CONFIG_DIR)
 
   for (const dir of dirs) {
-    if (!dir.endsWith(".mimocode") && dir !== Flag.MIMOCODE_CONFIG_DIR) continue
+    if (!dir.endsWith(".openfable") && dir !== Flag.OPENFABLE_CONFIG_DIR) continue
     for (const file of ConfigPaths.fileInDirectory(dir, "tui")) {
       yield* Effect.promise(() => mergeFile(acc, file, ctx)).pipe(Effect.orDie)
     }
@@ -160,7 +160,7 @@ export const layer = Layer.effect(
           .install(dir, {
             add: [
               {
-                name: "@mimo-ai/plugin",
+                name: "@openfable/plugin",
                 version: InstallationLocal ? undefined : InstallationVersion,
               },
             ],
@@ -208,7 +208,7 @@ async function load(text: string, configFilepath: string): Promise<Info> {
       if (!isRecord(data)) return {}
 
       // Flatten a nested "tui" key so users who wrote `{ "tui": { ... } }` inside tui.json
-      // (mirroring the old mimocode.json shape) still get their settings applied.
+      // (mirroring the old openfable.json shape) still get their settings applied.
       return ConfigParse.schema(Info, normalize(data), configFilepath)
     })
     .then((data) => resolvePlugins(data, configFilepath))

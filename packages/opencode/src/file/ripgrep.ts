@@ -1,6 +1,6 @@
 import path from "path"
 import z from "zod"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { Cause, Context, Effect, Fiber, Layer, Queue, Stream } from "effect"
 import type { PlatformError } from "effect/PlatformError"
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/unstable/http"
@@ -10,7 +10,7 @@ import { ChildProcessSpawner } from "effect/unstable/process/ChildProcessSpawner
 import * as CrossSpawnSpawner from "@/effect/cross-spawn-spawner"
 import { Global } from "@/global"
 import { Log } from "@/util"
-import { sanitizedProcessEnv } from "@/util/mimo-process"
+import { sanitizedProcessEnv } from "@/util/openfable-process"
 import { which } from "@/util/which"
 
 const log = Log.create({ service: "ripgrep" })
@@ -440,7 +440,7 @@ export const layer: Layer.Layer<Service, never, AppFileSystem.Service | ChildPro
 
         const root: Node = { name: "", children: new Map() }
         for (const file of list) {
-          if (file.includes(".mimocode")) continue
+          if (file.includes(".openfable")) continue
           const parts = file.split(path.sep)
           if (parts.length < 2) continue
           let node = root

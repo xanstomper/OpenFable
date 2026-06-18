@@ -1,5 +1,5 @@
 import fs from "fs/promises"
-import { Flock } from "@mimo-ai/shared/util/flock"
+import { Flock } from "@openfable/shared/util/flock"
 
 type Msg = {
   key: string

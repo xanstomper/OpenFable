@@ -63,7 +63,7 @@ read-only from this tool.
 Privacy note: CC's `type: user` and `type: feedback` categories may
 hold personal context (the user's role, preferences, prior guidance)
 that CC originally wrote for its own future sessions. With cc_index on,
-they become recallable from any mimocode agent — including subagents
+they become recallable from any openfable agent — including subagents
 that may be exposed to prompt-injected content. If that's not desired,
 keep cc_index disabled or filter `type` at search time to exclude
 the more sensitive categories.

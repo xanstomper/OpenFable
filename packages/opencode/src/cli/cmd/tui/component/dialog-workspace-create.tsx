@@ -1,4 +1,4 @@
-import { createOpencodeClient } from "@mimo-ai/sdk/v2"
+import { createOpencodeClient } from "@openfable/sdk/v2"
 import { useDialog } from "@tui/ui/dialog"
 import { DialogSelect } from "@tui/ui/dialog-select"
 import { useRoute } from "@tui/context/route"

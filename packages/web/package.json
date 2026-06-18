@@ -1,5 +1,5 @@
 {
-  "name": "@mimo-ai/web",
+  "name": "@openfable/web",
   "type": "module",
   "license": "MIT",
   "version": "0.1.1",
@@ -36,7 +36,7 @@
     "vscode-languageserver-types": "3.17.5"
   },
   "devDependencies": {
-    "@mimo-ai/cli": "workspace:*",
+    "@openfable/cli": "workspace:*",
     "@types/node": "catalog:",
     "@astrojs/check": "0.9.6",
     "typescript": "catalog:"

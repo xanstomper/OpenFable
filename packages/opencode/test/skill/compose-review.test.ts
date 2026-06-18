@@ -110,7 +110,7 @@ describe("compose spec-anchored review contract", () => {
     })
   })
 
-  describe("dispatch vocabulary uses mimocode's actor tool, not Claude Code's", () => {
+  describe("dispatch vocabulary uses openfable's actor tool, not Claude Code's", () => {
     const allContent = () =>
       Object.values(bundle).flatMap((files) => Object.values(files))
 

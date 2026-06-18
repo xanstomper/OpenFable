@@ -1,4 +1,4 @@
-import type { FileContent } from "@mimo-ai/sdk/v2"
+import type { FileContent } from "@openfable/sdk/v2"
 
 export type FileSelection = {
   startLine: number

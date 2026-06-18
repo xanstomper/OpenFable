@@ -1,5 +1,5 @@
 import { AwsClient } from "aws4fetch"
-import { lazy } from "@mimo-ai/shared/util/lazy"
+import { lazy } from "@openfable/shared/util/lazy"
 
 export namespace Storage {
   export interface Adapter {

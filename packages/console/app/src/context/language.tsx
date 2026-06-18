@@ -1,7 +1,7 @@
 import { createEffect } from "solid-js"
 import { createStore } from "solid-js/store"
 import { getRequestEvent } from "solid-js/web"
-import { createSimpleContext } from "@mimo-ai/ui/context"
+import { createSimpleContext } from "@openfable/ui/context"
 import {
   LOCALES,
   type Locale,

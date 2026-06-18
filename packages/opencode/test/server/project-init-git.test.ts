@@ -32,7 +32,7 @@ describe("project.initGit endpoint", () => {
       const init = await app.request("/project/git/init", {
         method: "POST",
         headers: {
-          "x-mimocode-directory": tmp.path,
+          "x-openfable-directory": tmp.path,
         },
       })
       const body = await init.json()
@@ -47,11 +47,11 @@ describe("project.initGit endpoint", () => {
       expect(seen.some((evt) => evt.directory === tmp.path && evt.payload.type === "server.instance.disposed")).toBe(
         true,
       )
-      expect(await Filesystem.exists(path.join(tmp.path, ".git", "mimocode"))).toBe(false)
+      expect(await Filesystem.exists(path.join(tmp.path, ".git", "openfable"))).toBe(false)
 
       const current = await app.request("/project/current", {
         headers: {
-          "x-mimocode-directory": tmp.path,
+          "x-openfable-directory": tmp.path,
         },
       })
       expect(current.status).toBe(200)
@@ -90,7 +90,7 @@ describe("project.initGit endpoint", () => {
       const init = await app.request("/project/git/init", {
         method: "POST",
         headers: {
-          "x-mimocode-directory": tmp.path,
+          "x-openfable-directory": tmp.path,
         },
       })
       expect(init.status).toBe(200)
@@ -105,7 +105,7 @@ describe("project.initGit endpoint", () => {
 
       const current = await app.request("/project/current", {
         headers: {
-          "x-mimocode-directory": tmp.path,
+          "x-openfable-directory": tmp.path,
         },
       })
       expect(current.status).toBe(200)

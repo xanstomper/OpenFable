@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "version": "0.1.1",
-  "name": "@mimo-ai/cli",
+  "name": "@openfable/cli",
   "type": "module",
   "license": "MIT",
   "publishConfig": {
@@ -14,7 +14,7 @@
     "test": "bun test --timeout 30000",
     "test:ci": "mkdir -p .artifacts/unit && bun test --timeout 30000 --reporter=junit --reporter-outfile=.artifacts/unit/junit.xml",
     "build": "bun run script/build.ts",
-    "build:dev": "MIMOCODE_CHANNEL=prod bun run script/build.ts --single",
+    "build:dev": "OPENFABLE_CHANNEL=prod bun run script/build.ts --single",
     "fix-node-pty": "bun run script/fix-node-pty.ts",
     "upgrade-opentui": "bun run script/upgrade-opentui.ts",
     "dev": "bun run --conditions=browser ./src/index.ts",
@@ -22,7 +22,7 @@
     "db": "bun drizzle-kit"
   },
   "bin": {
-    "mimo": "./bin/mimo"
+    "openfable": "./bin/openfable"
   },
   "exports": {
     "./*": "./src/*.ts"
@@ -53,8 +53,8 @@
     "@babel/core": "7.28.4",
     "@effect/language-service": "0.84.2",
     "@octokit/webhooks-types": "7.6.1",
-    "@mimo-ai/script": "workspace:*",
-    "@mimo-ai/shared": "workspace:*",
+    "@openfable/script": "workspace:*",
+    "@openfable/shared": "workspace:*",
     "@parcel/watcher-darwin-arm64": "2.5.1",
     "@parcel/watcher-darwin-x64": "2.5.1",
     "@parcel/watcher-linux-arm64-glibc": "2.5.1",
@@ -120,10 +120,10 @@
     "@hono/zod-validator": "catalog:",
     "@jitl/quickjs-singlefile-mjs-release-sync": "0.32.0",
     "@lydell/node-pty": "catalog:",
-    "@mimo-ai/plugin": "workspace:*",
-    "@mimo-ai/script": "workspace:*",
-    "@mimo-ai/sdk": "workspace:*",
-    "@mimo-ai/ui": "workspace:*",
+    "@openfable/plugin": "workspace:*",
+    "@openfable/script": "workspace:*",
+    "@openfable/sdk": "workspace:*",
+    "@openfable/ui": "workspace:*",
     "@modelcontextprotocol/sdk": "1.27.1",
     "@npmcli/arborist": "9.4.0",
     "@npmcli/config": "10.8.1",

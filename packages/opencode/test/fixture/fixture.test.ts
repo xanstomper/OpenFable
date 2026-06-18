@@ -47,7 +47,7 @@ describe("tmpdir", () => {
   })
 
   test("reports cleanup failures", async () => {
-    const dir = await fs.mkdtemp(path.join("/tmp", "mimocode-test-cleanup-failure-"))
+    const dir = await fs.mkdtemp(path.join("/tmp", "openfable-test-cleanup-failure-"))
 
     await expect(cleanupTmpdir(dir, () => Promise.reject(new Error("cleanup failed")))).rejects.toThrow(
       `Failed to cleanup temporary directory ${dir}: cleanup failed`,

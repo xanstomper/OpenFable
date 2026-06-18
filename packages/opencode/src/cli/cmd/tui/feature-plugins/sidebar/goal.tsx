@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@mimo-ai/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@openfable/plugin/tui"
 import { createMemo, Show } from "solid-js"
 
 const id = "internal:sidebar-goal"

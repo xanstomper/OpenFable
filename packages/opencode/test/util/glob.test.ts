@@ -1,7 +1,7 @@
 import { describe, test, expect } from "bun:test"
 import path from "path"
 import fs from "fs/promises"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Glob } from "@openfable/shared/util/glob"
 import { tmpdir } from "../fixture/fixture"
 
 describe("Glob", () => {

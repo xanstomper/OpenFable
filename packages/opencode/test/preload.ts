@@ -7,7 +7,7 @@ import { setTimeout as sleep } from "node:timers/promises"
 import { afterAll } from "bun:test"
 
 // Set XDG env vars FIRST, before any src/ imports
-const dir = path.join(os.tmpdir(), "mimocode-test-data-" + process.pid)
+const dir = path.join(os.tmpdir(), "openfable-test-data-" + process.pid)
 await fs.mkdir(dir, { recursive: true })
 
 // Route fixture tmpdirs under this per-PID dir so the afterAll rm below
@@ -15,7 +15,7 @@ await fs.mkdir(dir, { recursive: true })
 // (e.g. when bun test is killed/crashes/timeouts mid-run).
 const fixtureRoot = path.join(dir, "fixtures")
 await fs.mkdir(fixtureRoot, { recursive: true })
-process.env["MIMOCODE_TEST_TMPDIR_ROOT"] = fixtureRoot
+process.env["OPENFABLE_TEST_TMPDIR_ROOT"] = fixtureRoot
 afterAll(async () => {
   const { Database } = await import("../src/storage")
   Database.close()
@@ -40,7 +40,7 @@ process.env["XDG_DATA_HOME"] = path.join(dir, "share")
 process.env["XDG_CACHE_HOME"] = path.join(dir, "cache")
 process.env["XDG_CONFIG_HOME"] = path.join(dir, "config")
 process.env["XDG_STATE_HOME"] = path.join(dir, "state")
-process.env["MIMOCODE_MODELS_PATH"] = path.join(import.meta.dir, "tool", "fixtures", "models-api.json")
+process.env["OPENFABLE_MODELS_PATH"] = path.join(import.meta.dir, "tool", "fixtures", "models-api.json")
 
 // Set test home directory to isolate tests from user's actual home directory.
 // This prevents tests from picking up real user configs/skills from ~/.claude/skills.
@@ -53,11 +53,11 @@ process.env["USERPROFILE"] = testHome
 
 // Set test managed config directory to isolate tests from system managed settings
 const testManagedConfigDir = path.join(dir, "managed")
-process.env["MIMOCODE_TEST_MANAGED_CONFIG_DIR"] = testManagedConfigDir
-process.env["MIMOCODE_DISABLE_DEFAULT_PLUGINS"] = "true"
+process.env["OPENFABLE_TEST_MANAGED_CONFIG_DIR"] = testManagedConfigDir
+process.env["OPENFABLE_DISABLE_DEFAULT_PLUGINS"] = "true"
 
 // Write the cache version file to prevent global/index.ts from clearing the cache
-const cacheDir = path.join(dir, "cache", "mimocode")
+const cacheDir = path.join(dir, "cache", "openfable")
 await fs.mkdir(cacheDir, { recursive: true })
 await fs.writeFile(path.join(cacheDir, "version"), "14")
 
@@ -82,12 +82,12 @@ delete process.env["DEEPSEEK_API_KEY"]
 delete process.env["FIREWORKS_API_KEY"]
 delete process.env["CEREBRAS_API_KEY"]
 delete process.env["SAMBANOVA_API_KEY"]
-delete process.env["MIMOCODE_SERVER_PASSWORD"]
-delete process.env["MIMOCODE_SERVER_USERNAME"]
-delete process.env["MIMOCODE_HOME"]
+delete process.env["OPENFABLE_SERVER_PASSWORD"]
+delete process.env["OPENFABLE_SERVER_USERNAME"]
+delete process.env["OPENFABLE_HOME"]
 
 // Use in-memory sqlite
-process.env["MIMOCODE_DB"] = ":memory:"
+process.env["OPENFABLE_DB"] = ":memory:"
 
 // Now safe to import from src/
 const { Log } = await import("../src/util")

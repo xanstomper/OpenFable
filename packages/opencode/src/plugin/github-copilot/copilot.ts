@@ -1,5 +1,5 @@
-import type { Hooks, PluginInput } from "@mimo-ai/plugin"
-import type { Model } from "@mimo-ai/sdk/v2"
+import type { Hooks, PluginInput } from "@openfable/plugin"
+import type { Model } from "@openfable/sdk/v2"
 import { InstallationVersion } from "@/installation/version"
 import { iife } from "@/util/iife"
 import { Log } from "../../util"
@@ -70,7 +70,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
           base(auth.enterpriseUrl),
           {
             Authorization: `Bearer ${auth.refresh}`,
-            "User-Agent": `mimocode/${InstallationVersion}`,
+            "User-Agent": `openfable/${InstallationVersion}`,
           },
           provider.models,
         ).catch((error) => {
@@ -150,7 +150,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
             const headers: Record<string, string> = {
               "x-initiator": isAgent ? "agent" : "user",
               ...(init?.headers as Record<string, string>),
-              "User-Agent": `mimocode/${InstallationVersion}`,
+              "User-Agent": `openfable/${InstallationVersion}`,
               Authorization: `Bearer ${info.refresh}`,
               "Openai-Intent": "conversation-edits",
             }
@@ -226,7 +226,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                "User-Agent": `mimocode/${InstallationVersion}`,
+                "User-Agent": `openfable/${InstallationVersion}`,
               },
               body: JSON.stringify({
                 client_id: CLIENT_ID,
@@ -256,7 +256,7 @@ export async function CopilotAuthPlugin(input: PluginInput): Promise<Hooks> {
                     headers: {
                       Accept: "application/json",
                       "Content-Type": "application/json",
-                      "User-Agent": `mimocode/${InstallationVersion}`,
+                      "User-Agent": `openfable/${InstallationVersion}`,
                     },
                     body: JSON.stringify({
                       client_id: CLIENT_ID,

@@ -2,12 +2,12 @@ import { action, useParams, useAction, useSubmission, json, query, createAsync }
 import { createStore } from "solid-js/store"
 import { createMemo, For, Show } from "solid-js"
 import { Modal } from "~/component/modal"
-import { Billing } from "@mimo-ai/console-core/billing.js"
-import { Database, eq, and, isNull } from "@mimo-ai/console-core/drizzle/index.js"
-import { BillingTable, LiteTable } from "@mimo-ai/console-core/schema/billing.sql.js"
-import { Actor } from "@mimo-ai/console-core/actor.js"
-import { Subscription } from "@mimo-ai/console-core/subscription.js"
-import { LiteData } from "@mimo-ai/console-core/lite.js"
+import { Billing } from "@openfable/console-core/billing.js"
+import { Database, eq, and, isNull } from "@openfable/console-core/drizzle/index.js"
+import { BillingTable, LiteTable } from "@openfable/console-core/schema/billing.sql.js"
+import { Actor } from "@openfable/console-core/actor.js"
+import { Subscription } from "@openfable/console-core/subscription.js"
+import { LiteData } from "@openfable/console-core/lite.js"
 import { withActor } from "~/context/auth.withActor"
 import { queryBillingInfo } from "../../common"
 import styles from "./lite-section.module.css"
@@ -289,8 +289,8 @@ export function LiteSection() {
             <li>Kimi K2.6</li>
             <li>GLM-5</li>
             <li>GLM-5.1</li>
-            <li>Mimo-V2-Pro</li>
-            <li>Mimo-V2-Omni</li>
+            <li>OpenFable-V2-Pro</li>
+            <li>OpenFable-V2-Omni</li>
             <li>MiniMax M2.5</li>
             <li>MiniMax M2.7</li>
             <li>Qwen3.5 Plus</li>

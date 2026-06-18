@@ -6,7 +6,7 @@ import {
   parseDeepLink,
   parseNewSessionDeepLink,
 } from "./deep-links"
-import { type Session } from "@mimo-ai/sdk/v2/client"
+import { type Session } from "@openfable/sdk/v2/client"
 import {
   childSessionOnPath,
   displayName,

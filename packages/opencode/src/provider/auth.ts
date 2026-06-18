@@ -1,5 +1,5 @@
-import type { AuthOAuthResult, Hooks } from "@mimo-ai/plugin"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import type { AuthOAuthResult, Hooks } from "@openfable/plugin"
+import { NamedError } from "@openfable/shared/util/error"
 import { Auth } from "@/auth"
 import { InstanceState } from "@/effect"
 import { zod } from "@/util/effect-zod"

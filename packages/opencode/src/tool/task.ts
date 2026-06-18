@@ -111,7 +111,7 @@ const renameOperation = z.strictObject({
 const parameters = z.strictObject({
   // .meta({ type: "object" }) is REQUIRED — without it, the emitted JSON
   // schema's `operation` node has only `anyOf`, no `type`. Some models
-  // (notably mimo-v2.5-pro) then stringify the entire envelope, producing
+  // (notably openfable-v2.5-pro) then stringify the entire envelope, producing
   // {"operation":"{\"action\":\"create\",...}"} which fails zod validation.
   // See research-tool-call-schema/REPORT.md §2.5 "success-nested" warning.
   operation: z

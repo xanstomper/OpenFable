@@ -1,5 +1,5 @@
-import { createSimpleContext } from "@mimo-ai/ui/context"
-import { useDialog } from "@mimo-ai/ui/context/dialog"
+import { createSimpleContext } from "@openfable/ui/context"
+import { useDialog } from "@openfable/ui/context/dialog"
 import { type Accessor, createEffect, createMemo, onCleanup, onMount } from "solid-js"
 import { createStore } from "solid-js/store"
 import { makeEventListener } from "@solid-primitives/event-listener"

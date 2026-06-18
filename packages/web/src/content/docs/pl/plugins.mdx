@@ -128,7 +128,7 @@ Funkcja dostępu do:
 W przypadku wtyczek TypeScript możesz importować typy z pakietu wtyczek:
 
 ```ts title="my-plugin.ts" {1}
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const MyPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -279,7 +279,7 @@ export const InjectEnvPlugin = async () => {
 Wtyczki mogą również dodawać niestandardowe narzędzia do opencode:
 
 ```ts title=".opencode/plugins/custom-tools.ts"
-import { type Plugin, tool } from "@mimo-ai/plugin"
+import { type Plugin, tool } from "@openfable/plugin"
 
 export const CustomToolsPlugin: Plugin = async (ctx) => {
   return {
@@ -335,7 +335,7 @@ Poziomy: `debug`, `info`, `warn`, `error`. Aby uzyskać szczegółowe informacje
 Dostosuj kontekst dołączony podczas kompaktowania sesji:
 
 ```ts title=".opencode/plugins/compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CompactionPlugin: Plugin = async (ctx) => {
   return {
@@ -359,7 +359,7 @@ Hak `experimental.session.compacting` jest uruchamiany, zanim LLM wygeneruje pod
 Można także umieścić kompletny monit o zagęszczenie, ustawiając `output.prompt`:
 
 ```ts title=".opencode/plugins/custom-compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CustomCompactionPlugin: Plugin = async (ctx) => {
   return {

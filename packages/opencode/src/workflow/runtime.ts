@@ -1199,7 +1199,7 @@ export const layer = Layer.effect(
             // that supplied an explicit override), so a UI-side resume that doesn't know
             // the original launch params (e.g. TUI's /workflows resume) inherits the
             // original timeout instead of silently dropping to unbounded — which used to
-            // let a wedged mimo TTFT stall the resumed run forever.
+            // let a wedged openfable TTFT stall the resumed run forever.
             agentTimeoutMs: input.agentTimeoutMs ?? row.agentTimeoutMs,
           },
           input.runID,

@@ -1,4 +1,4 @@
-import type { Hooks, PluginInput } from "@mimo-ai/plugin"
+import type { Hooks, PluginInput } from "@openfable/plugin"
 import { Log } from "../util"
 import { Installation } from "../installation"
 import { InstallationVersion } from "../installation/version"

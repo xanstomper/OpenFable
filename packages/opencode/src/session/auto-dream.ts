@@ -20,7 +20,7 @@ let lastDistillSpawnTime = 0
 export const DREAM_TASK = [
   "Run one automatic dream memory consolidation pass for the current project.",
   "",
-  "Use the memory files as the working index and the raw mimocode trajectory database as the source of truth.",
+  "Use the memory files as the working index and the raw openfable trajectory database as the source of truth.",
   "Use bash for read-only SQLite and filesystem inspection. Do not modify the database.",
   "Consolidate only durable, verified information into project memory.",
 ].join("\n")
@@ -29,7 +29,7 @@ export const DISTILL_TASK = [
   "Run one automatic distill pass for the current project.",
   "",
   "Review the past month of sessions and identify repeated manual workflows worth packaging.",
-  "Use the raw mimocode trajectory database as the source of truth and memory files to spot cross-session patterns.",
+  "Use the raw openfable trajectory database as the source of truth and memory files to spot cross-session patterns.",
   "Inventory existing skills, agents, and commands first so you reuse or extend instead of duplicating.",
   "Use bash for read-only SQLite and filesystem inspection. Do not modify the database.",
   "Produce a compact shortlist, then create only the high-confidence missing assets.",

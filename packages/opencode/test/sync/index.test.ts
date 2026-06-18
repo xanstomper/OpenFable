@@ -10,16 +10,16 @@ import { Identifier } from "../../src/id/id"
 import { Flag } from "../../src/flag/flag"
 import { initProjectors } from "../../src/server/projectors"
 
-const original = Flag.MIMOCODE_EXPERIMENTAL_WORKSPACES
+const original = Flag.OPENFABLE_EXPERIMENTAL_WORKSPACES
 
 beforeEach(() => {
   Database.close()
 
-  Flag.MIMOCODE_EXPERIMENTAL_WORKSPACES = true
+  Flag.OPENFABLE_EXPERIMENTAL_WORKSPACES = true
 })
 
 afterEach(() => {
-  Flag.MIMOCODE_EXPERIMENTAL_WORKSPACES = original
+  Flag.OPENFABLE_EXPERIMENTAL_WORKSPACES = original
 })
 
 function withInstance(fn: () => void | Promise<void>) {

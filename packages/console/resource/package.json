@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@mimo-ai/console-resource",
+  "name": "@openfable/console-resource",
   "license": "MIT",
   "dependencies": {
     "@cloudflare/workers-types": "catalog:"

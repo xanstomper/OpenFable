@@ -3,8 +3,8 @@ import fs from "fs/promises"
 import { spawn } from "child_process"
 import path from "path"
 import os from "os"
-import { Flock } from "@mimo-ai/shared/util/flock"
-import { Hash } from "@mimo-ai/shared/util/hash"
+import { Flock } from "@openfable/shared/util/flock"
+import { Hash } from "@openfable/shared/util/hash"
 
 type Msg = {
   key: string

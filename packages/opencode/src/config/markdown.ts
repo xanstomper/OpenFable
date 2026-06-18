@@ -1,4 +1,4 @@
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import matter from "gray-matter"
 import { z } from "zod"
 import { Filesystem } from "../util"

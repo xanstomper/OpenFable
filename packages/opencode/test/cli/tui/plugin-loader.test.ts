@@ -61,9 +61,9 @@ async function load(): Promise<Data> {
       const invalidThemePath = path.join(dir, invalidThemeFile)
       const globalThemePath = path.join(dir, globalThemeFile)
       const preloadedThemePath = path.join(dir, preloadedThemeFile)
-      const localDest = path.join(dir, ".mimocode", "themes", localThemeFile)
+      const localDest = path.join(dir, ".openfable", "themes", localThemeFile)
       const globalDest = path.join(Global.Path.config, "themes", globalThemeFile)
-      const preloadedDest = path.join(dir, ".mimocode", "themes", preloadedThemeFile)
+      const preloadedDest = path.join(dir, ".openfable", "themes", preloadedThemeFile)
       const fnMarker = path.join(dir, "function-called.txt")
       const localMarker = path.join(dir, "local-called.json")
       const invalidMarker = path.join(dir, "invalid-called.json")
@@ -431,7 +431,7 @@ export default {
       .then(() => true)
       .catch(() => false)
     const leaked_global_to_local = await fs
-      .stat(path.join(tmp.path, ".mimocode", "themes", tmp.extra.globalThemeFile))
+      .stat(path.join(tmp.path, ".openfable", "themes", tmp.extra.globalThemeFile))
       .then(() => true)
       .catch(() => false)
 
@@ -506,7 +506,7 @@ test("continues loading when a plugin is missing config metadata", async () => {
     },
   })
 
-  process.env.MIMOCODE_PLUGIN_META_FILE = path.join(tmp.path, "plugin-meta.json")
+  process.env.OPENFABLE_PLUGIN_META_FILE = path.join(tmp.path, "plugin-meta.json")
   const config: TuiConfig.Info = {
     plugin: [
       [tmp.extra.badSpec, { marker: path.join(tmp.path, "bad.txt") }],
@@ -541,7 +541,7 @@ test("continues loading when a plugin is missing config metadata", async () => {
     await TuiPluginRuntime.dispose()
     cwd.mockRestore()
     wait.mockRestore()
-    delete process.env.MIMOCODE_PLUGIN_META_FILE
+    delete process.env.OPENFABLE_PLUGIN_META_FILE
   }
 })
 
@@ -598,7 +598,7 @@ export default {
     },
   })
 
-  process.env.MIMOCODE_PLUGIN_META_FILE = path.join(tmp.path, "plugin-meta.json")
+  process.env.OPENFABLE_PLUGIN_META_FILE = path.join(tmp.path, "plugin-meta.json")
   const cwd = spyOn(process, "cwd").mockImplementation(() => tmp.path)
 
   try {
@@ -619,7 +619,7 @@ export default {
   } finally {
     await TuiPluginRuntime.dispose()
     cwd.mockRestore()
-    delete process.env.MIMOCODE_PLUGIN_META_FILE
+    delete process.env.OPENFABLE_PLUGIN_META_FILE
 
     if (backupJson === undefined) {
       await fs.rm(globalJson, { force: true }).catch(() => {})
@@ -716,7 +716,7 @@ test("updates installed theme when plugin metadata changes", async () => {
       const spec = pathToFileURL(pluginPath).href
       const themeFile = "theme-update.json"
       const themePath = path.join(dir, themeFile)
-      const dest = path.join(dir, ".mimocode", "themes", themeFile)
+      const dest = path.join(dir, ".openfable", "themes", themeFile)
       const themeName = themeFile.replace(/\.json$/, "")
       const configPath = path.join(dir, "tui.json")
 
@@ -753,7 +753,7 @@ test("updates installed theme when plugin metadata changes", async () => {
     },
   })
 
-  process.env.MIMOCODE_PLUGIN_META_FILE = path.join(tmp.path, "plugin-meta.json")
+  process.env.OPENFABLE_PLUGIN_META_FILE = path.join(tmp.path, "plugin-meta.json")
   const cwd = spyOn(process, "cwd").mockImplementation(() => tmp.path)
   const wait = spyOn(TuiConfig, "waitForDependencies").mockResolvedValue()
 
@@ -804,13 +804,13 @@ test("updates installed theme when plugin metadata changes", async () => {
     expect(text).toContain("#222222")
     expect(text).not.toContain("#111111")
     const list = await Filesystem.readJson<Record<string, { themes?: Record<string, { dest: string }> }>>(
-      process.env.MIMOCODE_PLUGIN_META_FILE!,
+      process.env.OPENFABLE_PLUGIN_META_FILE!,
     )
     expect(list["demo.theme-update"]?.themes?.[tmp.extra.themeName]?.dest).toBe(tmp.extra.dest)
   } finally {
     await TuiPluginRuntime.dispose()
     cwd.mockRestore()
     wait.mockRestore()
-    delete process.env.MIMOCODE_PLUGIN_META_FILE
+    delete process.env.OPENFABLE_PLUGIN_META_FILE
   }
 })

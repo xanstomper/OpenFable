@@ -128,7 +128,7 @@ La función del complemento recibe:
 Para los complementos TypeScript, puede importar tipos desde el paquete de complementos:
 
 ```ts title="my-plugin.ts" {1}
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const MyPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -279,7 +279,7 @@ export const InjectEnvPlugin = async () => {
 Los complementos también pueden agregar herramientas personalizadas a opencode:
 
 ```ts title=".opencode/plugins/custom-tools.ts"
-import { type Plugin, tool } from "@mimo-ai/plugin"
+import { type Plugin, tool } from "@openfable/plugin"
 
 export const CustomToolsPlugin: Plugin = async (ctx) => {
   return {
@@ -339,7 +339,7 @@ Niveles: `debug`, `info`, `warn`, `error`. Consulte la [documentación del SDK](
 Personalice el contexto incluido cuando se compacta una sesión:
 
 ```ts title=".opencode/plugins/compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CompactionPlugin: Plugin = async (ctx) => {
   return {
@@ -363,7 +363,7 @@ El hook `experimental.session.compacting` se activa antes de que LLM genere un r
 También puede reemplazar completamente el mensaje de compactación configurando `output.prompt`:
 
 ```ts title=".opencode/plugins/custom-compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CustomCompactionPlugin: Plugin = async (ctx) => {
   return {

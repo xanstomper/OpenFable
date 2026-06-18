@@ -232,7 +232,7 @@ export const { use: useLocal, provider: LocalProvider } = createSimpleContext({
           const info = provider?.models[value.modelID]
           return {
             provider: provider?.name ?? value.providerID,
-            model: value.modelID === "mimo-auto" ? "MiMo Auto（MiMo-V2.5 限免中）" : (info?.name ?? value.modelID),
+            model: value.modelID === "openfable-auto" ? "OpenFable Auto（OpenFable-V2.5 限免中）" : (info?.name ?? value.modelID),
             reasoning: info?.capabilities?.reasoning ?? false,
           }
         }),

@@ -32,10 +32,10 @@ test("skips external tui plugins in pure mode", async () => {
     },
   })
 
-  const pure = process.env.MIMOCODE_PURE
-  const meta = process.env.MIMOCODE_PLUGIN_META_FILE
-  process.env.MIMOCODE_PURE = "1"
-  process.env.MIMOCODE_PLUGIN_META_FILE = tmp.extra.meta
+  const pure = process.env.OPENFABLE_PURE
+  const meta = process.env.OPENFABLE_PLUGIN_META_FILE
+  process.env.OPENFABLE_PURE = "1"
+  process.env.OPENFABLE_PLUGIN_META_FILE = tmp.extra.meta
 
   const config: TuiConfig.Info = {
     plugin: [[tmp.extra.spec, { marker: tmp.extra.marker }]],
@@ -58,14 +58,14 @@ test("skips external tui plugins in pure mode", async () => {
     cwd.mockRestore()
     wait.mockRestore()
     if (pure === undefined) {
-      delete process.env.MIMOCODE_PURE
+      delete process.env.OPENFABLE_PURE
     } else {
-      process.env.MIMOCODE_PURE = pure
+      process.env.OPENFABLE_PURE = pure
     }
     if (meta === undefined) {
-      delete process.env.MIMOCODE_PLUGIN_META_FILE
+      delete process.env.OPENFABLE_PLUGIN_META_FILE
     } else {
-      process.env.MIMOCODE_PLUGIN_META_FILE = meta
+      process.env.OPENFABLE_PLUGIN_META_FILE = meta
     }
   }
 })

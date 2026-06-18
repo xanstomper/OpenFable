@@ -29,7 +29,7 @@ export interface ActorPromptOps {
 const id = "actor"
 
 const MODEL_PARAM_DESCRIPTION =
-  "(optional) Model for this subagent: a model group name (e.g. ultra/standard/lite) or a literal provider/model (e.g. mimo-v2.5-pro). Overrides the agent's configured model; defaults to the agent's model, else the parent's. If no model_groups are configured, the tier names resolve to the default model."
+  "(optional) Model for this subagent: a model group name (e.g. ultra/standard/lite) or a literal provider/model (e.g. openfable-v2.5-pro). Overrides the agent's configured model; defaults to the agent's model, else the parent's. If no model_groups are configured, the tier names resolve to the default model."
 
 const KNOWN_ACTOR_VERBS = ["run", "spawn", "status", "wait", "cancel", "send"]
 
@@ -251,7 +251,7 @@ export function recoverActorArgs(rawArgs: unknown): ActorShellArgs | undefined {
     // run/spawn schema's optionals (model, actor_id, timeout_ms, command, context,
     // task_id, output_schema) — the others (timeout_ms/command/context/output_schema)
     // are dropped here, falling back to their schema defaults. Low risk in practice:
-    // the bare shape mimo emits is the 3 required fields, rarely with extras. When
+    // the bare shape openfable emits is the 3 required fields, rarely with extras. When
     // adding an actor schema field, decide whether bare-shape recover should carry
     // it here, or this whitelist silently drifts from the schema.
     if (typeof obj.model === "string") op.model = obj.model
@@ -447,7 +447,7 @@ export const ActorTool = Tool.define(
       const parameters = z.strictObject({
         // .meta({ type: "object" }) is REQUIRED — without it the emitted JSON
         // schema's `operation` node has only `anyOf`, no `type`, and some models
-        // (notably mimo-v2.5-pro) stringify the whole envelope
+        // (notably openfable-v2.5-pro) stringify the whole envelope
         // ({"operation":"{\"action\":\"run\",...}"}) which fails zod validation.
         // The root strictObject also means flattenDiscriminatedUnion finds no
         // root-level union and passes through unchanged — root keeps exactly one

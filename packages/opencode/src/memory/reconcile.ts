@@ -46,7 +46,7 @@ export async function walkCcRoot(base: string): Promise<string[]> {
 export async function indexFromDisk(
   absPath: string,
   loc: MemoryLocator,
-  bodyType: "mimo" | "cc",
+  bodyType: "openfable" | "cc",
   oldFingerprint?: string,
 ): Promise<"hit" | "updated" | "skipped"> {
   const stat = await fs.stat(absPath).catch((e: NodeJS.ErrnoException) => {
@@ -59,7 +59,7 @@ export async function indexFromDisk(
 
   const body = await Bun.file(absPath).text()
 
-  // For CC files, derive type from frontmatter; mimo files keep loc.type from path.
+  // For CC files, derive type from frontmatter; openfable files keep loc.type from path.
   const finalType =
     bodyType === "cc" ? (parseCcFrontmatterType(body) ?? "free") : loc.type
 
@@ -92,12 +92,12 @@ export async function indexFromDisk(
 }
 
 export async function reconcileMemory(
-  roots: { mimo: string; cc?: string },
+  roots: { openfable: string; cc?: string },
 ): Promise<{ indexed: number; pruned: number }> {
   // Collect disk paths from BOTH roots before pruning. If we pruned per-root,
-  // enabling CC indexing on a fresh run would prune all mimo rows (and vice
+  // enabling CC indexing on a fresh run would prune all openfable rows (and vice
   // versa) because each walk's set is missing the other root's paths.
-  const mimoFiles = new Set(await walkMemoryDir(roots.mimo))
+  const mimoFiles = new Set(await walkMemoryDir(roots.openfable))
   const ccFiles = roots.cc ? new Set(await walkCcRoot(roots.cc)) : new Set<string>()
   const diskPaths = new Set<string>([...mimoFiles, ...ccFiles])
 
@@ -127,7 +127,7 @@ export async function reconcileMemory(
       log.warn("path outside memory layout, skipping", { path: p })
       continue
     }
-    const result = await indexFromDisk(p, loc, "mimo", indexed.get(p))
+    const result = await indexFromDisk(p, loc, "openfable", indexed.get(p))
     if (result === "updated") indexedCount++
   }
   for (const p of ccFiles) {

@@ -1,5 +1,5 @@
-import { createSimpleContext } from "@mimo-ai/ui/context"
-import { checksum } from "@mimo-ai/shared/util/encode"
+import { createSimpleContext } from "@openfable/ui/context"
+import { checksum } from "@openfable/shared/util/encode"
 import { useParams } from "@solidjs/router"
 import { batch, createMemo, createRoot, getOwner, onCleanup } from "solid-js"
 import { createStore, type SetStoreFunction } from "solid-js/store"

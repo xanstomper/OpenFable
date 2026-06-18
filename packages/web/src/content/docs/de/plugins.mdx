@@ -127,7 +127,7 @@ Die Plugin-Funktion erhält:
 Für TypeScript-Plugins können Sie Typen aus dem Plugin-Paket importieren:
 
 ```ts title="my-plugin.ts" {1}
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const MyPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -278,7 +278,7 @@ export const InjectEnvPlugin = async () => {
 Plugins können OpenCode auch benutzerdefinierte Tools hinzufügen:
 
 ```ts title=".opencode/plugins/custom-tools.ts"
-import { type Plugin, tool } from "@mimo-ai/plugin"
+import { type Plugin, tool } from "@openfable/plugin"
 
 export const CustomToolsPlugin: Plugin = async (ctx) => {
   return {
@@ -334,7 +334,7 @@ Ebenen: `debug`, `info`, `warn`, `error`. Weitere Informationen finden Sie unter
 Passen Sie den Kontext an, der beim Komprimieren einer Sitzung einbezogen wird:
 
 ```ts title=".opencode/plugins/compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CompactionPlugin: Plugin = async (ctx) => {
   return {
@@ -358,7 +358,7 @@ Der Hook `experimental.session.compacting` wird ausgelöst, bevor der Hook LLM e
 Sie können die Komprimierungsaufforderung auch vollständig ersetzen, indem Sie `output.prompt` festlegen:
 
 ```ts title=".opencode/plugins/custom-compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CustomCompactionPlugin: Plugin = async (ctx) => {
   return {

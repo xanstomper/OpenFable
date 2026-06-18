@@ -57,20 +57,20 @@ type TmpDirOptions<T> = {
 }
 export async function tmpdir<T>(options?: TmpDirOptions<T>) {
   const dirpath = sanitizePath(
-    path.join(process.env["MIMOCODE_TEST_TMPDIR_ROOT"] ?? os.tmpdir(), "mimocode-test-" + Math.random().toString(36).slice(2)),
+    path.join(process.env["OPENFABLE_TEST_TMPDIR_ROOT"] ?? os.tmpdir(), "openfable-test-" + Math.random().toString(36).slice(2)),
   )
   await fs.mkdir(dirpath, { recursive: true })
   if (options?.git) {
     await $`git init`.cwd(dirpath).quiet()
     await $`git config core.fsmonitor false`.cwd(dirpath).quiet()
     await $`git config commit.gpgsign false`.cwd(dirpath).quiet()
-    await $`git config user.email "test@mimocode.test"`.cwd(dirpath).quiet()
+    await $`git config user.email "test@openfable.test"`.cwd(dirpath).quiet()
     await $`git config user.name "Test"`.cwd(dirpath).quiet()
     await $`git commit --allow-empty -m "root commit ${dirpath}"`.cwd(dirpath).quiet()
   }
   if (options?.config) {
     await Bun.write(
-      path.join(dirpath, "mimocode.json"),
+      path.join(dirpath, "openfable.json"),
       JSON.stringify({
         $schema: "https://opencode.ai/config.json",
         ...options.config,
@@ -99,7 +99,7 @@ export function tmpdirScoped(options?: { git?: boolean; config?: Partial<Config.
   return Effect.gen(function* () {
     const spawner = yield* ChildProcessSpawner.ChildProcessSpawner
     const dirpath = sanitizePath(
-      path.join(process.env["MIMOCODE_TEST_TMPDIR_ROOT"] ?? os.tmpdir(), "mimocode-test-" + Math.random().toString(36).slice(2)),
+      path.join(process.env["OPENFABLE_TEST_TMPDIR_ROOT"] ?? os.tmpdir(), "openfable-test-" + Math.random().toString(36).slice(2)),
     )
     yield* Effect.promise(() => fs.mkdir(dirpath, { recursive: true }))
     const dir = sanitizePath(yield* Effect.promise(() => fs.realpath(dirpath)))
@@ -118,7 +118,7 @@ export function tmpdirScoped(options?: { git?: boolean; config?: Partial<Config.
       yield* git("init")
       yield* git("config", "core.fsmonitor", "false")
       yield* git("config", "commit.gpgsign", "false")
-      yield* git("config", "user.email", "test@mimocode.test")
+      yield* git("config", "user.email", "test@openfable.test")
       yield* git("config", "user.name", "Test")
       yield* git("commit", "--allow-empty", "-m", "root commit")
     }
@@ -126,7 +126,7 @@ export function tmpdirScoped(options?: { git?: boolean; config?: Partial<Config.
     if (options?.config) {
       yield* Effect.promise(() =>
         fs.writeFile(
-          path.join(dir, "mimocode.json"),
+          path.join(dir, "openfable.json"),
           JSON.stringify({ $schema: "https://opencode.ai/config.json", ...options.config }),
         ),
       )

@@ -1,11 +1,11 @@
-import { Resource } from "@mimo-ai/console-resource"
-import { Actor } from "@mimo-ai/console-core/actor.js"
+import { Resource } from "@openfable/console-resource"
+import { Actor } from "@openfable/console-core/actor.js"
 import { action, json, query } from "@solidjs/router"
 import { withActor } from "~/context/auth.withActor"
-import { Billing } from "@mimo-ai/console-core/billing.js"
-import { and, Database, desc, eq, isNull } from "@mimo-ai/console-core/drizzle/index.js"
-import { WorkspaceTable } from "@mimo-ai/console-core/schema/workspace.sql.js"
-import { UserTable } from "@mimo-ai/console-core/schema/user.sql.js"
+import { Billing } from "@openfable/console-core/billing.js"
+import { and, Database, desc, eq, isNull } from "@openfable/console-core/drizzle/index.js"
+import { WorkspaceTable } from "@openfable/console-core/schema/workspace.sql.js"
+import { UserTable } from "@openfable/console-core/schema/user.sql.js"
 
 export function formatDateForTable(date: Date) {
   const options: Intl.DateTimeFormatOptions = {

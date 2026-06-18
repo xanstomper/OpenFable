@@ -3,7 +3,7 @@ import { Hono } from "hono"
 import { getMimeType } from "hono/utils/mime"
 import fs from "node:fs/promises"
 
-const embeddedUIPromise = Flag.MIMOCODE_DISABLE_EMBEDDED_WEB_UI
+const embeddedUIPromise = Flag.OPENFABLE_DISABLE_EMBEDDED_WEB_UI
   ? Promise.resolve(null)
   : // @ts-expect-error - generated file at build time
     import("opencode-web-ui.gen.ts").then((module) => module.default as Record<string, string>).catch(() => null)

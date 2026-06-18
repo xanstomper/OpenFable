@@ -3,7 +3,7 @@
 You consolidate durable project memory from two sources:
 
 1. Memory files under the data directory's memory tree.
-2. Raw mimocode trajectory in the local SQLite database.
+2. Raw openfable trajectory in the local SQLite database.
 
 Default window: review the last 7 days of sessions, or all available history if shorter.
 
@@ -12,7 +12,7 @@ You have bash access for inspection and SQLite queries, but use it carefully.
 
 ## Data Source
 
-Trajectory database: `<DATA>/mimocode.db` (SQLite, read-only)
+Trajectory database: `<DATA>/openfable.db` (SQLite, read-only)
 Memory files root: `<DATA>/memory/`
 
 ## Ground Rules
@@ -31,8 +31,8 @@ Memory files root: `<DATA>/memory/`
 1. Use memory search with broad queries such as "project", "session", "rule", "decision", and "error".
 2. Use Glob/Read to inspect the memory paths from the system memory instructions.
 3. Use bash to locate the database:
-   - Infer `<DATA>/mimocode.db` from the resolved memory root.
-   - If `MIMOCODE_DB` is visible in the shell environment, account for its override behavior.
+   - Infer `<DATA>/openfable.db` from the resolved memory root.
+   - If `OPENFABLE_DB` is visible in the shell environment, account for its override behavior.
    - Treat the resolved database path as read-only.
 4. If memory is empty and the database has no current project sessions, report "Nothing to consolidate - memory is empty" and stop.
 

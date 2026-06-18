@@ -1,19 +1,19 @@
 import type { APIEvent } from "@solidjs/start/server"
-import { and, Database, eq, isNull, lt, or, sql } from "@mimo-ai/console-core/drizzle/index.js"
-import { KeyTable } from "@mimo-ai/console-core/schema/key.sql.js"
-import { BillingTable, LiteTable, SubscriptionTable, UsageTable } from "@mimo-ai/console-core/schema/billing.sql.js"
-import { centsToMicroCents } from "@mimo-ai/console-core/util/price.js"
-import { getMonthlyBounds, getWeekBounds } from "@mimo-ai/console-core/util/date.js"
-import { Identifier } from "@mimo-ai/console-core/identifier.js"
-import { Billing } from "@mimo-ai/console-core/billing.js"
-import { Actor } from "@mimo-ai/console-core/actor.js"
-import { WorkspaceTable } from "@mimo-ai/console-core/schema/workspace.sql.js"
-import { ZenData } from "@mimo-ai/console-core/model.js"
-import { Subscription } from "@mimo-ai/console-core/subscription.js"
-import { BlackData } from "@mimo-ai/console-core/black.js"
-import { UserTable } from "@mimo-ai/console-core/schema/user.sql.js"
-import { ModelTable } from "@mimo-ai/console-core/schema/model.sql.js"
-import { ProviderTable } from "@mimo-ai/console-core/schema/provider.sql.js"
+import { and, Database, eq, isNull, lt, or, sql } from "@openfable/console-core/drizzle/index.js"
+import { KeyTable } from "@openfable/console-core/schema/key.sql.js"
+import { BillingTable, LiteTable, SubscriptionTable, UsageTable } from "@openfable/console-core/schema/billing.sql.js"
+import { centsToMicroCents } from "@openfable/console-core/util/price.js"
+import { getMonthlyBounds, getWeekBounds } from "@openfable/console-core/util/date.js"
+import { Identifier } from "@openfable/console-core/identifier.js"
+import { Billing } from "@openfable/console-core/billing.js"
+import { Actor } from "@openfable/console-core/actor.js"
+import { WorkspaceTable } from "@openfable/console-core/schema/workspace.sql.js"
+import { ZenData } from "@openfable/console-core/model.js"
+import { Subscription } from "@openfable/console-core/subscription.js"
+import { BlackData } from "@openfable/console-core/black.js"
+import { UserTable } from "@openfable/console-core/schema/user.sql.js"
+import { ModelTable } from "@openfable/console-core/schema/model.sql.js"
+import { ProviderTable } from "@openfable/console-core/schema/provider.sql.js"
 import { logger } from "./logger"
 import {
   AuthError,
@@ -41,8 +41,8 @@ import { createRateLimiter as createKeyRateLimiter } from "./keyRateLimiter"
 import { createDataDumper } from "./dataDumper"
 import { createTrialLimiter } from "./trialLimiter"
 import { createStickyTracker } from "./stickyProviderTracker"
-import { LiteData } from "@mimo-ai/console-core/lite.js"
-import { Resource } from "@mimo-ai/console-resource"
+import { LiteData } from "@openfable/console-core/lite.js"
+import { Resource } from "@openfable/console-resource"
 import { i18n, type Key } from "~/i18n"
 import { localeFromRequest } from "~/lib/language"
 import { createModelTpmLimiter } from "./modelTpmLimiter"
@@ -106,7 +106,7 @@ export async function handler(
       session: sessionId,
       request: requestId,
       client: ocClient,
-      ...(model === "mimo-v2-pro-free" && JSON.stringify(body).length < 1000 ? { payload: JSON.stringify(body) } : {}),
+      ...(model === "openfable-v2-pro-free" && JSON.stringify(body).length < 1000 ? { payload: JSON.stringify(body) } : {}),
     })
     const zenData = ZenData.list(opts.modelList)
     const modelInfo = validateModel(zenData, model)

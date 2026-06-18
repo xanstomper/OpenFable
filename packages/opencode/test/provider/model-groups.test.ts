@@ -58,7 +58,7 @@ test("resolveModelRef resolves literals and groups (provider-aware)", async () =
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -116,7 +116,7 @@ test("resolveModelRef skips a member on a disabled provider", async () => {
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -147,7 +147,7 @@ test("getSmallModel resolves the lite group provider-aware", async () => {
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -187,7 +187,7 @@ test("agent model field routes literal vs tier name", async () => {
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -246,7 +246,7 @@ test("per-call model accepts both group name and literal provider/model", async 
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -286,7 +286,7 @@ test("built-in tiers fall back to the default model when no model_groups configu
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -315,7 +315,7 @@ test("configured built-in tier wins over fallback; unconfigured coexists", async
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,
@@ -350,7 +350,7 @@ test("unknown custom group name still throws", async () => {
   await using tmp = await tmpdir({
     init: async (dir) => {
       await Bun.write(
-        path.join(dir, "mimocode.json"),
+        path.join(dir, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           provider: PROVIDERS,

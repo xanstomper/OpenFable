@@ -167,12 +167,12 @@ describe("workflows routes", () => {
 // data (not the degenerate []). These run under the workflow test layer
 // (makeLayer) so WorkflowRuntime.layer is live and populates the module-global
 // `workflowRef` that the route reads through. Crucially the data path is the
-// process-global `:memory:` DB (test/preload sets MIMOCODE_DB=:memory:, and the
+// process-global `:memory:` DB (test/preload sets OPENFABLE_DB=:memory:, and the
 // storage Client is a per-process singleton): the run writes its WorkflowRunTable
 // row there, and the route's handler — run via AppRuntime, NOT this layer — reads
 // the SAME DB. So `Server.Default().app.request("/workflows")` genuinely
 // exercises the HTTP route end-to-end against a real run. The
-// `x-mimocode-directory` header makes InstanceMiddleware re-enter the SAME cached
+// `x-openfable-directory` header makes InstanceMiddleware re-enter the SAME cached
 // tmpdir Instance the run used (one entry per directory in Instance's cache), so
 // resume's re-launch spawns in the run's own session context. We filter list by
 // sessionID to stay robust against any residue in the shared in-memory DB.
@@ -214,7 +214,7 @@ describe("workflows routes — live runtime", () => {
         const response = yield* Effect.promise(async () =>
           Server.Default().app.request(`/workflows/wf_00000000000000000000000000/resume`, {
             method: "POST",
-            headers: { "x-mimocode-directory": dir },
+            headers: { "x-openfable-directory": dir },
           }),
         )
 
@@ -252,7 +252,7 @@ describe("workflows routes — live runtime", () => {
         const response = yield* Effect.promise(async () =>
           Server.Default().app.request(`/workflows?sessionID=${parent.id}`, {
             method: "GET",
-            headers: { "x-mimocode-directory": dir },
+            headers: { "x-openfable-directory": dir },
           }),
         )
         expect(response.status).toBe(200)

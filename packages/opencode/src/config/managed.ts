@@ -32,7 +32,7 @@ function systemManagedConfigDir(): string {
 }
 
 export function managedConfigDir() {
-  return process.env.MIMOCODE_TEST_MANAGED_CONFIG_DIR || systemManagedConfigDir()
+  return process.env.OPENFABLE_TEST_MANAGED_CONFIG_DIR || systemManagedConfigDir()
 }
 
 export function parseManagedPlist(json: string): string {

@@ -380,7 +380,7 @@ export interface Interface {
 
   /**
    * Await all in-flight writers across sessions up to `timeoutMs`. Used by
-   * the CLI shutdown path so headless `mimo run` invocations don't exit
+   * the CLI shutdown path so headless `openfable run` invocations don't exit
    * while a forked checkpoint writer is still waiting on its LLM round-trip.
    * Returns the count of writers that completed vs. still pending when the
    * timeout fired.

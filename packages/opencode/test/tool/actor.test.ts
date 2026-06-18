@@ -540,19 +540,19 @@ describe("Actor tool subagent_type enum (F36)", () => {
     ),
   )
 
-  it.live("flattened schema keeps operation as the sole root key (mimo can't drop the discriminator)", () =>
+  it.live("flattened schema keeps operation as the sole root key (OpenFable can't drop the discriminator)", () =>
     provideTmpdirInstance(() =>
       Effect.gen(function* () {
         const tool = yield* ActorTool
         const def = yield* tool.init()
         const fakeModel = {
-          providerID: "mimo",
-          api: { id: "mimo-v2.5-pro", npm: "@ai-sdk/openai-compatible" },
-          id: "mimo-v2.5-pro",
+          providerID: "openfable",
+          api: { id: "openfable-v2.5-pro", npm: "@ai-sdk/openai-compatible" },
+          id: "openfable-v2.5-pro",
           capabilities: { input: {} },
         } as any
         const flat = transformSchema(fakeModel, z.toJSONSchema(def.parameters)) as any
-        // Root must expose ONLY `operation`. A flat bag (the bug) lets mimo omit
+        // Root must expose ONLY `operation`. A flat bag (the bug) lets OpenFable omit
         // the discriminator entirely; a nested envelope makes it unmissable.
         expect(Object.keys(flat.properties)).toEqual(["operation"])
         expect(flat.required).toEqual(["operation"])

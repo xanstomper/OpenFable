@@ -33,7 +33,7 @@ export const layer: Layer.Layer<Service, never, Bus.Service> = Layer.effect(
     const resolveTeamDir = (teamID: string) =>
       Effect.gen(function* () {
         const ctx = yield* InstanceState.context
-        return path.join(ctx.directory, ".mimocode", "teams", teamID)
+        return path.join(ctx.directory, ".openfable", "teams", teamID)
       })
 
     const membersFilePath = (teamID: string) =>

@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@mimo-ai/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@openfable/plugin/tui"
 import { createMemo } from "solid-js"
 import { Global } from "@/global"
 import { useLanguage } from "@tui/context/language"

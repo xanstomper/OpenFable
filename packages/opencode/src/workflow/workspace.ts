@@ -1,6 +1,6 @@
 import path from "path"
 import { Filesystem } from "@/util"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Glob } from "@openfable/shared/util/glob"
 
 // Resolve a guest-supplied relative path against the workspace root, refusing
 // any path that escapes the root by LEXICAL means (parent traversal `..`, or an

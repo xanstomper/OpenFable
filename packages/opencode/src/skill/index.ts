@@ -3,17 +3,17 @@ import path from "path"
 import { pathToFileURL } from "url"
 import z from "zod"
 import { Effect, Layer, Context } from "effect"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import type { Agent } from "@/agent/agent"
 import { Bus } from "@/bus"
 import { InstanceState } from "@/effect"
 import { Flag } from "@/flag/flag"
 import { Global } from "@/global"
 import { Permission } from "@/permission"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { Config } from "../config"
 import { ConfigMarkdown } from "../config"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Glob } from "@openfable/shared/util/glob"
 import { Log } from "../util"
 import { Discovery } from "./discovery"
 import { extractComposeBundle } from "./compose/extract"
@@ -21,7 +21,7 @@ import { extractComposeBundle } from "./compose/extract"
 const log = Log.create({ service: "skill" })
 const EXTERNAL_DIRS = [".claude", ".agents", ".codex", ".opencode"]
 const EXTERNAL_SKILL_PATTERN = "skills/**/SKILL.md"
-const MIMOCODE_SKILL_PATTERN = "{skill,skills}/**/SKILL.md"
+const OPENFABLE_SKILL_PATTERN = "{skill,skills}/**/SKILL.md"
 const SKILL_PATTERN = "**/SKILL.md"
 
 export const Info = z.object({
@@ -155,7 +155,7 @@ const discoverSkills = Effect.fnUntraced(function* (
   const state: ScanState = { matches: new Set(), dirs: new Set() }
 
   // Extract compose skills to disk first (user skills with same name override)
-  if (!Flag.MIMOCODE_DISABLE_COMPOSE_SKILLS) {
+  if (!Flag.OPENFABLE_DISABLE_COMPOSE_SKILLS) {
     const composeSkillRoot = yield* extractComposeBundle(fsys).pipe(
       Effect.catch(() => Effect.succeed(undefined)),
     )
@@ -164,11 +164,11 @@ const discoverSkills = Effect.fnUntraced(function* (
     }
   }
 
-  if (!Flag.MIMOCODE_DISABLE_EXTERNAL_SKILLS) {
+  if (!Flag.OPENFABLE_DISABLE_EXTERNAL_SKILLS) {
     const externalDirs = EXTERNAL_DIRS.filter((dir) => {
-      if (dir === ".claude" && Flag.MIMOCODE_DISABLE_CLAUDE_CODE_SKILLS) return false
-      if (dir === ".codex" && Flag.MIMOCODE_DISABLE_CODEX_SKILLS) return false
-      if (dir === ".opencode" && Flag.MIMOCODE_DISABLE_OPENCODE_SKILLS) return false
+      if (dir === ".claude" && Flag.OPENFABLE_DISABLE_CLAUDE_CODE_SKILLS) return false
+      if (dir === ".codex" && Flag.OPENFABLE_DISABLE_CODEX_SKILLS) return false
+      if (dir === ".opencode" && Flag.OPENFABLE_DISABLE_OPENCODE_SKILLS) return false
       return true
     })
 
@@ -189,7 +189,7 @@ const discoverSkills = Effect.fnUntraced(function* (
 
   const configDirs = yield* config.directories()
   for (const dir of configDirs) {
-    yield* scan(state, dir, MIMOCODE_SKILL_PATTERN)
+    yield* scan(state, dir, OPENFABLE_SKILL_PATTERN)
   }
 
   const cfg = yield* config.get()

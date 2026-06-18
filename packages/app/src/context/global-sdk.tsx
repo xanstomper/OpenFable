@@ -1,5 +1,5 @@
-import type { Event } from "@mimo-ai/sdk/v2/client"
-import { createSimpleContext } from "@mimo-ai/ui/context"
+import type { Event } from "@openfable/sdk/v2/client"
+import { createSimpleContext } from "@openfable/ui/context"
 import { createGlobalEmitter } from "@solid-primitives/event-bus"
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { batch, onCleanup, onMount } from "solid-js"

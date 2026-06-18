@@ -118,8 +118,8 @@ describe("WorkflowRuntime workflow() by name + dataflow", () => {
           title: "wf nest named",
           permission: [{ permission: "*", pattern: "*", action: "allow" }],
         })
-        // Write two saved workflows into the project's .mimocode/workflows.
-        const wfDir = path.join(dir, ".mimocode", "workflows")
+        // Write two saved workflows into the project's .openfable/workflows.
+        const wfDir = path.join(dir, ".openfable", "workflows")
         mkdirSync(wfDir, { recursive: true })
         writeFileSync(
           path.join(wfDir, "produce.js"),
@@ -197,7 +197,7 @@ describe("WorkflowRuntime global concurrency ceiling", () => {
       // The global ceiling of 2 comes from CONFIG (a pure process/config property),
       // NOT from a per-run start() input — a per-run input could only narrow its own
       // run's cap, never the process-wide global. Config.get() reads this from the
-      // tmpdir's mimocode.json.
+      // tmpdir's openfable.json.
       { git: true, config: (url) => ({ ...providerCfg(url), workflow: { maxConcurrentAgents: 2 } }) },
     ),
     30000,
@@ -303,7 +303,7 @@ describe("WorkflowRuntime cycle + depth safety", () => {
           title: "wf cycle",
           permission: [{ permission: "*", pattern: "*", action: "allow" }],
         })
-        const wfDir = path.join(dir, ".mimocode", "workflows")
+        const wfDir = path.join(dir, ".openfable", "workflows")
         mkdirSync(wfDir, { recursive: true })
         // loop.js calls itself by name → cycle.
         writeFileSync(

@@ -20,7 +20,7 @@ body:
       required: false
 
   - type: input
-    id: mimocode-version
+    id: openfable-version
     attributes:
       label: MiMoCode version
       description: What version of MiMoCode are you using?

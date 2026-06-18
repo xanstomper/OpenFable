@@ -1,7 +1,7 @@
 import { GlobalBus } from "@/bus/global"
 import { disposeInstance } from "@/effect/instance-registry"
 import { makeRuntime } from "@/effect/run-service"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { iife } from "@/util/iife"
 import { Log } from "@/util"
 import { LocalContext } from "../util"

@@ -10,8 +10,8 @@ import type {
   Part,
   Auth,
   Config as SDKConfig,
-} from "@mimo-ai/sdk"
-import type { Provider as ProviderV2, Model as ModelV2 } from "@mimo-ai/sdk/v2"
+} from "@openfable/sdk"
+import type { Provider as ProviderV2, Model as ModelV2 } from "@openfable/sdk/v2"
 
 import type { BunShell } from "./shell.js"
 import { type ToolDefinition } from "./tool.js"

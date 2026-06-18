@@ -8,7 +8,7 @@ import { DialogPrompt } from "../ui/dialog-prompt"
 import { Link } from "../ui/link"
 import { useTheme } from "../context/theme"
 import { TextAttributes } from "@opentui/core"
-import type { ProviderAuthAuthorization, ProviderAuthMethod } from "@mimo-ai/sdk/v2"
+import type { ProviderAuthAuthorization, ProviderAuthMethod } from "@openfable/sdk/v2"
 import { DialogModel } from "./dialog-model"
 import { useKeyboard } from "@opentui/solid"
 import * as Clipboard from "@tui/util/clipboard"
@@ -179,7 +179,7 @@ export async function runCustomProviderWizard(opts: {
   const providerID = providerIDRaw.trim()
   if (!providerID) return
 
-  const nameRaw = await step(2, 6, "Display name", "e.g. MiMo Router", providerID)
+  const nameRaw = await step(2, 6, "Display name", "e.g. OpenFable Router", providerID)
   if (nameRaw === null) return
   const name = nameRaw.trim() || providerID
 

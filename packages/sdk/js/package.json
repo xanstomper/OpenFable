@@ -1,20 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@mimo-ai/sdk",
+  "name": "@openfable/sdk",
   "version": "0.1.1",
-  "description": "TypeScript SDK for the MiMoCode API",
-  "keywords": ["mimo", "mimocode", "ai", "sdk", "coding-assistant"],
+  "description": "TypeScript SDK for the OpenFable API",
+  "keywords": ["openfable", "ai", "sdk", "coding-assistant"],
   "type": "module",
   "license": "MIT",
-  "author": "Xiaomi MiMo Team",
-  "homepage": "https://mimo.xiaomi.com/en/mimocode",
+  "author": "OpenFable Contributors",
+  "homepage": "https://github.com/xanstomper/OpenFable-Code",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/XiaomiMiMo/MiMo-Code.git",
+    "url": "git+https://github.com/xanstomper/OpenFable-Code.git",
     "directory": "packages/sdk/js"
   },
   "bugs": {
-    "url": "https://github.com/XiaomiMiMo/MiMo-Code/issues"
+    "url": "https://github.com/xanstomper/OpenFable-Code/issues"
   },
   "publishConfig": {
     "access": "public"

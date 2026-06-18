@@ -21,7 +21,7 @@ const log = Log.create({ service: "server" })
 // stream is not the idle-stream case the heartbeat exists to keep alive, and a
 // proxy that drops the stalled connection just triggers the durable /sync
 // catch-up path on reconnect.
-const EVENT_QUEUE_CAPACITY = Number(process.env["MIMOCODE_EVENT_QUEUE_CAPACITY"]) || 10_000
+const EVENT_QUEUE_CAPACITY = Number(process.env["OPENFABLE_EVENT_QUEUE_CAPACITY"]) || 10_000
 
 export const EventRoutes = () =>
   new Hono().get(

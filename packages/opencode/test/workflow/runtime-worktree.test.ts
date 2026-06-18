@@ -41,7 +41,7 @@ describe("WorkflowRuntime worktree isolation", () => {
         yield* llm.tool("write", { filePath: "port.rs", content: "// rust" })
         yield* llm.text("done")
         // A worktree is a fresh checkout of HEAD; uncommitted files (like the
-        // fixture's mimocode.json provider config) do NOT propagate. Commit it so
+        // fixture's openfable.json provider config) do NOT propagate. Commit it so
         // the isolated agent's worktree Instance can resolve the test provider.
         yield* Effect.promise(() => $`git add -A && git commit -q -m wf-config`.cwd(dir).quiet().nothrow())
         const script = [

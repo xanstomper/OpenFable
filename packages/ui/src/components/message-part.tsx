@@ -28,7 +28,7 @@ import {
   Todo,
   QuestionAnswer,
   QuestionInfo,
-} from "@mimo-ai/sdk/v2"
+} from "@openfable/sdk/v2"
 import { useData } from "../context"
 import { useFileComponent } from "../context/file"
 import { useDialog } from "../context/dialog"
@@ -44,8 +44,8 @@ import { Checkbox } from "./checkbox"
 import { DiffChanges } from "./diff-changes"
 import { Markdown } from "./markdown"
 import { ImagePreview } from "./image-preview"
-import { getDirectory as _getDirectory, getFilename } from "@mimo-ai/shared/util/path"
-import { checksum } from "@mimo-ai/shared/util/encode"
+import { getDirectory as _getDirectory, getFilename } from "@openfable/shared/util/path"
+import { checksum } from "@openfable/shared/util/encode"
 import { Tooltip } from "./tooltip"
 import { IconButton } from "./icon-button"
 import { Spinner } from "./spinner"

@@ -8,7 +8,7 @@ import type {
   TuiPluginMeta,
   TuiPluginModule,
   TuiSlotPlugin,
-} from "@mimo-ai/plugin/tui"
+} from "@openfable/plugin/tui"
 
 const tabs = ["overview", "counter", "help"]
 const bind = {

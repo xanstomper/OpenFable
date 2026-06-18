@@ -112,9 +112,9 @@ export const dict = {
   "tui.tips.cycle_sessions":
     "Pulsa {highlight}Ctrl+X Right/Left{/highlight} para alternar entre sesiones padre e hija",
   "tui.tips.config_files":
-    "Crea {highlight}mimocode.json{/highlight} para la configuración del servidor y {highlight}tui.json{/highlight} para la TUI",
+    "Crea {highlight}openfable.json{/highlight} para la configuración del servidor y {highlight}tui.json{/highlight} para la TUI",
   "tui.tips.global_config":
-    "Coloca la configuración de TUI en {highlight}~/.config/mimocode/tui.json{/highlight} como configuración global",
+    "Coloca la configuración de TUI en {highlight}~/.config/openfable/tui.json{/highlight} como configuración global",
   "tui.tips.schema":
     "Añade {highlight}$schema{/highlight} a tu configuración para autocompletado en el editor",
   "tui.tips.default_model":
@@ -128,13 +128,13 @@ export const dict = {
   "tui.tips.mcp_oauth":
     "MiMoCode gestiona automáticamente OAuth para servidores MCP remotos que requieran autenticación",
   "tui.tips.custom_command":
-    "Añade archivos {highlight}.md{/highlight} en {highlight}.mimocode/command/{/highlight} para definir indicaciones personalizadas reutilizables",
+    "Añade archivos {highlight}.md{/highlight} en {highlight}.openfable/command/{/highlight} para definir indicaciones personalizadas reutilizables",
   "tui.tips.command_args":
     "Usa {highlight}$ARGUMENTS{/highlight}, {highlight}$1{/highlight}, {highlight}$2{/highlight} en comandos personalizados para entradas dinámicas",
   "tui.tips.command_backticks":
     "Usa comillas invertidas en los comandos para inyectar la salida del shell (p. ej. {highlight}`git status`{/highlight})",
   "tui.tips.custom_agent":
-    "Añade archivos {highlight}.md{/highlight} en {highlight}.mimocode/agent/{/highlight} para personajes de IA especializados",
+    "Añade archivos {highlight}.md{/highlight} en {highlight}.openfable/agent/{/highlight} para personajes de IA especializados",
   "tui.tips.agent_perms":
     "Configura por agente los permisos de las herramientas {highlight}edit{/highlight}, {highlight}bash{/highlight} y {highlight}webfetch{/highlight}",
   "tui.tips.bash_allow":
@@ -150,43 +150,43 @@ export const dict = {
     "Define comandos de formateo personalizados por extensión de archivo en la configuración",
   "tui.tips.lsp": "MiMoCode usa servidores LSP para análisis inteligente de código",
   "tui.tips.custom_tool":
-    "Crea archivos {highlight}.ts{/highlight} en {highlight}.mimocode/tools/{/highlight} para definir nuevas herramientas LLM",
+    "Crea archivos {highlight}.ts{/highlight} en {highlight}.openfable/tools/{/highlight} para definir nuevas herramientas LLM",
   "tui.tips.tool_scripts":
     "Las definiciones de herramientas pueden invocar scripts en Python, Go, etc.",
   "tui.tips.plugins":
-    "Añade archivos {highlight}.ts{/highlight} en {highlight}.mimocode/plugin/{/highlight} para enganchar eventos",
+    "Añade archivos {highlight}.ts{/highlight} en {highlight}.openfable/plugin/{/highlight} para enganchar eventos",
   "tui.tips.plugin_notify":
     "Usa plugins para enviar notificaciones del sistema cuando termine una sesión",
   "tui.tips.plugin_protect":
     "Crea un plugin que impida a MiMoCode leer archivos sensibles",
   "tui.tips.run":
-    "Usa {highlight}mimo run{/highlight} para scripting no interactivo",
+    "Usa {highlight}openfable run{/highlight} para scripting no interactivo",
   "tui.tips.continue":
-    "Usa {highlight}mimo --continue{/highlight} para retomar la última sesión",
+    "Usa {highlight}openfable --continue{/highlight} para retomar la última sesión",
   "tui.tips.attach_cli":
-    "Usa {highlight}mimo run -f file.ts{/highlight} para adjuntar archivos vía CLI",
+    "Usa {highlight}openfable run -f file.ts{/highlight} para adjuntar archivos vía CLI",
   "tui.tips.format_json":
     "Usa {highlight}--format json{/highlight} para obtener salida legible por máquina en scripts",
   "tui.tips.serve":
-    "Ejecuta {highlight}mimo serve{/highlight} para acceso headless a la API de MiMoCode",
+    "Ejecuta {highlight}openfable serve{/highlight} para acceso headless a la API de MiMoCode",
   "tui.tips.attach_server":
-    "Usa {highlight}mimo run --attach{/highlight} para conectarte a un servidor en ejecución",
+    "Usa {highlight}openfable run --attach{/highlight} para conectarte a un servidor en ejecución",
   "tui.tips.upgrade":
-    "Ejecuta {highlight}mimo upgrade{/highlight} para actualizar a la última versión",
+    "Ejecuta {highlight}openfable upgrade{/highlight} para actualizar a la última versión",
   "tui.tips.auth_list":
-    "Ejecuta {highlight}mimo auth list{/highlight} para ver todos los proveedores configurados",
+    "Ejecuta {highlight}openfable auth list{/highlight} para ver todos los proveedores configurados",
   "tui.tips.agent_create":
-    "Ejecuta {highlight}mimo agent create{/highlight} para crear un agente con asistente guiado",
+    "Ejecuta {highlight}openfable agent create{/highlight} para crear un agente con asistente guiado",
   "tui.tips.github_trigger":
     "Usa {highlight}/opencode{/highlight} en issues/PR de GitHub para disparar acciones de IA",
   "tui.tips.github_install":
-    "Ejecuta {highlight}mimo github install{/highlight} para configurar el workflow de GitHub",
+    "Ejecuta {highlight}openfable github install{/highlight} para configurar el workflow de GitHub",
   "tui.tips.github_oc":
     "Comenta {highlight}/oc{/highlight} en líneas de código de un PR para revisiones puntuales",
   "tui.tips.theme_system":
     'Usa {highlight}"theme": "system"{/highlight} para seguir los colores de tu terminal',
   "tui.tips.theme_files":
-    "Crea archivos JSON de tema en el directorio {highlight}.mimocode/themes/{/highlight}",
+    "Crea archivos JSON de tema en el directorio {highlight}.openfable/themes/{/highlight}",
   "tui.tips.theme_variants": "Los temas admiten variantes claras/oscuras para ambos modos",
   "tui.tips.theme_ansi": "Referencia colores ANSI 0-255 en temas personalizados",
   "tui.tips.env_var":
@@ -216,7 +216,7 @@ export const dict = {
   "tui.tips.external_dir":
     "El permiso {highlight}external_directory{/highlight} protege archivos fuera del proyecto",
   "tui.tips.debug_config":
-    "Ejecuta {highlight}mimo debug config{/highlight} para diagnosticar problemas de configuración",
+    "Ejecuta {highlight}openfable debug config{/highlight} para diagnosticar problemas de configuración",
   "tui.tips.print_logs":
     "Usa la opción {highlight}--print-logs{/highlight} para ver logs detallados en stderr",
   "tui.tips.timeline":
@@ -232,7 +232,7 @@ export const dict = {
   "tui.tips.docker":
     "Ejecuta {highlight}docker run -it --rm ghcr.io/anomalyco/opencode{/highlight} para uso en contenedor",
   "tui.tips.zen":
-    "Usa {highlight}/connect{/highlight} con MiMo Code para modelos seleccionados y probados",
+    "Usa {highlight}/connect{/highlight} con OpenFable Code para modelos seleccionados y probados",
   "tui.tips.agents_md":
     "Sube el {highlight}AGENTS.md{/highlight} de tu proyecto a Git para compartirlo con el equipo",
   "tui.tips.review":
@@ -421,7 +421,7 @@ export const dict = {
   "tui.command.voice.control.title": "Alternar control de voz (multimodal)",
   "tui.command.voice.control.title_on": "Control de voz: activado (multimodal) — clic para desactivar",
   "tui.command.voice.control.title_off": "Control de voz: desactivado (ASR rápido) — clic para activar",
-  "tui.voice.error.no_auth": "Usa /connect para conectar tu cuenta MiMo, o configura voice.asr_model para otro proveedor",
+  "tui.voice.error.no_auth": "Usa /connect para conectar tu cuenta OpenFable, o configura voice.asr_model para otro proveedor",
   "tui.voice.error.no_auth_provider": "El proveedor de voz \"{{provider}}\" no está autenticado, revisa su apiKey",
   "tui.voice.error.provider_not_found": "Proveedor \"{{provider}}\" no disponible — /connect para autenticarte, o declara models en la config para endpoints personalizados",
   "tui.voice.error.no_url": "El proveedor \"{{provider}}\" no tiene baseURL configurada — configura options.baseURL",
@@ -456,7 +456,7 @@ export const dict = {
   // Workspace trust
   "trust.title": "Accediendo al espacio de trabajo:",
   "trust.safety_check": "Verificación rápida: ¿Es este un proyecto que creaste o en el que confías? (Tu propio código, un proyecto open source conocido o trabajo de tu equipo). Si no, tómate un momento para revisar el contenido de esta carpeta.",
-  "trust.capabilities": "MiMo Code podrá leer, editar y ejecutar archivos aquí.",
+  "trust.capabilities": "OpenFable Code podrá leer, editar y ejecutar archivos aquí.",
   "trust.plugin_warn": "Si existen plugins maliciosos en este directorio, pueden ejecutar código arbitrario, leer, modificar o exfiltrar tus archivos.",
   "trust.option.yes": "Sí, confío en esta carpeta",
   "trust.option.no": "No, salir",
@@ -468,7 +468,7 @@ export const dict = {
   "trust.dangerous.advice_root": "A menos que tengas una razón muy específica, NO confíes en la raíz del sistema de archivos.",
   "trust.dangerous.option.yes": "Entiendo los riesgos, confiar solo esta sesión",
   "trust.dangerous.option.no": "Salir (recomendado)",
-  "tui.dialog.login.flow.title": "Inicio de sesión MiMo",
+  "tui.dialog.login.flow.title": "Inicio de sesión OpenFable",
   "tui.dialog.login.flow.placeholder": "Pega el código (o espera la devolución del navegador)",
   "tui.dialog.login.flow.busy": "Iniciando sesión...",
   "tui.dialog.login.flow.manual_hint": "¿El navegador no se abrió? Haz clic en el enlace para copiar:",

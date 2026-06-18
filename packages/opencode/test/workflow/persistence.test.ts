@@ -201,8 +201,8 @@ describe("journalKey", () => {
   })
 
   test("opts key order does not change the hash", () => {
-    const a = journalKey("p", { agentType: "g", model: { providerID: "mimo", modelID: "m" } }, 0)
-    const b = journalKey("p", { model: { modelID: "m", providerID: "mimo" }, agentType: "g" }, 0)
+    const a = journalKey("p", { agentType: "g", model: { providerID: "openfable", modelID: "m" } }, 0)
+    const b = journalKey("p", { model: { modelID: "m", providerID: "openfable" }, agentType: "g" }, 0)
     expect(a).toBe(b)
   })
 
@@ -222,7 +222,7 @@ describe("journalKey", () => {
     const lite = journalKey("p", { agentType: "g", model: "lite" }, 0)
     expect(journalKey("p", { agentType: "g", model: "lite" }, 0)).toBe(lite)
     expect(journalKey("p", { agentType: "g", model: "ultra" }, 0)).not.toBe(lite)
-    expect(journalKey("p", { agentType: "g", model: "mimo/mimo-v2.5-pro" }, 0)).not.toBe(lite)
+    expect(journalKey("p", { agentType: "g", model: "openfable/openfable-v2.5-pro" }, 0)).not.toBe(lite)
     // omitting model differs from naming a tier
     expect(journalKey("p", { agentType: "g" }, 0)).not.toBe(lite)
   })

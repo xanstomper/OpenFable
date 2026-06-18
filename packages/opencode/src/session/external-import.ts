@@ -1,6 +1,6 @@
 import path from "path"
 import { existsSync } from "fs"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Glob } from "@openfable/shared/util/glob"
 import { Global } from "../global"
 import { Log } from "../util"
 import { Database, eq, count } from "../storage"

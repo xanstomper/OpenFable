@@ -71,7 +71,7 @@ function select(file: string | undefined, opts?: { acceptable?: boolean }) {
 
 export function gitbash() {
   if (process.platform !== "win32") return
-  if (Flag.MIMOCODE_GIT_BASH_PATH) return Flag.MIMOCODE_GIT_BASH_PATH
+  if (Flag.OPENFABLE_GIT_BASH_PATH) return Flag.OPENFABLE_GIT_BASH_PATH
   const git = which("git")
   if (!git) return
   const file = path.join(git, "..", "..", "bin", "bash.exe")

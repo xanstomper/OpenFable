@@ -1,4 +1,4 @@
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@mimo-ai/plugin/tui"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@openfable/plugin/tui"
 import { createMemo, Index, Show, createSignal } from "solid-js"
 import { TaskItem } from "../../component/task-item"
 

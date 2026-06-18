@@ -13,7 +13,7 @@ import {
   PlatformProvider,
   ServerConnection,
   useCommand,
-} from "@mimo-ai/app"
+} from "@openfable/app"
 import type { AsyncStorage } from "@solid-primitives/storage"
 import { MemoryRouter } from "@solidjs/router"
 import { createEffect, createResource, onCleanup, onMount, Show } from "solid-js"
@@ -22,7 +22,7 @@ import pkg from "../../package.json"
 import { initI18n, t } from "./i18n"
 import { webviewZoom } from "./webview-zoom"
 import "./styles.css"
-import { useTheme } from "@mimo-ai/ui/theme"
+import { useTheme } from "@openfable/ui/theme"
 
 const root = document.getElementById("root")
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {

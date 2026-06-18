@@ -18,7 +18,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //         }),
@@ -42,7 +42,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //           provider: {
@@ -74,7 +74,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //         }),
@@ -111,7 +111,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //         }),
@@ -147,7 +147,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //           provider: {
@@ -179,7 +179,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //           provider: {
@@ -209,7 +209,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //         }),
@@ -235,7 +235,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //           provider: {
@@ -270,7 +270,7 @@ export {}
 //   await using tmp = await tmpdir({
 //     init: async (dir) => {
 //       await Bun.write(
-//         path.join(dir, "mimocode.json"),
+//         path.join(dir, "openfable.json"),
 //         JSON.stringify({
 //           $schema: "https://opencode.ai/config.json",
 //         }),
@@ -298,7 +298,7 @@ export {}
 //   test("duo-workflow-* model routes through workflowChat", async () => {
 //     await using tmp = await tmpdir({
 //       init: async (dir) => {
-//         await Bun.write(path.join(dir, "mimocode.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
+//         await Bun.write(path.join(dir, "openfable.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
 //       },
 //     })
 //     await Instance.provide({
@@ -346,7 +346,7 @@ export {}
 //   test("duo-chat-* model routes through agenticChat (not workflow)", async () => {
 //     await using tmp = await tmpdir({
 //       init: async (dir) => {
-//         await Bun.write(path.join(dir, "mimocode.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
+//         await Bun.write(path.join(dir, "openfable.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
 //       },
 //     })
 //     await Instance.provide({
@@ -369,7 +369,7 @@ export {}
 //   test("model.options merged with provider.options in getLanguage", async () => {
 //     await using tmp = await tmpdir({
 //       init: async (dir) => {
-//         await Bun.write(path.join(dir, "mimocode.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
+//         await Bun.write(path.join(dir, "openfable.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
 //       },
 //     })
 //     await Instance.provide({
@@ -393,7 +393,7 @@ export {}
 //   test("static duo-chat models always present regardless of discovery", async () => {
 //     await using tmp = await tmpdir({
 //       init: async (dir) => {
-//         await Bun.write(path.join(dir, "mimocode.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
+//         await Bun.write(path.join(dir, "openfable.json"), JSON.stringify({ $schema: "https://opencode.ai/config.json" }))
 //       },
 //     })
 //     await Instance.provide({

@@ -50,11 +50,11 @@ function testLayer(
 
 describe("installation", () => {
   describe("method", () => {
-    test("detects npm when @mimo-ai/cli is in npm list output", async () => {
+    test("detects npm when @openfable/cli is in npm list output", async () => {
       const layer = testLayer(
         () => jsonResponse({}),
         (cmd, args) => {
-          if (cmd === "npm" && args.includes("-g")) return "@mimo-ai/cli@1.0.0"
+          if (cmd === "npm" && args.includes("-g")) return "@openfable/cli@1.0.0"
           return ""
         },
       )
@@ -65,11 +65,11 @@ describe("installation", () => {
       expect(result).toBe("npm")
     })
 
-    test("detects pnpm when @mimo-ai/cli is in pnpm list output", async () => {
+    test("detects pnpm when @openfable/cli is in pnpm list output", async () => {
       const layer = testLayer(
         () => jsonResponse({}),
         (cmd, args) => {
-          if (cmd === "pnpm" && args.includes("-g")) return "@mimo-ai/cli@1.0.0"
+          if (cmd === "pnpm" && args.includes("-g")) return "@openfable/cli@1.0.0"
           return ""
         },
       )
@@ -80,11 +80,11 @@ describe("installation", () => {
       expect(result).toBe("pnpm")
     })
 
-    test("detects bun when @mimo-ai/cli is in bun pm ls output", async () => {
+    test("detects bun when @openfable/cli is in bun pm ls output", async () => {
       const layer = testLayer(
         () => jsonResponse({}),
         (cmd, args) => {
-          if (cmd === "bun" && args.includes("-g")) return "@mimo-ai/cli@1.0.0"
+          if (cmd === "bun" && args.includes("-g")) return "@openfable/cli@1.0.0"
           return ""
         },
       )
@@ -95,7 +95,7 @@ describe("installation", () => {
       expect(result).toBe("bun")
     })
 
-    test("returns unknown when no package manager has @mimo-ai/cli", async () => {
+    test("returns unknown when no package manager has @openfable/cli", async () => {
       const layer = testLayer(
         () => jsonResponse({}),
         () => "",
@@ -112,7 +112,7 @@ describe("installation", () => {
     test("reads version from npm registry for npm method", async () => {
       const layer = testLayer(
         (req) => {
-          expect(req.url).toContain(encodeURIComponent("@mimo-ai/cli"))
+          expect(req.url).toContain(encodeURIComponent("@openfable/cli"))
           return jsonResponse({ version: "1.5.0" })
         },
         (cmd, args) => {
@@ -161,8 +161,8 @@ describe("installation", () => {
       const layer = testLayer(
         () => jsonResponse({}),
         (cmd, args) => {
-          if (cmd === "curl" && args.includes("https://github.com/XiaomiMiMo/MiMo-Code/releases/latest"))
-            return "HTTP/2 302\r\nlocation: https://github.com/XiaomiMiMo/MiMo-Code/releases/tag/v0.1.1\r\n"
+          if (cmd === "curl" && args.includes("https://github.com/XiaomiMiMo/OpenFable-Code/releases/latest"))
+            return "HTTP/2 302\r\nlocation: https://github.com/XiaomiMiMo/OpenFable-Code/releases/tag/v0.1.1\r\n"
           return ""
         },
       )
@@ -206,7 +206,7 @@ describe("installation", () => {
       )
       expect(capturedCmd).toBe("npm")
       expect(capturedArgs).toContain("-g")
-      expect(capturedArgs).toContain("@mimo-ai/cli@2.0.0")
+      expect(capturedArgs).toContain("@openfable/cli@2.0.0")
     })
 
     test("runs pnpm install with correct package", async () => {
@@ -223,7 +223,7 @@ describe("installation", () => {
         Installation.Service.use((svc) => svc.upgrade("pnpm", "2.0.0")).pipe(Effect.provide(layer)),
       )
       expect(capturedArgs).toContain("-g")
-      expect(capturedArgs).toContain("@mimo-ai/cli@2.0.0")
+      expect(capturedArgs).toContain("@openfable/cli@2.0.0")
     })
 
     test("runs bun install with correct package", async () => {
@@ -240,7 +240,7 @@ describe("installation", () => {
         Installation.Service.use((svc) => svc.upgrade("bun", "2.0.0")).pipe(Effect.provide(layer)),
       )
       expect(capturedArgs).toContain("-g")
-      expect(capturedArgs).toContain("@mimo-ai/cli@2.0.0")
+      expect(capturedArgs).toContain("@openfable/cli@2.0.0")
     })
 
     test("fails for unknown method", async () => {

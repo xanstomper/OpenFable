@@ -14,7 +14,7 @@ import { useRenderer } from "@opentui/solid"
 import os from "os"
 import path from "path"
 
-export function DialogMimoLogin() {
+export function DialogOpenFableLogin() {
   const dialog = useDialog()
   const sdk = useSDK()
   const sync = useSync()
@@ -46,25 +46,25 @@ export function DialogMimoLogin() {
             ))
           },
         },
-        // Free "mimo-auto" channel: only offered when its provider is actually
+        // Free "openfable-auto" channel: only offered when its provider is actually
         // loaded (i.e. the private src/private/ overlay is present). In the
         // open-source build the provider never loads, so this option is hidden.
-        ...(sync.data.provider.some((p) => p.id === "mimo")
+        ...(sync.data.provider.some((p) => p.id === "openfable")
           ? [
               {
-                title: t("tui.dialog.login.mimo_free"),
-                value: "mimo-free",
-                description: t("tui.dialog.login.mimo_free.desc"),
+                title: t("tui.dialog.login.openfable_free"),
+                value: "openfable-free",
+                description: t("tui.dialog.login.openfable_free.desc"),
                 onSelect: async () => {
                   await sync.bootstrap()
-                  const mimo = sync.data.provider.find((p) => p.id === "mimo")
-                  if (!mimo || !("mimo-auto" in mimo.models)) {
-                    toast.show({ message: t("tui.dialog.login.mimo_free.unavailable"), variant: "error" })
+                  const openfable = sync.data.provider.find((p) => p.id === "openfable")
+                  if (!openfable || !("openfable-auto" in openfable.models)) {
+                    toast.show({ message: t("tui.dialog.login.openfable_free.unavailable"), variant: "error" })
                     dialog.clear()
                     return
                   }
-                  local.model.set({ providerID: "mimo", modelID: "mimo-auto" }, { recent: true })
-                  toast.show({ message: t("tui.dialog.login.mimo_free.success"), variant: "info" })
+                  local.model.set({ providerID: "openfable", modelID: "openfable-auto" }, { recent: true })
+                  toast.show({ message: t("tui.dialog.login.openfable_free.success"), variant: "info" })
                   dialog.clear()
                 },
               },
@@ -187,8 +187,8 @@ function MimoOAuthFlow(props: { url: string; instructions: string }) {
   async function onLoginSuccess() {
     await sdk.client.instance.dispose()
     await sync.bootstrap()
-    const xiaomi = sync.data.provider.find((p) => p.id === "xiaomi")
-    const defaultModel = xiaomi && "mimo-v2.5-pro" in xiaomi.models ? "mimo-v2.5-pro" : xiaomi ? Object.keys(xiaomi.models)[0] : undefined
+    const openfable = sync.data.provider.find((p) => p.id === "xiaomi")
+    const defaultModel = xiaomi && "openfable-v2.5-pro" in xiaomi.models ? "openfable-v2.5-pro" : xiaomi ? Object.keys(xiaomi.models)[0] : undefined
     if (defaultModel) {
       local.model.set({ providerID: "xiaomi", modelID: defaultModel }, { recent: true })
     }

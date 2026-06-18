@@ -5,7 +5,7 @@ import { Workspace } from "@/control-plane/workspace"
 import type { WorkspaceID } from "@/control-plane/schema"
 import { Log } from "@/util"
 
-const HEADER = "x-mimocode-sync"
+const HEADER = "x-openfable-sync"
 type State = Record<string, number>
 const log = Log.create({ service: "fence" })
 

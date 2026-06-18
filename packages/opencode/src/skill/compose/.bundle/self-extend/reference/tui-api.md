@@ -3,7 +3,7 @@
 ## File Format
 
 ```tsx
-import type { TuiPlugin } from "@mimo-ai/plugin/tui"
+import type { TuiPlugin } from "@openfable/plugin/tui"
 
 export const tui: TuiPlugin = async (api, options, meta) => {
   // api — the full TUI plugin API
@@ -177,7 +177,7 @@ const keys = api.keybind.create(
 SDK client for server communication.
 
 ```ts
-// The full @mimo-ai/sdk client — same as what plugins get on server side
+// The full @openfable/sdk client — same as what plugins get on server side
 const sessions = await api.client.session.list()
 const messages = await api.client.session.messages(sessionID)
 ```
@@ -215,7 +215,7 @@ api.lifecycle.onDispose(() => {
 ## Complete Example
 
 ```tsx
-import type { TuiPlugin } from "@mimo-ai/plugin/tui"
+import type { TuiPlugin } from "@openfable/plugin/tui"
 
 export const tui: TuiPlugin = async (api) => {
   // Register a command

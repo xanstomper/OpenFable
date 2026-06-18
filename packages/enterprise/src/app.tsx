@@ -1,16 +1,16 @@
 import { Router } from "@solidjs/router"
 import { FileRoutes } from "@solidjs/start/router"
-import { Font } from "@mimo-ai/ui/font"
+import { Font } from "@openfable/ui/font"
 import { MetaProvider } from "@solidjs/meta"
-import { MarkedProvider } from "@mimo-ai/ui/context/marked"
-import { DialogProvider } from "@mimo-ai/ui/context/dialog"
-import { I18nProvider, type UiI18nParams } from "@mimo-ai/ui/context"
-import { dict as uiEn } from "@mimo-ai/ui/i18n/en"
-import { dict as uiZh } from "@mimo-ai/ui/i18n/zh"
+import { MarkedProvider } from "@openfable/ui/context/marked"
+import { DialogProvider } from "@openfable/ui/context/dialog"
+import { I18nProvider, type UiI18nParams } from "@openfable/ui/context"
+import { dict as uiEn } from "@openfable/ui/i18n/en"
+import { dict as uiZh } from "@openfable/ui/i18n/zh"
 import { createEffect, createMemo, Suspense, type ParentProps } from "solid-js"
 import { getRequestEvent } from "solid-js/web"
 import "./app.css"
-import { Favicon } from "@mimo-ai/ui/favicon"
+import { Favicon } from "@openfable/ui/favicon"
 
 function resolveTemplate(text: string, params?: UiI18nParams) {
   if (!params) return text

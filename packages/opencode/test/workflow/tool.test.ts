@@ -18,7 +18,7 @@ import { Question } from "../../src/question"
 import { Todo } from "../../src/session/todo"
 import { Session } from "../../src/session"
 import { LLM } from "../../src/session/llm"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { SessionPrune } from "../../src/session/prune"
 import { SessionSummary } from "../../src/session/summary"
 import { Instruction } from "../../src/session/instruction"
@@ -260,12 +260,12 @@ function providerCfg(url: string) {
 describe("WorkflowTool run", () => {
   // The workflow tool is flag-gated (src/tool/registry.ts) — it only appears in
   // the agent's tool list when this is true. The agent-loop test below needs it.
-  const originalFlag = Flag.MIMOCODE_EXPERIMENTAL_WORKFLOW_TOOL
+  const originalFlag = Flag.OPENFABLE_EXPERIMENTAL_WORKFLOW_TOOL
   beforeAll(() => {
-    Flag.MIMOCODE_EXPERIMENTAL_WORKFLOW_TOOL = true
+    Flag.OPENFABLE_EXPERIMENTAL_WORKFLOW_TOOL = true
   })
   afterAll(() => {
-    Flag.MIMOCODE_EXPERIMENTAL_WORKFLOW_TOOL = originalFlag
+    Flag.OPENFABLE_EXPERIMENTAL_WORKFLOW_TOOL = originalFlag
   })
 
   it.live("run returns a run_id immediately, then completes in the background", () =>

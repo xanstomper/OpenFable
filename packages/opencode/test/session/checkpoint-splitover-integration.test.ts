@@ -115,7 +115,7 @@ describe("CheckpointSplitoverPlugin spawn-loop integration", () => {
       await using tmp = await tmpdir({
         init: async (dir) => {
           await Bun.write(
-            `${dir}/mimocode.json`,
+            `${dir}/openfable.json`,
             JSON.stringify({
               $schema: "https://opencode.ai/config.json",
               enabled_providers: ["alibaba"],
@@ -236,7 +236,7 @@ describe("CheckpointContext producer (tryStartCheckpointWriter)", () => {
       await using tmp = await tmpdir({
         init: async (dir) => {
           await Bun.write(
-            `${dir}/mimocode.json`,
+            `${dir}/openfable.json`,
             JSON.stringify({
               $schema: "https://opencode.ai/config.json",
               enabled_providers: ["alibaba"],
@@ -405,7 +405,7 @@ describe("parentSessionID end-to-end (Axis A wiring)", () => {
       await using tmp = await tmpdir({
         init: async (dir) => {
           await Bun.write(
-            `${dir}/mimocode.json`,
+            `${dir}/openfable.json`,
             JSON.stringify({
               $schema: "https://opencode.ai/config.json",
               enabled_providers: ["alibaba"],

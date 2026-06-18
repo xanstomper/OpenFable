@@ -121,7 +121,7 @@ Funkcija dodatka prima:
 Za TypeScript dodatke, možete uvesti tipove iz paketa dodataka:
 
 ```ts title="my-plugin.ts" {1}
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const MyPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -269,7 +269,7 @@ export const InjectEnvPlugin = async () => {
 Dodaci također mogu dodati prilagođene alate u opencode:
 
 ```ts title=".opencode/plugins/custom-tools.ts"
-import { type Plugin, tool } from "@mimo-ai/plugin"
+import { type Plugin, tool } from "@openfable/plugin"
 
 export const CustomToolsPlugin: Plugin = async (ctx) => {
   return {
@@ -322,7 +322,7 @@ Nivoi su: `debug`, `info`, `warn`, `error`. Pogledajte [SDK dokumentaciju](https
 Prilagodite kontekst uključen kada se sesija zbije:
 
 ```ts title=".opencode/plugins/compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CompactionPlugin: Plugin = async (ctx) => {
   return {
@@ -345,7 +345,7 @@ Include any state that should persist across compaction:
 Također možete u potpunosti zamijeniti prompt za sabijanje postavljanjem `output.prompt`:
 
 ```ts title=".opencode/plugins/custom-compaction.ts"
-import type { Plugin } from "@mimo-ai/plugin"
+import type { Plugin } from "@openfable/plugin"
 
 export const CustomCompactionPlugin: Plugin = async (ctx) => {
   return {

@@ -2,7 +2,7 @@ import path from "path"
 import os from "os"
 import { Filesystem } from "@/util"
 import { Path as GlobalPath } from "@/global"
-import { Flock } from "@mimo-ai/shared/util/flock"
+import { Flock } from "@openfable/shared/util/flock"
 
 export type TrustLevel = "trusted" | "untrusted" | "dangerous"
 

@@ -1,7 +1,7 @@
 import { describe, test, expect } from "bun:test"
 import { Effect, Layer } from "effect"
 import { NodeFileSystem } from "@effect/platform-node"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { testEffect } from "../lib/effect"
 import path from "path"
 

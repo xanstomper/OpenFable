@@ -1,8 +1,8 @@
-# Xiaomi MiMoCode Use Restrictions
+# OpenFable Code Use Restrictions
 
 ## Use Restrictions
 
-You are solely responsible for your use of Xiaomi MiMoCode and any outputs, actions, or consequences arising therefrom, and you agree not to use Xiaomi MiMoCode or any derivatives thereof:
+You are solely responsible for your use of OpenFable Code and any outputs, actions, or consequences arising therefrom, and you agree not to use OpenFable Code or any derivatives thereof:
 
 - For any unlawful, fraudulent, or malicious purpose, or in any manner that violates any applicable laws or regulations;
 
@@ -16,4 +16,4 @@ You are solely responsible for your use of Xiaomi MiMoCode and any outputs, acti
 
 - To access, collect, process, disclose, or disseminate personal data or other protected information without appropriate authorization or lawful basis; or to access, interact with, scrape, or automate any third-party platform or service in violation of any applicable laws, policies, or authorization requirements;
 
-- To use Xiaomi MiMoCode in a manner that autonomously executes high-risk actions without appropriate human oversight or authorization.
+- To use OpenFable Code in a manner that autonomously executes high-risk actions without appropriate human oversight or authorization.

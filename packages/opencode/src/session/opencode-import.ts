@@ -114,11 +114,11 @@ export async function run(opts?: { force?: boolean; dbPath?: string }): Promise<
           continue
         }
 
-        // If this import previously created a mimocode session that the user has
+        // If this import previously created a openfable session that the user has
         // since deleted, drop the stale mapping and re-import fresh (otherwise the
         // update below touches zero rows and the message FK insert fails). When it
         // still exists, remember its time_updated so a re-sync never moves the
-        // session backward past mimocode-native activity (cc/codex parity).
+        // session backward past openfable-native activity (cc/codex parity).
         let existingUpdated: number | undefined
         if (existing) {
           const mimoSess = Database.use((db) =>

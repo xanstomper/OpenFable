@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js"
-import { Dialog } from "@mimo-ai/ui/dialog"
-import { Button } from "@mimo-ai/ui/button"
-import { useDialog } from "@mimo-ai/ui/context/dialog"
+import { Dialog } from "@openfable/ui/dialog"
+import { Button } from "@openfable/ui/button"
+import { useDialog } from "@openfable/ui/context/dialog"
 import { useLanguage } from "@/context/language"
 import { useSettings } from "@/context/settings"
 

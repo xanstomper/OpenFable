@@ -1,5 +1,5 @@
 import type { ParsedKey } from "@opentui/core"
-import type { TuiDialogSelectOption, TuiPluginApi, TuiRouteDefinition, TuiSlotProps } from "@mimo-ai/plugin/tui"
+import type { TuiDialogSelectOption, TuiPluginApi, TuiRouteDefinition, TuiSlotProps } from "@openfable/plugin/tui"
 import type { useCommandDialog } from "@tui/component/dialog-command"
 import type { useEvent } from "@tui/context/event"
 import type { useKeybind } from "@tui/context/keybind"

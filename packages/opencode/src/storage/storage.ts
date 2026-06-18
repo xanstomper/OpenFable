@@ -1,9 +1,9 @@
 import { Log } from "../util"
 import path from "path"
 import { Global } from "../global"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import z from "zod"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { Effect, Exit, Layer, Option, RcMap, Schema, Context, TxReentrantLock } from "effect"
 import { Git } from "@/git"
 

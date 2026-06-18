@@ -1,5 +1,5 @@
-import type { AssistantMessage } from "@mimo-ai/sdk/v2"
-import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@mimo-ai/plugin/tui"
+import type { AssistantMessage } from "@openfable/sdk/v2"
+import type { TuiPlugin, TuiPluginApi, TuiPluginModule } from "@openfable/plugin/tui"
 import { Show, createEffect, createMemo, createSignal, onCleanup } from "solid-js"
 import { completedTPS, formatTPS, streamingTPS } from "./tps"
 

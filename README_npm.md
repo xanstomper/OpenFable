@@ -1,16 +1,16 @@
-<h1 align="center">MiMoCode</h1>
+<h1 align="center">OpenFable Code</h1>
 
-<p align="center"><strong>MiMo Code: Where Models and Agents Co-Evolve</strong></p>
+<p align="center"><strong>OpenFable Code: Where Models and Agents Co-Evolve</strong></p>
 
 <p align="center">
-  <a href="https://mimo.xiaomi.com/en/mimocode">Website</a> | <a href="https://mimo.xiaomi.com/en/blog/mimo-code-long-horizon">Blog</a> | <a href="https://github.com/XiaomiMiMo/MiMo-Code">GitHub</a>
+  <a href="https://github.com/xanstomper/OpenFable-Code/en/openfable">Website</a> | <a href="https://github.com/xanstomper/OpenFable-Code/en/blog/openfable-code-long-horizon">Blog</a> | <a href="https://github.com/xanstomper/OpenFable-Code">GitHub</a>
 </p>
 
 ---
 
-MiMoCode is a terminal-native AI coding assistant. It can read and write code, run commands, manage Git, and use a persistent memory system to keep a deep understanding of your project across sessions while continuously improving itself.
+OpenFable Code is a terminal-native AI coding assistant. It can read and write code, run commands, manage Git, and use a persistent memory system to keep a deep understanding of your project across sessions while continuously improving itself.
 
-MiMo Auto is built in as a free-for-limited-time channel, so you can start with zero configuration. MiMoCode also supports connecting to any mainstream LLM provider API.
+OpenFable Auto is built in as a free-for-limited-time channel, so you can start with zero configuration. OpenFable also supports connecting to any mainstream LLM provider API.
 
 ---
 
@@ -18,18 +18,18 @@ MiMo Auto is built in as a free-for-limited-time channel, so you can start with 
 
 ```bash
 # One-line install
-curl -fsSL https://mimo.xiaomi.com/install | bash
+curl -fsSL https://github.com/xanstomper/OpenFable-Code/install | bash
 
 # Or install via npm
-npm install -g @mimo-ai/cli
+npm install -g @openfable/cli
 
 # Run
-mimo
+openfable
 ```
 
 The first launch guides you through configuration automatically. Supported options:
-- **MiMo Auto (free for a limited time)** — anonymous channel, zero configuration
-- **Xiaomi MiMo Platform** — OAuth login
+- **OpenFable Auto (free for a limited time)** — anonymous channel, zero configuration
+- **OpenFable Platform** — OAuth login
 - **Import from Claude Code** — migrate existing authentication in one step
 - **Custom Provider** — add any OpenAI-compatible API in the TUI
 
@@ -91,7 +91,7 @@ Compose mode provides a structured workflow for specs-driven development. It inc
 
 ### Voice Input
 
-Real-time streaming voice input powered by TenVAD and MiMo ASR. Activate with `/voice`, then speak — audio is segmented by pauses and transcribed incrementally into the input. Available for MiMo logged-in users. Requires `sox` (`brew install sox` on macOS, other platforms similar).
+Real-time streaming voice input powered by TenVAD and OpenFable ASR. Activate with `/voice`, then speak — audio is segmented by pauses and transcribed incrementally into the input. Available for OpenFable logged-in users. Requires `sox` (`brew install sox` on macOS, other platforms similar).
 
 <details>
 <summary><strong>WSLg audio setup</strong></summary>
@@ -127,7 +127,7 @@ export PULSE_SERVER=tcp:127.0.0.1:4713
 
 ## Configuration
 
-MiMoCode is configured via `.mimocode/mimocode.json` in the project directory (or `~/.config/mimocode/mimocode.json` globally). Key options include:
+OpenFable is configured via `.openfable/openfable.json` in the project directory (or `~/.config/openfable/openfable.json` globally). Key options include:
 
 - Provider and model selection
 - Agent permissions and custom agents
@@ -141,8 +141,8 @@ Max Mode (parallel best-of-N reasoning with judge selection) can be enabled via 
 
 ## License
 
-Source code is licensed under the [MIT License](https://github.com/XiaomiMiMo/MiMo-Code/blob/main/LICENSE).
+Source code is licensed under the [MIT License](https://github.com/xanstomper/OpenFable-Code/blob/main/LICENSE).
 
-Use of MiMoCode is also subject to the [Use Restrictions](https://github.com/XiaomiMiMo/MiMo-Code/blob/main/USE_RESTRICTIONS.md).
-Use of Xiaomi MiMo-hosted services is subject to the [MiMo Terms of Service](https://platform.xiaomimimo.com/docs/terms/user-agreement).
-Use of the MiMo name, logo, and trademarks is subject to the MiMo Trademark Policy.
+Use of OpenFable Code is also subject to the [Use Restrictions](https://github.com/xanstomper/OpenFable-Code/blob/main/USE_RESTRICTIONS.md).
+Use of OpenFable-hosted services is subject to the [OpenFable Terms of Service](https://platform.openfable.ai/docs/terms/user-agreement).
+Use of the OpenFable name, logo, and trademarks is subject to the OpenFable Trademark Policy.

@@ -14,15 +14,15 @@ import { SessionID } from "../../src/session/schema"
 
 async function withTmpHome<T>(fn: (sid: SessionID) => Promise<T>): Promise<T> {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), "progress-reconcile-test-"))
-  const prevHome = process.env.MIMOCODE_HOME
-  process.env.MIMOCODE_HOME = dir
+  const prevHome = process.env.OPENFABLE_HOME
+  process.env.OPENFABLE_HOME = dir
   try {
     const sid = SessionID.make("ses_test_" + Date.now())
     await fs.mkdir(tasksDir(sid), { recursive: true })
     return await fn(sid)
   } finally {
-    if (prevHome === undefined) delete process.env.MIMOCODE_HOME
-    else process.env.MIMOCODE_HOME = prevHome
+    if (prevHome === undefined) delete process.env.OPENFABLE_HOME
+    else process.env.OPENFABLE_HOME = prevHome
     await fs.rm(dir, { recursive: true, force: true })
   }
 }

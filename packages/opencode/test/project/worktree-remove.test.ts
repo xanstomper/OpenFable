@@ -18,7 +18,7 @@ describe("Worktree.remove", () => {
         Effect.gen(function* () {
           const svc = yield* Worktree.Service
           const name = `remove-regression-${Date.now().toString(36)}`
-          const branch = `mimocode/${name}`
+          const branch = `openfable/${name}`
           const dir = path.join(root, "..", name)
 
           yield* Effect.promise(() => $`git worktree add --no-checkout -b ${branch} ${dir}`.cwd(root).quiet())
@@ -90,7 +90,7 @@ describe("Worktree.remove", () => {
         Effect.gen(function* () {
           const svc = yield* Worktree.Service
           const name = `remove-fsmonitor-${Date.now().toString(36)}`
-          const branch = `mimocode/${name}`
+          const branch = `openfable/${name}`
           const dir = path.join(root, "..", name)
 
           yield* Effect.promise(() => $`git worktree add --no-checkout -b ${branch} ${dir}`.cwd(root).quiet())

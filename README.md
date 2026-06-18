@@ -1,24 +1,24 @@
-<h1 align="center">MiMoCode</h1>
+<h1 align="center">OpenFable</h1>
 
 <p align="center">
-  <img src="assets/readme/mimocode-banner.png" alt="MiMoCode" width="700">
+  <img src="assets/readme/openfable-banner.png" alt="OpenFable" width="700">
 </p>
 
-<p align="center"><strong>MiMo Code: Where Models and Agents Co-Evolve</strong></p>
+<p align="center"><strong>Terminal-native AI coding agent</strong></p>
 
 <p align="center">
   <a href="README.zh.md">中文</a> | English
 </p>
 
 <p align="center">
-  <a href="https://mimo.xiaomi.com/en/mimocode">Website</a> | <a href="https://mimo.xiaomi.com/en/blog/mimo-code-long-horizon">Blog</a>
+  <a href="https://github.com/xanstomper/OpenFable-Code">GitHub</a>
 </p>
 
 ---
 
-MiMoCode is a terminal-native AI coding assistant. It can read and write code, run commands, manage Git, and use a persistent memory system to keep a deep understanding of your project across sessions while continuously improving itself.
+OpenFable is a terminal-native AI coding assistant. It can read and write code, run commands, manage Git, and use a persistent memory system to keep a deep understanding of your project across sessions while continuously improving itself.
 
-MiMo Auto is built in as a free-for-limited-time channel, so you can start with zero configuration. MiMoCode also supports connecting to any mainstream LLM provider API.
+OpenFable Auto is built in as a free-for-limited-time channel, so you can start with zero configuration. OpenFable also supports connecting to any mainstream LLM provider API.
 
 ---
 
@@ -26,18 +26,18 @@ MiMo Auto is built in as a free-for-limited-time channel, so you can start with 
 
 ```bash
 # One-line install
-curl -fsSL https://mimo.xiaomi.com/install | bash
+curl -fsSL https://github.com/xanstomper/OpenFable-Code/raw/main/install | bash
 
 # Or install via npm
-npm install -g @mimo-ai/cli
+npm install -g @openfable/cli
 
 # Run
-mimo
+openfable
 ```
 
 The first launch guides you through configuration automatically. Supported options:
-- **MiMo Auto (free for a limited time)** — anonymous channel, zero configuration
-- **Xiaomi MiMo Platform** — OAuth login
+- **OpenFable Auto (free for a limited time)** — anonymous channel, zero configuration
+- **OpenFable Cloud** — OAuth login
 - **Import from Claude Code** — migrate existing authentication in one step
 - **Custom Provider** — add any OpenAI-compatible API in the TUI
 
@@ -99,7 +99,7 @@ Compose mode provides a structured workflow for specs-driven development. It inc
 
 ### Voice Input
 
-Real-time streaming voice input powered by TenVAD and MiMo ASR. Activate with `/voice`, then speak — audio is segmented by pauses and transcribed incrementally into the input. Available for MiMo logged-in users. Requires `sox` (`brew install sox` on macOS, other platforms similar).
+Real-time streaming voice input powered by TenVAD and OpenFable ASR. Activate with `/voice`, then speak — audio is segmented by pauses and transcribed incrementally into the input. Available for OpenFable logged-in users. Requires `sox` (`brew install sox` on macOS, other platforms similar).
 
 <details>
 <summary><strong>WSLg audio setup</strong></summary>
@@ -127,9 +127,9 @@ export PULSE_SERVER=tcp:127.0.0.1:4713
 </details>
 
 <details>
-<summary><strong>Non-MiMo voice providers (OpenRouter, internal API, etc.)</strong></summary>
+<summary><strong>Non-OpenFable voice providers (OpenRouter, internal API, etc.)</strong></summary>
 
-Voice input can route through other OpenAI-compatible providers via the `voice` config field. The ASR model (`mimo-v2.5-asr`) is only available on MiMo's platform; voice control mode (`mimo-v2.5`) is available on OpenRouter and compatible relay platforms.
+Voice input can route through other OpenAI-compatible providers via the `voice` config field. The ASR model (`openfable-v2.5-asr`) is only available on OpenFable's platform; voice control mode (`openfable-v2.5`) is available on OpenRouter and compatible relay platforms.
 
 **OpenRouter (voice control only):**
 
@@ -137,7 +137,7 @@ Use `/connect` to sign in to OpenRouter, then add to your config:
 ```jsonc
 {
   "voice": {
-    "control_model": "openrouter/xiaomi/mimo-v2.5"
+    "control_model": "openrouter/openfable/openfable-v2.5"
   }
 }
 ```
@@ -152,21 +152,21 @@ Use `/connect` to sign in to OpenRouter, then add to your config:
         "apiKey": "sk-..."
       },
       "models": {
-        "xiaomi/mimo-v2.5-asr": { "name": "MiMo-V2.5-ASR" },
-        "xiaomi/mimo-v2.5": { "name": "MiMo-V2.5" }
+        "openfable/openfable-v2.5-asr": { "name": "OpenFable-V2.5-ASR" },
+        "openfable/openfable-v2.5": { "name": "OpenFable-V2.5" }
       }
     }
   },
   "voice": {
-    "asr_model": "internal/xiaomi/mimo-v2.5-asr",
-    "control_model": "internal/xiaomi/mimo-v2.5"
+    "asr_model": "internal/openfable/openfable-v2.5-asr",
+    "control_model": "internal/openfable/openfable-v2.5"
   }
 }
 ```
 
 Custom providers must register at least one model in their `models` field to be recognized. The model names in `voice.*_model` are sent directly to the API — they don't need to match the registered model keys exactly.
 
-> **Note:** Models registered under a custom provider will appear in the model selection list. Don't use ASR-only models (e.g. `mimo-v2.5-asr`) as your primary coding model.
+> **Note:** Models registered under a custom provider will appear in the model selection list. Don't use ASR-only models (e.g. `openfable-v2.5-asr`) as your primary coding model.
 
 </details>
 
@@ -179,7 +179,7 @@ Custom providers must register at least one model in their `models` field to be 
 
 ## Configuration
 
-MiMoCode is configured via `.mimocode/mimocode.json` in the project directory (or `~/.config/mimocode/mimocode.json` globally). Key options include:
+OpenFable is configured via `.openfable/openfable.json` in the project directory (or `~/.config/openfable/openfable.json` globally). Key options include:
 
 - Provider and model selection
 - Agent permissions and custom agents
@@ -203,7 +203,7 @@ bun turbo typecheck      # Type check
 
 ## Relationship to OpenCode
 
-MiMoCode is built as a fork of [OpenCode](https://github.com/XiaomiMiMo/MiMo-Code). It keeps all core OpenCode capabilities (multiple providers, TUI, LSP, MCP, plugins) and adds persistent memory, intelligent context management, subagent orchestration, goal-driven autonomous loops, compose workflows, and self-improvement via dream/distill.
+OpenFable is built as a fork of the original MiMoCode project. It keeps all core capabilities (multiple providers, TUI, LSP, MCP, plugins) and adds persistent memory, intelligent context management, subagent orchestration, goal-driven autonomous loops, compose workflows, and self-improvement via dream/distill.
 
 ---
 
@@ -221,6 +221,4 @@ Scan the QR code to join the community group chat:
 
 Source code is licensed under the [MIT License](./LICENSE).
 
-Use of MiMoCode is also subject to the [Use Restrictions](./USE_RESTRICTIONS.md).
-Use of Xiaomi MiMo-hosted services is subject to the [MiMo Terms of Service](https://platform.xiaomimimo.com/docs/terms/user-agreement).
-Use of the MiMo name, logo, and trademarks is subject to the MiMo Trademark Policy.
+Use of OpenFable is also subject to the [Use Restrictions](./USE_RESTRICTIONS.md).

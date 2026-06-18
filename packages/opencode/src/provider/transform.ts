@@ -17,14 +17,14 @@ function mimeToModality(mime: string): Modality | undefined {
   return undefined
 }
 
-// MiMo vision support isn't reflected in models.dev modality data, so the
+// OpenFable vision support isn't reflected in models.dev modality data, so the
 // generic capability check would strip images before they reach the model.
-// mimo-auto and mimo-v2.5 accept images; mimo-v2.5-pro is text-only.
+// openfable-auto and openfable-v2.5 accept images; openfable-v2.5-pro is text-only.
 function supportsImageInput(model: Provider.Model): boolean {
-  if (model.providerID === "mimo" || model.providerID === "xiaomi") {
+  if (model.providerID === "openfable" || model.providerID === "openfable") {
     const id = model.id.toLowerCase()
     if (id.includes("v2.5-pro")) return false
-    if (id === "mimo-auto" || id.includes("v2.5")) return true
+    if (id === "openfable-auto" || id.includes("v2.5")) return true
   }
   // Claude and GPT models are all multimodal regardless of catalog data.
   const id = model.id.toLowerCase()
@@ -34,7 +34,7 @@ function supportsImageInput(model: Provider.Model): boolean {
   return model.capabilities.input.image
 }
 
-export const OUTPUT_TOKEN_MAX = Flag.MIMOCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX || 32_000
+export const OUTPUT_TOKEN_MAX = Flag.OPENFABLE_EXPERIMENTAL_OUTPUT_TOKEN_MAX || 32_000
 const MIMO_OUTPUT_TOKEN_MAX = 128_000
 
 // Maps npm package to the key the AI SDK expects for providerOptions
@@ -378,8 +378,8 @@ function imageByteSize(image: string): number | undefined {
 }
 
 function limitImages(msgs: ModelMessage[]): ModelMessage[] {
-  const maxImages = Flag.MIMOCODE_MAX_PROMPT_IMAGES
-  const maxSize = Flag.MIMOCODE_MAX_PROMPT_IMAGE_SIZE
+  const maxImages = Flag.OPENFABLE_MAX_PROMPT_IMAGES
+  const maxSize = Flag.OPENFABLE_MAX_PROMPT_IMAGE_SIZE
   if (maxImages === undefined && maxSize === undefined) return msgs
 
   const total = msgs.reduce(
@@ -458,7 +458,7 @@ export function temperature(model: Provider.Model) {
   if (id.includes("glm-4.6")) return 1.0
   if (id.includes("glm-4.7")) return 1.0
   if (id.includes("minimax-m2")) return 1.0
-  if (id.includes("mimo")) return 1.0
+  if (id.includes("openfable")) return 1.0
   if (id.includes("kimi-k2")) {
     // kimi-k2-thinking & kimi-k2.5 && kimi-k2p5 && kimi-k2-5
     if (["thinking", "k2.", "k2p", "k2-5"].some((s) => id.includes(s))) {
@@ -1111,7 +1111,7 @@ export function providerOptions(model: Provider.Model, options: { [x: string]: a
 }
 
 export function maxOutputTokens(model: Provider.Model): number {
-  if (model.providerID === "mimo" || model.providerID === "xiaomi" || model.id.toLowerCase().includes("mimo")) {
+  if (model.providerID === "openfable" || model.providerID === "openfable" || model.id.toLowerCase().includes("openfable")) {
     return MIMO_OUTPUT_TOKEN_MAX
   }
   return Math.min(model.limit.output, OUTPUT_TOKEN_MAX) || OUTPUT_TOKEN_MAX

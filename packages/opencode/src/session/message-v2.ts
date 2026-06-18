@@ -1,7 +1,7 @@
 import { BusEvent } from "@/bus/bus-event"
 import { SessionID, MessageID, PartID } from "./schema"
 import z from "zod"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import { APICallError, convertToModelMessages, LoadAPIKeyError, RetryError, type ModelMessage, type UIMessage } from "ai"
 import { LSP } from "../lsp"
 import { Snapshot } from "@/snapshot"

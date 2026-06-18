@@ -1,7 +1,7 @@
 import { RequestError, type McpServer } from "@agentclientprotocol/sdk"
 import type { ACPSessionState } from "./types"
 import { Log } from "@/util"
-import type { OpencodeClient } from "@mimo-ai/sdk/v2"
+import type { OpencodeClient } from "@openfable/sdk/v2"
 
 const log = Log.create({ service: "acp-session-manager" })
 

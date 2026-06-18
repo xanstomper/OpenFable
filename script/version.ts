@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { Script } from "@mimo-ai/script"
+import { Script } from "@openfable/script"
 import { $ } from "bun"
 
 const output = [`version=${Script.version}`]

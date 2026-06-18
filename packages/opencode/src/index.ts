@@ -12,7 +12,7 @@ import { ModelsCommand } from "./cli/cmd/models"
 import { UI } from "./cli/ui"
 import { Installation } from "./installation"
 import { InstallationVersion } from "./installation/version"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import { FormatError } from "./cli/error"
 import { ServeCommand } from "./cli/cmd/serve"
 import { Filesystem } from "./util"
@@ -40,7 +40,7 @@ import { errorMessage } from "./util/error"
 import { PluginCommand } from "./cli/cmd/plug"
 import { Heap } from "./cli/heap"
 import { drizzle } from "drizzle-orm/bun-sqlite"
-import { ensureProcessMetadata } from "./util/mimo-process"
+import { ensureProcessMetadata } from "./util/openfable-process"
 
 const processMetadata = ensureProcessMetadata("main")
 
@@ -60,7 +60,7 @@ const args = hideBin(process.argv)
 
 function show(out: string) {
   const text = out.trimStart()
-  if (!text.startsWith("mimo ")) {
+  if (!text.startsWith("openfable ")) {
     process.stderr.write(UI.logo() + EOL + EOL)
     process.stderr.write(text)
     return
@@ -70,7 +70,7 @@ function show(out: string) {
 
 const cli = yargs(args)
   .parserConfiguration({ "populate--": true })
-  .scriptName("mimo")
+  .scriptName("openfable")
   .wrap(100)
   .help("help", "show help")
   .alias("help", "h")
@@ -91,7 +91,7 @@ const cli = yargs(args)
   })
   .middleware(async (opts) => {
     if (opts.pure) {
-      process.env.MIMOCODE_PURE = "1"
+      process.env.OPENFABLE_PURE = "1"
     }
 
     await Log.init({
@@ -108,16 +108,16 @@ const cli = yargs(args)
 
     process.env.AGENT = "1"
     process.env.MIMOCODE = "1"
-    process.env.MIMOCODE_PID = String(process.pid)
+    process.env.OPENFABLE_PID = String(process.pid)
 
-    Log.Default.info("mimocode", {
+    Log.Default.info("openfable", {
       version: InstallationVersion,
       args: process.argv.slice(2),
       process_role: processMetadata.processRole,
       run_id: processMetadata.runID,
     })
 
-    const marker = path.join(Global.Path.data, "mimocode.db")
+    const marker = path.join(Global.Path.data, "openfable.db")
     if (!(await Filesystem.exists(marker))) {
       const tty = process.stderr.isTTY
       process.stderr.write("Performing one time database migration, may take a few minutes..." + EOL)
@@ -157,8 +157,8 @@ const cli = yargs(args)
     // Idempotently import Claude Code sessions into SQLite. Runs once per process
     // tree (the env guard is inherited by spawned children) and is best-effort:
     // a failure here must never block command startup.
-    if (!process.env.MIMOCODE_DISABLE_CLAUDE_IMPORT && !process.env.MIMOCODE_CLAUDE_IMPORTED) {
-      process.env.MIMOCODE_CLAUDE_IMPORTED = "1"
+    if (!process.env.OPENFABLE_DISABLE_CLAUDE_IMPORT && !process.env.OPENFABLE_CLAUDE_IMPORTED) {
+      process.env.OPENFABLE_CLAUDE_IMPORTED = "1"
       try {
         await ClaudeImport.run()
       } catch (e) {

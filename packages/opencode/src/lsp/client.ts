@@ -9,7 +9,7 @@ import { Process } from "../util"
 import { LANGUAGE_EXTENSIONS } from "./language"
 import z from "zod"
 import type * as LSPServer from "./server"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import { withTimeout } from "../util/timeout"
 import { Filesystem } from "../util"
 

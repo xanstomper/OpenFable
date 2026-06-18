@@ -16,7 +16,7 @@ function pick(value: string | null, fallback?: string) {
 function rewrite(request: Request, directory?: string) {
   if (request.method !== "GET" && request.method !== "HEAD") return request
 
-  const value = pick(request.headers.get("x-mimocode-directory"), directory)
+  const value = pick(request.headers.get("x-openfable-directory"), directory)
   if (!value) return request
 
   const url = new URL(request.url)
@@ -25,7 +25,7 @@ function rewrite(request: Request, directory?: string) {
   }
 
   const next = new Request(url, request)
-  next.headers.delete("x-mimocode-directory")
+  next.headers.delete("x-openfable-directory")
   return next
 }
 
@@ -45,7 +45,7 @@ export function createOpencodeClient(config?: Config & { directory?: string }) {
   if (config?.directory) {
     config.headers = {
       ...config.headers,
-      "x-mimocode-directory": encodeURIComponent(config.directory),
+      "x-openfable-directory": encodeURIComponent(config.directory),
     }
   }
 

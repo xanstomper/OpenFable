@@ -13,7 +13,7 @@ let lock = false
 let armed = true
 
 export function start() {
-  if (!Flag.MIMOCODE_AUTO_HEAP_SNAPSHOT) return
+  if (!Flag.OPENFABLE_AUTO_HEAP_SNAPSHOT) return
   if (timer) return
 
   const run = async () => {

@@ -1,6 +1,6 @@
 import path from "path"
 import { describe, expect, test } from "bun:test"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import { fileURLToPath } from "url"
 import { Effect, Layer } from "effect"
 import { Instance } from "../../src/project/instance"
@@ -270,7 +270,7 @@ describe("session.prompt regression", () => {
         git: true,
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, "mimocode.json"),
+            path.join(dir, "openfable.json"),
             JSON.stringify({
               $schema: "https://opencode.ai/config.json",
               enabled_providers: ["alibaba"],
@@ -344,7 +344,7 @@ describe("session.prompt regression", () => {
         git: true,
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, "mimocode.json"),
+            path.join(dir, "openfable.json"),
             JSON.stringify({
               $schema: "https://opencode.ai/config.json",
               enabled_providers: ["alibaba"],
@@ -618,7 +618,7 @@ describe("session.prompt F37 subagent context isolation", () => {
         git: true,
         init: async (dir) => {
           await Bun.write(
-            path.join(dir, "mimocode.json"),
+            path.join(dir, "openfable.json"),
             JSON.stringify({
               $schema: "https://opencode.ai/config.json",
               enabled_providers: ["alibaba"],

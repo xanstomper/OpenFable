@@ -9,7 +9,7 @@ beforeAll(async () => {
     useNavigate: () => () => undefined,
     useParams: () => ({}),
   }))
-  mock.module("@mimo-ai/ui/context", () => ({
+  mock.module("@openfable/ui/context", () => ({
     createSimpleContext: () => ({
       use: () => undefined,
       provider: () => undefined,

@@ -1,10 +1,10 @@
-import { Database, eq, and, sql, inArray } from "@mimo-ai/console-core/drizzle/index.js"
-import { IpRateLimitTable } from "@mimo-ai/console-core/schema/ip.sql.js"
+import { Database, eq, and, sql, inArray } from "@openfable/console-core/drizzle/index.js"
+import { IpRateLimitTable } from "@openfable/console-core/schema/ip.sql.js"
 import { FreeUsageLimitError } from "./error"
 import { logger } from "./logger"
 import { i18n } from "~/i18n"
 import { localeFromRequest } from "~/lib/language"
-import { Subscription } from "@mimo-ai/console-core/subscription.js"
+import { Subscription } from "@openfable/console-core/subscription.js"
 
 export function createRateLimiter(modelId: string, rateLimit: number | undefined, rawIp: string, request: Request) {
   const dict = i18n(localeFromRequest(request))

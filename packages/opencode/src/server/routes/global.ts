@@ -26,7 +26,7 @@ const log = Log.create({ service: "server" })
 // is safe under sustained backpressure. At ~1KB/event the default is ≈10MB
 // worst-case per stalled connection. See routes/instance/event.ts for the full
 // rationale (incl. heartbeat/sentinel lag under saturation). Tune via env.
-const EVENT_QUEUE_CAPACITY = Number(process.env["MIMOCODE_EVENT_QUEUE_CAPACITY"]) || 10_000
+const EVENT_QUEUE_CAPACITY = Number(process.env["OPENFABLE_EVENT_QUEUE_CAPACITY"]) || 10_000
 
 export const GlobalDisposedEvent = BusEvent.define("global.disposed", z.object({}))
 
@@ -327,7 +327,7 @@ export const GlobalRoutes = lazy(() =>
       describeRoute({
         summary: "Import external sessions",
         description:
-          "Import sessions from external AI tools (Claude Code, Codex, opencode) into mimocode. Idempotent; pass force to re-sync. Per-source failures are not thrown as HTTP errors — they are collected into the corresponding stats.errors[] while other sources continue.",
+          "Import sessions from external AI tools (Claude Code, Codex, opencode) into openfable. Idempotent; pass force to re-sync. Per-source failures are not thrown as HTTP errors — they are collected into the corresponding stats.errors[] while other sources continue.",
         operationId: "global.import.run",
         responses: {
           200: {

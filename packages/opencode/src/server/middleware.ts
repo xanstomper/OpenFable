@@ -1,5 +1,5 @@
 import { Provider } from "../provider"
-import { NamedError } from "@mimo-ai/shared/util/error"
+import { NamedError } from "@openfable/shared/util/error"
 import { NotFoundError } from "../storage"
 import { Session } from "../session"
 import type { ContentfulStatusCode } from "hono/utils/http-status"
@@ -39,14 +39,14 @@ export const ErrorMiddleware: ErrorHandler = (err, c) => {
 
 export const AuthMiddleware: MiddlewareHandler = (c, next) => {
   if (c.req.method === "OPTIONS") return next()
-  const password = Flag.MIMOCODE_SERVER_PASSWORD
+  const password = Flag.OPENFABLE_SERVER_PASSWORD
   if (!password) return next()
 
   // PTY websocket connect with a ticket skips basic auth; the handler validates the ticket.
   const path = new URL(c.req.url).pathname
   if (isPtyConnectPath(path) && c.req.query(PTY_CONNECT_TICKET_QUERY)) return next()
 
-  const username = Flag.MIMOCODE_SERVER_USERNAME ?? "mimocode"
+  const username = Flag.OPENFABLE_SERVER_USERNAME ?? "openfable"
 
   if (c.req.query("auth_token")) c.req.raw.headers.set("authorization", `Basic ${c.req.query("auth_token")}`)
 

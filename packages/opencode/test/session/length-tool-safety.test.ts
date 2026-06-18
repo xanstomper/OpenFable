@@ -62,7 +62,7 @@ describe("length + tool safety contract", () => {
     try {
       await Bun.write(readmePath, "# Hello\n")
       await Bun.write(
-        path.join(tmp.path, "mimocode.json"),
+        path.join(tmp.path, "openfable.json"),
         JSON.stringify({
           $schema: "https://opencode.ai/config.json",
           enabled_providers: ["alibaba"],

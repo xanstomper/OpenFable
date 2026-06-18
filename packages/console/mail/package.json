@@ -1,5 +1,5 @@
 {
-  "name": "@mimo-ai/console-mail",
+  "name": "@openfable/console-mail",
   "version": "0.1.1",
   "dependencies": {
     "@jsx-email/all": "2.2.3",

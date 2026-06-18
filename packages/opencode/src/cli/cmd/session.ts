@@ -26,8 +26,8 @@ function pagerCmd(): string[] {
     if (Filesystem.stat(lessOnPath)?.size) return [lessOnPath, ...lessOptions]
   }
 
-  if (Flag.MIMOCODE_GIT_BASH_PATH) {
-    const less = path.join(Flag.MIMOCODE_GIT_BASH_PATH, "..", "..", "usr", "bin", "less.exe")
+  if (Flag.OPENFABLE_GIT_BASH_PATH) {
+    const less = path.join(Flag.OPENFABLE_GIT_BASH_PATH, "..", "..", "usr", "bin", "less.exe")
     if (Filesystem.stat(less)?.size) return [less, ...lessOptions]
   }
 
@@ -51,7 +51,7 @@ export const SessionCommand = cmd({
 
 export const SessionImportClaudeCommand = cmd({
   command: "import-claude",
-  describe: "import Claude Code sessions (~/.claude/projects) into mimocode",
+  describe: "import Claude Code sessions (~/.claude/projects) into openfable",
   builder: (yargs: Argv) =>
     yargs.option("force", {
       describe: "re-sync every session, ignoring the mtime cache",

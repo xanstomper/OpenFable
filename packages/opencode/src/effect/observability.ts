@@ -4,7 +4,7 @@ import { OtlpLogger, OtlpSerialization } from "effect/unstable/observability"
 import * as EffectLogger from "./logger"
 import { Flag } from "@/flag/flag"
 import { InstallationChannel, InstallationVersion } from "@/installation/version"
-import { ensureProcessMetadata } from "@/util/mimo-process"
+import { ensureProcessMetadata } from "@/util/openfable-process"
 
 const base = Flag.OTEL_EXPORTER_OTLP_ENDPOINT
 export const enabled = !!base
@@ -45,7 +45,7 @@ export function resource(): { serviceName: string; serviceVersion: string; attri
     attributes: {
       ...attributes,
       "deployment.environment.name": InstallationChannel,
-      "opencode.client": Flag.MIMOCODE_CLIENT,
+      "opencode.client": Flag.OPENFABLE_CLIENT,
       "opencode.process_role": processMetadata.processRole,
       "opencode.run_id": processMetadata.runID,
       "service.instance.id": processID,

@@ -10,7 +10,7 @@ import { useDialog, type DialogContext } from "@tui/ui/dialog"
 export const FREE_AGREEMENT_KEY = "free_agreement_accepted"
 
 // Model IDs that count as "free" and require the one-time agreement.
-export const FREE_MODEL_IDS = new Set(["mimo-auto", "mimo-free"])
+export const FREE_MODEL_IDS = new Set(["openfable-auto", "openfable-free"])
 
 const TERMS_URL = "https://platform.xiaomimimo.com/docs/terms/user-agreement"
 const PRIVACY_URL = "https://privacy.mi.com/XiaomiMiMoPlatform"

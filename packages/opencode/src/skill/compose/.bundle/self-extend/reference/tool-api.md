@@ -3,7 +3,7 @@
 ## File Format
 
 ```ts
-import { tool } from "@mimo-ai/plugin"
+import { tool } from "@openfable/plugin"
 
 // Single tool (default export)
 export default tool({
@@ -70,7 +70,7 @@ return {
 
 ### Wrap a shell command
 ```ts
-import { tool } from "@mimo-ai/plugin"
+import { tool } from "@openfable/plugin"
 import { execSync } from "child_process"
 
 export default tool({
@@ -91,7 +91,7 @@ export default tool({
 
 ### HTTP API call
 ```ts
-import { tool } from "@mimo-ai/plugin"
+import { tool } from "@openfable/plugin"
 
 export default tool({
   description: "Query project's health endpoint",

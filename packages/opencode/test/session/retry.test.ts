@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import type { NamedError } from "@mimo-ai/shared/util/error"
+import type { NamedError } from "@openfable/shared/util/error"
 import { APICallError, RetryError } from "ai"
 import { setTimeout as sleep } from "node:timers/promises"
 import { Effect, Schedule } from "effect"

@@ -17,10 +17,10 @@ afterEach(async () => {
 })
 
 describe("tool.registry", () => {
-  it.live("loads tools from .mimocode/tool (singular)", () =>
+  it.live("loads tools from .openfable/tool (singular)", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        const opencode = path.join(dir, ".mimocode")
+        const opencode = path.join(dir, ".openfable")
         const tool = path.join(opencode, "tool")
         yield* Effect.promise(() => fs.mkdir(tool, { recursive: true }))
         yield* Effect.promise(() =>
@@ -45,10 +45,10 @@ describe("tool.registry", () => {
     ),
   )
 
-  it.live("loads tools from .mimocode/tools (plural)", () =>
+  it.live("loads tools from .openfable/tools (plural)", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        const opencode = path.join(dir, ".mimocode")
+        const opencode = path.join(dir, ".openfable")
         const tools = path.join(opencode, "tools")
         yield* Effect.promise(() => fs.mkdir(tools, { recursive: true }))
         yield* Effect.promise(() =>
@@ -76,7 +76,7 @@ describe("tool.registry", () => {
   it.live("loads tools with external dependencies without crashing", () =>
     provideTmpdirInstance((dir) =>
       Effect.gen(function* () {
-        const opencode = path.join(dir, ".mimocode")
+        const opencode = path.join(dir, ".openfable")
         const tools = path.join(opencode, "tools")
         yield* Effect.promise(() => fs.mkdir(tools, { recursive: true }))
         yield* Effect.promise(() =>
@@ -85,7 +85,7 @@ describe("tool.registry", () => {
             JSON.stringify({
               name: "custom-tools",
               dependencies: {
-                "@mimo-ai/plugin": "^0.0.0",
+                "@openfable/plugin": "^0.0.0",
                 cowsay: "^1.6.0",
               },
             }),
@@ -100,7 +100,7 @@ describe("tool.registry", () => {
               packages: {
                 "": {
                   dependencies: {
-                    "@mimo-ai/plugin": "^0.0.0",
+                    "@openfable/plugin": "^0.0.0",
                     cowsay: "^1.6.0",
                   },
                 },

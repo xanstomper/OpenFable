@@ -18,7 +18,7 @@ import { Instance } from "../project/instance"
 import { SessionCwd } from "./session-cwd"
 import { Snapshot } from "@/snapshot"
 import { assertWriteAllowed, askEditUnlessMemory } from "./external-directory"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 
 function normalizeLineEndings(text: string): string {
   return text.replaceAll("\r\n", "\n")

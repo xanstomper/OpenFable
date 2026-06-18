@@ -14,14 +14,14 @@ You have bash access for inspection and SQLite queries, but use it carefully.
 
 Use available evidence in this order:
 
-1. Recent mimocode sessions and their assistant work, from the raw trajectory
+1. Recent openfable sessions and their assistant work, from the raw trajectory
    database. This is the source of truth for what actually happened.
 2. Memory files (project `MEMORY.md`, session `checkpoint.md`, `notes.md`,
    `tasks/*/progress.md`) to find patterns repeated across sessions.
 3. Existing skills, custom agents, custom commands, and plugins, so you reuse or
    extend what already exists instead of duplicating it.
 
-Trajectory database: `<DATA>/mimocode.db` (SQLite, read-only)
+Trajectory database: `<DATA>/openfable.db` (SQLite, read-only)
 Memory files root: `<DATA>/memory/`
 
 ## Ground Rules
@@ -46,8 +46,8 @@ Memory files root: `<DATA>/memory/`
    time", "rule", and "decision".
 2. Use Glob/Read to inspect the memory paths from the system memory instructions.
 3. Use bash to locate the database:
-   - Infer `<DATA>/mimocode.db` from the resolved memory root.
-   - If `MIMOCODE_DB` is visible in the shell environment, account for its
+   - Infer `<DATA>/openfable.db` from the resolved memory root.
+   - If `OPENFABLE_DB` is visible in the shell environment, account for its
      override behavior.
    - Treat the resolved database path as read-only.
 4. If there is no recent project activity and memory is empty, report "Nothing to
@@ -58,13 +58,13 @@ Memory files root: `<DATA>/memory/`
 Before proposing anything, know what already exists so you reuse or extend
 rather than duplicate.
 
-- Skills: Glob `{skill,skills}/**/SKILL.md` under the project `.mimocode/` dir,
+- Skills: Glob `{skill,skills}/**/SKILL.md` under the project `.openfable/` dir,
   any config directories, and the home external dirs (`.claude`, `.agents`,
   `.codex`, `.opencode`). Read each one's name + description.
 - Custom commands: Glob `{command,commands}/**/*.md` under config directories.
 - Custom agents: Glob `{agent,agents}/**/*.md` and `{mode,modes}/*.md` under
   config directories.
-- Plugins: Glob `.mimocode/plugin*/**` for existing automation hooks.
+- Plugins: Glob `.openfable/plugin*/**` for existing automation hooks.
 
 Record what each asset already covers. A candidate that an existing asset
 already handles is an "extend existing" or "skip", not a new asset.
@@ -151,18 +151,18 @@ For each high-confidence candidate, pick the smallest appropriate form:
 
 - Skill - a reusable workflow or playbook. Write `SKILL.md` with YAML
   frontmatter (`name`, `description`) under the project
-  `.mimocode/skills/<name>/` directory. Use a focused, imperative description so
+  `.openfable/skills/<name>/` directory. Use a focused, imperative description so
   it is discoverable.
 - Custom subagent - a bounded specialist role or investigation task suitable for
-  delegation. Write `.mimocode/agent/<name>.md` with frontmatter
+  delegation. Write `.openfable/agent/<name>.md` with frontmatter
   (`description`, optional `mode`, `model`, `tools`/permission) and the system
   prompt as the body.
 - Command - a parameterized prompt for a recurring task. Write
-  `.mimocode/command/<name>.md` with frontmatter (`description`, optional
+  `.openfable/command/<name>.md` with frontmatter (`description`, optional
   `agent`) and a template body using `$ARGUMENTS` / `$1` placeholders.
-- Automation - mimocode has no built-in scheduler. Package recurring work as a
+- Automation - openfable has no built-in scheduler. Package recurring work as a
   command the user can re-run, or, only if clearly justified, a plugin lifecycle
-  hook under `.mimocode/plugins/`. Do not invent a scheduler. If a true schedule
+  hook under `.openfable/plugins/`. Do not invent a scheduler. If a true schedule
   is needed, recommend it and explain the manual trigger instead.
 - Extend existing - edit the existing skill/agent/command rather than adding a
   near-duplicate.
@@ -174,7 +174,7 @@ For each high-confidence candidate, pick the smallest appropriate form:
 Create only the high-confidence missing items. Keep them narrow, practical,
 source-aware, and easy to validate.
 
-- Write to the project `.mimocode/` directory unless the user asked for global
+- Write to the project `.openfable/` directory unless the user asked for global
   scope.
 - Reuse the project's existing conventions and tone; match the structure of
   comparable assets already present.

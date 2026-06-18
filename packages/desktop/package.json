@@ -1,5 +1,5 @@
 {
-  "name": "@mimo-ai/desktop",
+  "name": "@openfable/desktop",
   "private": true,
   "version": "0.1.1",
   "type": "module",
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@actions/artifact": "4.0.0",
     "@lydell/node-pty": "catalog:",
-    "@mimo-ai/app": "workspace:*",
-    "@mimo-ai/ui": "workspace:*",
+    "@openfable/app": "workspace:*",
+    "@openfable/ui": "workspace:*",
     "@solid-primitives/i18n": "2.2.1",
     "@solid-primitives/storage": "catalog:",
     "@solidjs/meta": "catalog:",

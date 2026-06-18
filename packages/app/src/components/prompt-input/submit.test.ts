@@ -63,18 +63,18 @@ beforeAll(async () => {
     useParams: () => params,
   }))
 
-  mock.module("@mimo-ai/sdk/v2/client", () => ({
+  mock.module("@openfable/sdk/v2/client", () => ({
     createOpencodeClient: (input: { directory: string }) => {
       createdClients.push(input.directory)
       return clientFor(input.directory)
     },
   }))
 
-  mock.module("@mimo-ai/ui/toast", () => ({
+  mock.module("@openfable/ui/toast", () => ({
     showToast: () => 0,
   }))
 
-  mock.module("@mimo-ai/shared/util/encode", () => ({
+  mock.module("@openfable/shared/util/encode", () => ({
     base64Encode: (value: string) => value,
   }))
 

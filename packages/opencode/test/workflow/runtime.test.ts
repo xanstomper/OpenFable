@@ -379,7 +379,7 @@ describe("WorkflowRuntime concurrency clamp", () => {
 })
 
 describe("WorkflowRuntime per-agent timeout (straggler-abort)", () => {
-  // A single hung agent (e.g. a persistent mimo TTFT wall) must not stall the whole
+  // A single hung agent (e.g. a persistent openfable TTFT wall) must not stall the whole
   // parallel/pipeline barrier indefinitely. With agentTimeoutMs set, the hung agent
   // is gracefully cancelled and resolves to the never-throw null sentinel, so the
   // sibling's "ok" and the run COMPLETE — bounded by the per-agent timeout, NOT the
@@ -859,7 +859,7 @@ describe("WorkflowRuntime replay journal", () => {
 })
 
 // agent() collapses every failure path to bare null, but operators need to know
-// the REASON to triage (mimo TTFT timeout vs spawn-reject vs over-cap). The
+// the REASON to triage (openfable TTFT timeout vs spawn-reject vs over-cap). The
 // WorkflowAgentFailed bus event carries the reason without changing agent()'s
 // null contract — these tests pin both invariants: the script still sees null,
 // AND the bus carries one event per failed agent with the right reason.
@@ -1020,7 +1020,7 @@ describe("WorkflowRuntime PRNG seeding (cross-run divergence)", () => {
 // agent_timeout_ms is persisted on the workflow_run row at start time so a
 // resume that doesn't supply its own override (e.g. the TUI's /workflows resume
 // command, which currently passes only runID) inherits the original timeout
-// instead of silently dropping to unbounded — which used to let a wedged mimo
+// instead of silently dropping to unbounded — which used to let a wedged openfable
 // TTFT stall the resumed run forever. This test pins the "implicit-resume
 // inherits the persisted timeout" contract end-to-end via the persistence layer.
 describe("WorkflowRuntime persists agentTimeoutMs across resume (TUI-style)", () => {

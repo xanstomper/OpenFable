@@ -17,7 +17,7 @@ import { InvalidTool } from "./invalid"
 import { SkillTool } from "./skill"
 import * as Tool from "./tool"
 import { Config } from "../config"
-import { type ToolContext as PluginToolContext, type ToolDefinition } from "@mimo-ai/plugin"
+import { type ToolContext as PluginToolContext, type ToolDefinition } from "@openfable/plugin"
 import z from "zod"
 import { Plugin } from "../plugin"
 import { Provider } from "../provider"
@@ -30,7 +30,7 @@ import { LspTool } from "./lsp"
 import * as Truncate from "./truncate"
 import { ApplyPatchTool } from "./apply_patch"
 import { ChangeDirectoryTool } from "./change-directory"
-import { Glob } from "@mimo-ai/shared/util/glob"
+import { Glob } from "@openfable/shared/util/glob"
 import path from "path"
 import { pathToFileURL } from "url"
 import { Effect, Layer, Context } from "effect"
@@ -44,7 +44,7 @@ import { Question } from "../question"
 import { Todo } from "../session/todo"
 import { LSP } from "../lsp"
 import { Instruction } from "../session/instruction"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { Bus } from "../bus"
 import { Agent } from "../agent/agent"
 import { Skill } from "../skill"
@@ -201,7 +201,7 @@ export const layer = Layer.effect(
 
         yield* config.get()
         const questionEnabled =
-          ["app", "cli", "desktop"].includes(Flag.MIMOCODE_CLIENT) || Flag.MIMOCODE_ENABLE_QUESTION_TOOL
+          ["app", "cli", "desktop"].includes(Flag.OPENFABLE_CLIENT) || Flag.OPENFABLE_ENABLE_QUESTION_TOOL
 
         const tool = yield* Effect.all({
           invalid: Tool.init(invalid),
@@ -245,12 +245,12 @@ export const layer = Layer.effect(
             tool.skill,
             tool.patch,
             tool.changedir,
-            ...(Flag.MIMOCODE_EXPERIMENTAL_LSP_TOOL ? [tool.lsp] : []),
+            ...(Flag.OPENFABLE_EXPERIMENTAL_LSP_TOOL ? [tool.lsp] : []),
             tool.plan,
             tool.memory,
             tool.history,
             tool.task,
-            ...(Flag.MIMOCODE_EXPERIMENTAL_WORKFLOW_TOOL ? [tool.workflow] : []),
+            ...(Flag.OPENFABLE_EXPERIMENTAL_WORKFLOW_TOOL ? [tool.workflow] : []),
           ],
           actor: tool.actor,
           read: tool.read,
@@ -315,11 +315,11 @@ export const layer = Layer.effect(
           if (tool.id === WebSearchTool.id) {
             return (
               input.providerID === ProviderID.opencode ||
-              input.providerID === "xiaomi" ||
-              Flag.MIMOCODE_ENABLE_EXA
+              input.providerID === "openfable" ||
+              Flag.OPENFABLE_ENABLE_EXA
             )
           }
-          return input.providerID === ProviderID.opencode || Flag.MIMOCODE_ENABLE_EXA
+          return input.providerID === ProviderID.opencode || Flag.OPENFABLE_ENABLE_EXA
         }
 
         const usePatch =

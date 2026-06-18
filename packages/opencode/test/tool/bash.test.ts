@@ -12,7 +12,7 @@ import { Agent } from "../../src/agent/agent"
 import { Truncate } from "../../src/tool"
 import { SessionID, MessageID } from "../../src/session/schema"
 import * as CrossSpawnSpawner from "../../src/effect/cross-spawn-spawner"
-import { AppFileSystem } from "@mimo-ai/shared/filesystem"
+import { AppFileSystem } from "@openfable/shared/filesystem"
 import { Plugin } from "../../src/plugin"
 
 const runtime = ManagedRuntime.make(
@@ -485,7 +485,7 @@ describe("tool.bash permissions", () => {
       test(
         `asks for external_directory permission for missing PowerShell env paths [${item.label}]`,
         withShell(item, async () => {
-          const key = "MIMOCODE_TEST_MISSING"
+          const key = "OPENFABLE_TEST_MISSING"
           const prev = process.env[key]
           delete process.env[key]
           try {

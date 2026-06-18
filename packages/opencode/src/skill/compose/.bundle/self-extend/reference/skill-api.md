@@ -3,7 +3,7 @@
 ## File Structure
 
 ```
-.mimocode/skills/<skill-name>/
+.openfable/skills/<skill-name>/
 ├── SKILL.md              # Required — main skill document
 ├── supporting-file.md    # Optional — reference material
 └── scripts/              # Optional — executable scripts
@@ -40,7 +40,7 @@ Content loaded into conversation when the skill is invoked.
 
 ```yaml
 # ❌ BAD: summarizes workflow
-description: Creates tools and hooks by writing files to .mimocode directories
+description: Creates tools and hooks by writing files to .openfable directories
 
 # ✅ GOOD: triggering conditions only
 description: Use when you want to evolve your own capabilities or notice repeated patterns worth automating

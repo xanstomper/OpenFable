@@ -24,7 +24,7 @@ const Query = Schema.Struct({
 
 const Headers = Schema.Struct({
   authorization: Schema.optional(Schema.String),
-  "x-mimocode-directory": Schema.optional(Schema.String),
+  "x-openfable-directory": Schema.optional(Schema.String),
 })
 
 function decode(input: string) {
@@ -71,13 +71,13 @@ const auth = Layer.succeed(
   Authorization.of({
     basic: (effect, { credential }) =>
       Effect.gen(function* () {
-        if (!Flag.MIMOCODE_SERVER_PASSWORD) return yield* effect
+        if (!Flag.OPENFABLE_SERVER_PASSWORD) return yield* effect
 
-        const user = Flag.MIMOCODE_SERVER_USERNAME ?? "mimocode"
+        const user = Flag.OPENFABLE_SERVER_USERNAME ?? "openfable"
         if (credential.username !== user) {
           return yield* new Unauthorized({ message: "Unauthorized" })
         }
-        if (Redacted.value(credential.password) !== Flag.MIMOCODE_SERVER_PASSWORD) {
+        if (Redacted.value(credential.password) !== Flag.OPENFABLE_SERVER_PASSWORD) {
           return yield* new Unauthorized({ message: "Unauthorized" })
         }
         return yield* effect
@@ -91,7 +91,7 @@ const instance = HttpRouter.middleware()(
       Effect.gen(function* () {
         const query = yield* HttpServerRequest.schemaSearchParams(Query)
         const headers = yield* HttpServerRequest.schemaHeaders(Headers)
-        const raw = query.directory || headers["x-mimocode-directory"] || process.cwd()
+        const raw = query.directory || headers["x-openfable-directory"] || process.cwd()
         const workspace = query.workspace || undefined
         const ctx = yield* Effect.promise(() =>
           Instance.provide({

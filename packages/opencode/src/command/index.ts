@@ -136,7 +136,7 @@ export const layer = Layer.effect(
             "User focus or constraints:",
             "$ARGUMENTS",
             "",
-            "Use the memory files as the working index and the raw mimocode trajectory database as the source of truth.",
+            "Use the memory files as the working index and the raw openfable trajectory database as the source of truth.",
             "Use bash for read-only SQLite and filesystem inspection. Do not modify the database.",
             "Consolidate only durable, verified information into project memory.",
           ].join("\n")
@@ -157,7 +157,7 @@ export const layer = Layer.effect(
             "$ARGUMENTS",
             "",
             "Look back over recent work and identify repeated manual workflows worth packaging.",
-            "Use the raw mimocode trajectory database as the source of truth and memory files to spot cross-session patterns.",
+            "Use the raw openfable trajectory database as the source of truth and memory files to spot cross-session patterns.",
             "Inventory existing skills, agents, and commands first so you reuse or extend instead of duplicating.",
             "Use bash for read-only SQLite and filesystem inspection. Do not modify the database.",
             "Produce a compact shortlist, then create only the high-confidence missing assets.",
@@ -176,7 +176,7 @@ export const layer = Layer.effect(
         hints: ["$ARGUMENTS"],
       }
 
-      if (Flag.MIMOCODE_EXPERIMENTAL_WORKFLOW_TOOL) {
+      if (Flag.OPENFABLE_EXPERIMENTAL_WORKFLOW_TOOL) {
         commands[Default.DEEP_RESEARCH] = {
           name: Default.DEEP_RESEARCH,
           description: "deep multi-source, fact-checked research report (runs the deep-research workflow)",

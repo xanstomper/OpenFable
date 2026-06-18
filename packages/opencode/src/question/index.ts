@@ -47,7 +47,7 @@ export class Info extends Schema.Class<Info>("QuestionInfo")({
     description: "i18n key for client-side translation (e.g. plan_exit). When set, clients may translate question/options text using this key as a namespace.",
   }),
   params: Schema.optional(Schema.Record(Schema.String, Schema.String)).annotate({
-    description: "Template parameters for i18n interpolation (e.g. { plan: '.mimocode/plans/...' })",
+    description: "Template parameters for i18n interpolation (e.g. { plan: '.openfable/plans/...' })",
   }),
 }) {
   static readonly zod = zod(this)

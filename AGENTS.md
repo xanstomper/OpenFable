@@ -1,3 +1,15 @@
+# OpenFable Code
+
+## Purpose
+
+A terminal-native AI coding assistant with persistent memory, multi-agent orchestration, and TUI. Fork of MiMoCode.
+
+## Ownership
+
+Fork maintained by xanstomper. Full rebrand from MiMoCode → OpenFable complete.
+
+## Work Guidance
+
 - Always use superpowers skill instead of builtin plan mode.
 - To regenerate the JavaScript SDK, run `./packages/sdk/js/script/build.ts`.
 - ALWAYS USE PARALLEL TOOLS WHEN APPLICABLE.
