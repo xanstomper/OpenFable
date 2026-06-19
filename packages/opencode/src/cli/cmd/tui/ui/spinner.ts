@@ -309,14 +309,14 @@ export function createFrames(options: KnightRiderOptions = {}): string[] {
   const frames = Array.from({ length: totalFrames }, (_, frameIndex) => {
     const state = getScannerState(frameIndex, width, trailOptions)
     return Array.from({ length: width }, (_, charIndex) => {
-      if (style === "plane") {
-        const dd = state.isMovingForward ? state.activePosition - charIndex : charIndex - state.activePosition
-        if (dd === 0) return "🛸"
-        if (dd > 0 && dd < trailOptions.colors.length) {
-          return ["·", "∙", "˙"][(frameIndex + dd) % 3]!
+        if (style === "plane") {
+          const dd = state.isMovingForward ? state.activePosition - charIndex : charIndex - state.activePosition
+          if (dd === 0) return "◉"
+          if (dd > 0 && dd < trailOptions.colors.length) {
+            return ["·", "∙", "˙"][(frameIndex + dd) % 3]!
+          }
+          return " "
         }
-        return " "
-      }
 
       const index = calculateColorIndex(frameIndex, charIndex, width, trailOptions, state)
 

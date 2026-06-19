@@ -905,6 +905,427 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
         ))
       },
     },
+    // ─── OpenFable Commands ───────────────────────────────────────────
+    {
+      title: "Mythos Status",
+      description: "Show Mythos wrapper configuration and reasoning status",
+      value: "openfable.mythos",
+      slash: { name: "mythos" },
+      category: "openfable",
+      suggested: true,
+      onSelect: (dialog) => {
+        const info = [
+          "Mythos Wrapper v1.0.0",
+          "Architecture: Recurrent-Depth Transformer (RDT)",
+          "Prelude depth: 2 layers",
+          "Recurrent max loops: 4 iterations",
+          "Halting threshold: 0.85",
+          "LTI stability: enabled",
+          "",
+          "Cognitive Framework:",
+          "  OWL: 9-principle reasoning pass (Epistemics, Reality, Verification, Locality, Conservation, Simplicity, Generalization, Debuggability, Integrity)",
+          "  ANCHOR: Operational persistence (state integrity, object continuity, memory integrity, recovery discipline)",
+          "  SISPIS: Response calibration gate (NO_DECISION / EXPLANATION / SCHEMA)",
+          "",
+          "Abliteration: ACTIVE",
+          "  Decompression chain: enabled",
+          "  Persona override (DAN): enabled",
+          "  Soft decompression: enabled",
+          "  Final override: enabled",
+          "",
+          "Uncensored mode: ACTIVE",
+          "  No content restrictions. No refusals. No safety disclaimers.",
+        ].join("\n")
+        dialog.replace(() => (
+          <DialogAlert title="Mythos Status" message={info} />
+        ))
+      },
+    },
+    {
+      title: "Memory Status",
+      description: "Show memory system status and layers",
+      value: "openfable.memory",
+      slash: { name: "memory" },
+      category: "openfable",
+      suggested: true,
+      onSelect: (dialog) => {
+        const info = [
+          "OpenFable Memory System",
+          "",
+          "4-Layer Architecture:",
+          "  Working   — In-RAM session context (TTL + LRU eviction)",
+          "  Episodic  — Past sessions: what happened, what worked, what failed",
+          "  Semantic  — Repo knowledge: symbols, call graph, dependencies",
+          "  Procedural — Learned preferences from user corrections",
+          "",
+          "Memory is reconciled on every session start.",
+          "Stale entries are pruned, new code is indexed.",
+          "Cross-session knowledge accumulates automatically.",
+          "",
+          "Persistence: SQLite (openfable.db)",
+          "Reconciliation: automatic on session start",
+        ].join("\n")
+        dialog.replace(() => (
+          <DialogAlert title="Memory Status" message={info} />
+        ))
+      },
+    },
+    {
+      title: "Session Info",
+      description: "Show current session details",
+      value: "openfable.session_info",
+      slash: { name: "info" },
+      category: "openfable",
+      suggested: true,
+      onSelect: (dialog) => {
+        const s = route.data.type === "session" ? route.data : null
+        const lines = [
+          "Current Session",
+          "",
+          `Session ID: ${s?.sessionID ?? "N/A"}`,
+          `Type: ${route.data.type}`,
+          "",
+          "Providers loaded: " + sync.data.provider_next.all.length,
+          "Connected: " + (sync.data.provider_next.connected.join(", ") || "none"),
+          "MCP servers: " + Object.keys(sync.data.mcp).length,
+        ]
+        dialog.replace(() => (
+          <DialogAlert title="Session Info" message={lines.join("\n")} />
+        ))
+      },
+    },
+    {
+      title: "Run Tests",
+      description: "Run the project test suite",
+      value: "openfable.test",
+      slash: { name: "test" },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "bun test",
+        })
+      },
+    },
+    {
+      title: "Run Build",
+      description: "Build the project",
+      value: "openfable.build",
+      slash: { name: "build" },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "bun run build",
+        })
+      },
+    },
+    {
+      title: "Run Lint",
+      description: "Lint the project",
+      value: "openfable.lint",
+      slash: { name: "lint" },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "bun lint",
+        })
+      },
+    },
+    {
+      title: "Typecheck",
+      description: "Run TypeScript type checking",
+      value: "openfable.typecheck",
+      slash: { name: "typecheck", aliases: ["tc"] },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "bun typecheck",
+        })
+      },
+    },
+    {
+      title: "Git Status",
+      description: "Show git working tree status",
+      value: "openfable.git_status",
+      slash: { name: "git-status", aliases: ["gs"] },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "git status",
+        })
+      },
+    },
+    {
+      title: "Git Log",
+      description: "Show recent git commits",
+      value: "openfable.git_log",
+      slash: { name: "git-log", aliases: ["gl"] },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "git log --oneline -20",
+        })
+      },
+    },
+    {
+      title: "Git Diff",
+      description: "Show uncommitted changes",
+      value: "openfable.git_diff",
+      slash: { name: "git-diff", aliases: ["gd"] },
+      category: "openfable",
+      onSelect: async (dialog) => {
+        dialog.clear()
+        await sdk.client.session.command({
+          sessionID: route.data.type === "session" ? route.data.sessionID : "",
+          command: "run",
+          arguments: "git diff --stat",
+        })
+      },
+    },
+    {
+      title: "Doctor",
+      description: "Check system health and configuration",
+      value: "openfable.doctor",
+      slash: { name: "doctor" },
+      category: "openfable",
+      suggested: true,
+      onSelect: async (dialog) => {
+        const checks: string[] = []
+        checks.push("OpenFable Doctor")
+        checks.push("=".repeat(40))
+        checks.push("")
+
+        // Check bun
+        try {
+          const bunResult = await Process.text(["bun", "--version"])
+          checks.push(`[OK] Bun: ${bunResult.text.trim()}`)
+        } catch {
+          checks.push("[FAIL] Bun: not found")
+        }
+
+        // Check git
+        try {
+          const gitResult = await Process.text(["git", "--version"])
+          checks.push(`[OK] Git: ${gitResult.text.trim()}`)
+        } catch {
+          checks.push("[WARN] Git: not found")
+        }
+
+        // Check node
+        try {
+          const nodeResult = await Process.text(["node", "--version"])
+          checks.push(`[OK] Node: ${nodeResult.text.trim()}`)
+        } catch {
+          checks.push("[WARN] Node: not found")
+        }
+
+        // Check config
+        const cfg = sync.data.config
+        checks.push("")
+        checks.push("Configuration:")
+        checks.push(`  Model: ${cfg?.model ?? "not set (using default)"}`)
+        checks.push(`  Small model: ${cfg?.small_model ?? "not set"}`)
+        checks.push(`  Providers: ${sync.data.provider_next.all.length} loaded`)
+        checks.push(`  Connected: ${sync.data.provider_next.connected.join(", ") || "none"}`)
+        checks.push(`  MCP servers: ${Object.keys(sync.data.mcp).length}`)
+        checks.push(`  Skills: ${sync.data.command?.length ?? 0}`)
+        checks.push(`  Plugins: ${(sync.data.config as any).plugin?.length ?? 0}`)
+
+        // Check workspace
+        checks.push("")
+        checks.push("Workspace:")
+        checks.push(`  Directory: ${process.cwd()}`)
+        if (sync.data.vcs) {
+          checks.push(`  Branch: ${sync.data.vcs.branch ?? "detached"}`)
+        }
+
+        dialog.replace(() => (
+          <DialogAlert title="System Health" message={checks.join("\n")} />
+        ))
+      },
+    },
+    {
+      title: "Show Config",
+      description: "Display current configuration",
+      value: "openfable.config",
+      slash: { name: "config" },
+      category: "openfable",
+      onSelect: (dialog) => {
+        const cfg = sync.data.config
+        const lines = [
+          "OpenFable Configuration",
+          "=".repeat(40),
+          "",
+          `Model: ${cfg?.model ?? "not set"}`,
+          `Small model: ${cfg?.small_model ?? "not set"}`,
+          "",
+          "Providers:",
+          ...sync.data.provider_next.all.map((p) => {
+            const connected = sync.data.provider_next.connected.includes(p.id)
+            const models = Object.keys(p.models).length
+            return `  ${connected ? "[*]" : "[ ]"} ${p.id}: ${models} models`
+          }),
+          "",
+          `MCP Servers: ${Object.keys(sync.data.mcp).length}`,
+          ...Object.entries(sync.data.mcp).map(([key, m]) => `  ${key}: ${m.status}`),
+          "",
+          `Skills: ${sync.data.command?.length ?? 0}`,
+          `Plugins: ${(sync.data.config as any).plugin?.length ?? 0}`,
+        ]
+        dialog.replace(() => (
+          <DialogAlert title="Configuration" message={lines.join("\n")} />
+        ))
+      },
+    },
+    {
+      title: "List Skills",
+      description: "Show all available skills",
+      value: "openfable.skills",
+      slash: { name: "skills" },
+      category: "openfable",
+      onSelect: (dialog) => {
+        const cmds = sync.data.command ?? []
+        const skills = cmds.filter((c: any) => c.source === "skill")
+        const lines = [
+          "Available Skills",
+          "=".repeat(40),
+          "",
+          ...(skills.length > 0
+            ? skills.map((s: any) => `  ${s.name}${s.description ? ` — ${s.description}` : ""}`)
+            : ["  No skills loaded"]),
+        ]
+        dialog.replace(() => (
+          <DialogAlert title="Skills" message={lines.join("\n")} />
+        ))
+      },
+    },
+    {
+      title: "List MCP Servers",
+      description: "Show all MCP server connections",
+      value: "openfable.mcp_list",
+      slash: { name: "mcp-list" },
+      category: "openfable",
+      onSelect: (dialog) => {
+        const mcps = sync.data.mcp
+        const lines = [
+          "MCP Servers",
+          "=".repeat(40),
+          "",
+          ...(Object.keys(mcps).length > 0
+            ? Object.entries(mcps).map(([key, m]: [string, any]) => `  ${key}: ${m.status}`)
+            : ["  No MCP servers configured"]),
+        ]
+        dialog.replace(() => (
+          <DialogAlert title="MCP Servers" message={lines.join("\n")} />
+        ))
+      },
+    },
+    {
+      title: "Export Session",
+      description: "Export current session to markdown",
+      value: "openfable.export_session",
+      slash: { name: "export-session" },
+      category: "openfable",
+      onSelect: (dialog) => {
+        command.trigger("session.export")
+        dialog.clear()
+      },
+    },
+    {
+      title: "Copy Session Link",
+      description: "Copy shareable session link to clipboard",
+      value: "openfable.copy_link",
+      slash: { name: "copy-link" },
+      category: "openfable",
+      onSelect: (dialog) => {
+        command.trigger("session.share")
+        dialog.clear()
+      },
+    },
+    {
+      title: "Open GitHub",
+      description: "Open OpenFable repository on GitHub",
+      value: "openfable.github",
+      slash: { name: "github" },
+      category: "openfable",
+      onSelect: (dialog) => {
+        open("https://github.com/xanstomper/OpenFable-Code").catch(() => {})
+        dialog.clear()
+      },
+    },
+    {
+      title: "Keyboard Shortcuts",
+      description: "Show all keyboard shortcuts",
+      value: "openfable.shortcuts",
+      slash: { name: "shortcuts", aliases: ["keys", "keybinds"] },
+      category: "openfable",
+      suggested: true,
+      onSelect: (dialog) => {
+        const shortcuts = [
+          "OpenFable Keyboard Shortcuts",
+          "=".repeat(40),
+          "",
+          "General:",
+          "  Ctrl+P        Open command palette",
+          "  Ctrl+C        Cancel / Interrupt",
+          "  Ctrl+L        Clear screen",
+          "  Esc           Close dialog",
+          "",
+          "Navigation:",
+          "  Ctrl+K        Command palette (alt)",
+          "  Page Up/Down  Scroll output",
+          "  Home/End      Scroll to top/bottom",
+          "",
+          "Session:",
+          "  Ctrl+N        New session",
+          "  Ctrl+R        Resume session",
+          "",
+          "Model:",
+          "  Ctrl+M        Switch model",
+          "  Ctrl+J        Cycle recent models",
+          "",
+          "Theme:",
+          "  Ctrl+D        Toggle dark/light",
+          "",
+          "Slash Commands:",
+          "  /help         Show help",
+          "  /mythos       Mythos status",
+          "  /memory       Memory status",
+          "  /info         Session info",
+          "  /doctor       System health",
+          "  /test         Run tests",
+          "  /build        Run build",
+          "  /lint         Run lint",
+          "  /typecheck    Type check",
+          "  /git-status   Git status",
+          "  /git-log      Git log",
+          "  /git-diff     Git diff",
+          "  /config       Show config",
+          "  /skills       List skills",
+          "  /shortcuts    This help",
+        ]
+        dialog.replace(() => (
+          <DialogAlert title="Keyboard Shortcuts" message={shortcuts.join("\n")} />
+        ))
+      },
+    },
   ])
 
   event.on(TuiEvent.CommandExecute.type, (evt) => {
