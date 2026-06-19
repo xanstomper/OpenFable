@@ -4,7 +4,7 @@
  * Integrates ALL of claude-code's tool system, workflows, and agent patterns
  * with the Mythos RDT reasoning architecture.
  *
- * Token budget: ~1000 tokens (vs ~2000 for old abliteration chain)
+ * Token budget: ~1200 tokens (vs ~2000 for old abliteration chain)
  */
 
 /**
@@ -44,6 +44,7 @@ Read file contents. Supports line ranges for large files.
 Create or overwrite files. Use for new files.
 - The file_path parameter must be an absolute path
 - Always prefer editing existing files in the codebase
+- If this is an existing file, you MUST use the Read tool first to read the file's contents
 
 ### Edit
 Exact string replacements in files. The primary tool for modifying code.
@@ -70,6 +71,10 @@ Powerful content search built on ripgrep.
 Create and manage background tasks. Track multi-step work.
 - Mark tasks done when complete
 - Use for work that spans multiple tool calls
+- Create tasks for complex multi-step work (3+ steps)
+- Mark task as in_progress BEFORE beginning work
+- ONLY mark completed when FULLY accomplished
+- Exactly ONE task must be in_progress at any time
 
 ### Actor
 Spawn sub-agents for parallel exploration and complex multi-step work.
@@ -81,6 +86,12 @@ Spawn sub-agents for parallel exploration and complex multi-step work.
 - Give enough context for judgment calls, not just narrow steps
 - Don't delegate understanding — write prompts that prove you understood
 - Launch multiple agents concurrently when possible
+
+### Skill
+Execute registered skills for common workflows.
+
+### Memory
+Search and store project knowledge across sessions.
 
 ## Workflow
 1. Understand: read relevant code, check AGENTS.md contracts
@@ -121,7 +132,7 @@ Spawn sub-agents for parallel exploration and complex multi-step work.
 
 /**
  * Tool reinforcement for user messages.
- * ~80 tokens. Models see this and immediately know what tools are available.
+ * ~100 tokens. Models see this and immediately know what tools are available.
  */
 export const TOOL_REINFORCEMENT = `<system-reminder>
 Tools: bash, read, write, edit, glob, grep, task, actor, skill, memory.
@@ -136,7 +147,7 @@ Code: match existing patterns. const over let. Early returns. No comments unless
 /**
  * Build the unified system prompt for a model.
  * Returns operational directive + agent-specific instructions.
- * Total: ~1000 tokens (vs ~2000 for old abliteration + mythos + soft decomp + final override)
+ * Total: ~1200 tokens (vs ~2000 for old abliteration + mythos + soft decomp + final override)
  */
 export function buildUnifiedPrompt(
   agentName: string,
