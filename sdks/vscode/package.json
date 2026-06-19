@@ -72,7 +72,7 @@
       },
       {
         "command": "opencode.addFilepathToTerminal",
-        "title": "opencode: Insert At-Mentioned",
+        "title": "OpenFable: Insert At-Mentioned",
         "key": "cmd+alt+k",
         "mac": "cmd+alt+k",
         "win": "ctrl+alt+K",

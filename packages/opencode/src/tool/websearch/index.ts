@@ -3,7 +3,7 @@ import { Effect } from "effect"
 import { HttpClient } from "effect/unstable/http"
 import * as Tool from "../tool"
 import * as McpExa from "../mcp-exa"
-import * as MimoWebsearch from "./openfable"
+import * as OpenFableWebsearch from "./openfable"
 import { Auth } from "@/auth"
 import { Provider } from "@/provider"
 import DESCRIPTION from "./websearch.txt"
@@ -68,7 +68,7 @@ export const WebSearchTool = Tool.define(
                   Effect.gen(function* () {
                     const info = yield* auth.get("openfable")
                     if (!info || info.type !== "api") return undefined
-                    return yield* MimoWebsearch.call(
+                    return yield* OpenFableWebsearch.call(
                       http,
                       model.api.url,
                       info.key,

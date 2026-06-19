@@ -82,7 +82,7 @@ function buildAuthorizeUrl(publicKey: string, redirectUri: string): string {
   return `${PLATFORM_URL}/authorize?${params.toString()}`
 }
 
-export async function MimoAuthPlugin(_input: PluginInput): Promise<Hooks> {
+export async function OpenFableAuthPlugin(_input: PluginInput): Promise<Hooks> {
   return {
     config: async (input) => {
       input.provider ??= {}

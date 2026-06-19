@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import crypto from "crypto"
-import { MimoAuthPlugin } from "../../src/plugin/openfable"
+import { OpenFableAuthPlugin } from "../../src/plugin/openfable"
 import type { PluginInput } from "@openfable/plugin"
 
 function encrypt(recipientPkBase64: string, payload: string): string {
@@ -39,10 +39,10 @@ const fakeInput = {
   $: undefined,
 } as unknown as PluginInput
 
-describe("MimoAuthPlugin", () => {
+describe("OpenFableAuthPlugin", () => {
   describe("config hook", () => {
     test("registers OpenFable provider with correct name", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const cfg: any = {}
       await hooks.config!(cfg)
       expect(cfg.provider.openfable.name).toBe("OpenFable")
@@ -50,7 +50,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("registers all expected models", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const cfg: any = {}
       await hooks.config!(cfg)
       // The plugin only sets name and api; models are not registered by the plugin
@@ -60,7 +60,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("does not overwrite existing config", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const cfg: any = { provider: { xiaomi: { name: "Custom", api: "https://custom.api" } } }
       await hooks.config!(cfg)
       expect(cfg.provider.openfable.name).toBe("Custom")
@@ -70,13 +70,13 @@ describe("MimoAuthPlugin", () => {
 
   describe("auth hook structure", () => {
     test("registers auth for OpenFable provider", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       expect(hooks.auth).toBeDefined()
       expect(hooks.auth!.provider).toBe("xiaomi")
     })
 
     test("has one login method", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       expect(hooks.auth!.methods).toHaveLength(1)
       expect(hooks.auth!.methods[0].label).toBe("浏览器登录")
       expect(hooks.auth!.methods[0].type).toBe("oauth")
@@ -85,7 +85,7 @@ describe("MimoAuthPlugin", () => {
 
   describe("authorize", () => {
     test("returns url with pk, redirect_uri, kn, key_name params", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -100,7 +100,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("displayed url has platform redirect_uri for manual copy", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -112,7 +112,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("returns method auto", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
       expect(result.method).toBe("auto")
@@ -120,7 +120,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("pk is valid base64url-encoded SPKI DER (44 bytes)", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -133,7 +133,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("each authorize generates different pk", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
 
       const result1 = (await method.authorize!()) as any
@@ -150,7 +150,7 @@ describe("MimoAuthPlugin", () => {
 
   describe("callback with code (manual paste)", () => {
     test("decrypts valid code and returns sk, uid, base_url", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -166,7 +166,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("trims whitespace from pasted code", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -180,7 +180,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("returns failed for invalid data", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -189,7 +189,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("returns empty key when sk not in payload", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -204,7 +204,7 @@ describe("MimoAuthPlugin", () => {
     })
 
     test("metadata omits base_url when url not in payload", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 
@@ -220,14 +220,14 @@ describe("MimoAuthPlugin", () => {
 
   describe("chat.headers hook", () => {
     test("adds X-OpenFable-Source header for OpenFable provider", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const output = { headers: {} as Record<string, string> }
       await hooks["chat.headers"]!({ model: { providerID: "xiaomi" } } as any, output as any)
       expect(output.headers["X-OpenFable-Source"]).toBe("openfable-cli")
     })
 
     test("does not add header for other providers", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const providers = ["anthropic", "openai", "google"]
       for (const providerID of providers) {
         const output = { headers: {} as Record<string, string> }
@@ -239,7 +239,7 @@ describe("MimoAuthPlugin", () => {
 
   describe("encryption", () => {
     test("decrypts correctly formatted payload", async () => {
-      const hooks = await MimoAuthPlugin(fakeInput)
+      const hooks = await OpenFableAuthPlugin(fakeInput)
       const method = hooks.auth!.methods[0]
       const result = (await method.authorize!()) as any
 

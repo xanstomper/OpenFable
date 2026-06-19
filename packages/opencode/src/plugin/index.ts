@@ -18,7 +18,7 @@ import { Log } from "../util"
 import { createOpencodeClient } from "@openfable/sdk"
 import { Flag } from "../flag/flag"
 import { CodexAuthPlugin } from "./codex"
-import { MimoAuthPlugin, AnthropicProxyPlugin } from "./openfable"
+import { OpenFableAuthPlugin, AnthropicProxyPlugin } from "./openfable"
 import { Session } from "../session"
 import type { SessionID } from "../session/schema"
 import { NamedError } from "@openfable/shared/util/error"
@@ -126,7 +126,7 @@ export class Service extends Context.Service<Service, Interface>()("@opencode/Pl
 
 // Built-in plugins that are directly imported (not installed from npm)
 const INTERNAL_PLUGINS: PluginInstance[] = [
-  MimoAuthPlugin,
+  OpenFableAuthPlugin,
   AnthropicProxyPlugin,
   CodexAuthPlugin,
   CopilotAuthPlugin,

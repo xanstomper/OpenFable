@@ -42,7 +42,7 @@ export function DialogOpenFableLogin() {
               return
             }
             dialog.replace(() => (
-              <MimoOAuthFlow url={result.data!.url} instructions={result.data!.instructions} />
+              <OpenFableLoginFlow url={result.data!.url} instructions={result.data!.instructions} />
             ))
           },
         },
@@ -169,7 +169,7 @@ export function DialogOpenFableLogin() {
   )
 }
 
-function MimoOAuthFlow(props: { url: string; instructions: string }) {
+function OpenFableLoginFlow(props: { url: string; instructions: string }) {
   const dialog = useDialog()
   const sdk = useSDK()
   const sync = useSync()
