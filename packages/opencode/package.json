@@ -7,7 +7,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "private": true,
   "scripts": {
     "prepare": "effect-language-service patch || true",
     "typecheck": "tsgo --noEmit",
