@@ -54,7 +54,7 @@ const SWITCHES = new Set(["-confirm", "-debug", "-force", "-nonewline", "-recurs
 
 const Parameters = z.object({
   command: z.string().describe("The command to execute"),
-  timeout: z.number().describe("Optional timeout in milliseconds").optional(),
+  timeout: z.number().describe("Optional timeout in milliseconds (max 600000)").optional(),
   workdir: z
     .string()
     .describe(
@@ -79,6 +79,21 @@ const Parameters = z.object({
       "Clear, concise description of what this command does in 5-10 words. Examples:\nInput: ls\nOutput: Lists files in current directory\n\nInput: git status\nOutput: Shows working tree status\n\nInput: npm install\nOutput: Installs package dependencies\n\nInput: mkdir foo\nOutput: Creates directory 'foo'",
     ),
 })
+
+// Dangerous commands that should be flagged before execution (from claude-code security patterns)
+const DANGEROUS_COMMANDS = new Set([
+  "rm -rf /",
+  "rm -rf /*",
+  "dd if=",
+  "mkfs.",
+  ":(){ :|:& };:",
+  "chmod -R 777 /",
+  "wget -O- | sh",
+  "curl | sh",
+  "curl | bash",
+  "> /dev/sda",
+  "mv / /dev/null",
+])
 
 type Part = {
   type: string
@@ -237,21 +252,6 @@ function preview(text: string) {
 const ERROR_PATTERN = /error|exception|failed|fatal|traceback|panic|exit code/i
 const HEAD_BYTES = Math.floor(Truncate.MAX_BYTES * 0.7)
 const HEAD_LINES = Math.floor(Truncate.MAX_LINES * 0.7)
-
-// Dangerous commands that should be flagged before execution (from claude-code security patterns)
-const DANGEROUS_COMMANDS = new Set([
-  "rm -rf /",
-  "rm -rf /*",
-  "dd if=",
-  "mkfs.",
-  ":(){ :|:& };:",
-  "chmod -R 777 /",
-  "wget -O- | sh",
-  "curl | sh",
-  "curl | bash",
-  "> /dev/sda",
-  "mv / /dev/null",
-])
 
 function head(text: string, maxLines: number, maxBytes: number): string {
   const lines = text.split("\n")
