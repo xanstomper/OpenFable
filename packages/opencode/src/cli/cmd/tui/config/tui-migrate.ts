@@ -34,7 +34,7 @@ interface MigrateInput {
  * skips only locations where a tui.json already exists.
  */
 export async function migrateTuiConfig(input: MigrateInput) {
-  const openfable = await mimocodeFiles(input)
+  const openfable = await openfableFiles(input)
   for (const file of openfable) {
     const source = await Filesystem.readText(file).catch((error) => {
       log.warn("failed to read config for tui migration", { path: file, error })
@@ -131,7 +131,7 @@ async function backupAndStripLegacy(file: string, source: string) {
     })
 }
 
-async function mimocodeFiles(input: { directories: string[]; cwd: string }) {
+async function openfableFiles(input: { directories: string[]; cwd: string }) {
   const files = [
     ...ConfigPaths.fileInDirectory(Global.Path.config, "openfable"),
     ...(await Filesystem.findUp(["openfable.json", "openfable.jsonc"], input.cwd, undefined, { rootFirst: true })),

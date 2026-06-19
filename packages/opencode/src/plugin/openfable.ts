@@ -9,7 +9,7 @@ import fs from "fs"
 
 const log = Log.create({ service: "plugin.openfable" })
 
-const PLATFORM_URL = process.env.OPENFABLE_PLATFORM_URL || "https://platform.xiaomimimo.com"
+const PLATFORM_URL = process.env.OPENFABLE_PLATFORM_URL || ""
 
 function getKeyName(): string {
   const filePath = path.join(Global.Path.data, "openfable-key-name")
@@ -89,7 +89,7 @@ export async function MimoAuthPlugin(_input: PluginInput): Promise<Hooks> {
       input.provider.openfable ??= {}
       const openfable = input.provider.openfable
       openfable.name ??= "OpenFable"
-      openfable.api ??= "https://api.xiaomimimo.com/v1"
+      openfable.api ??= process.env.OPENFABLE_API_URL || ""
       // Disable upstream OpenFable hosted providers so they don't silently
       // auto-load their free/public tier (opencode autoloads zero-cost models
       // with apiKey "public" when no key is configured). Previously set by the

@@ -121,16 +121,16 @@ export async function run(opts?: { force?: boolean; dbPath?: string }): Promise<
         // session backward past openfable-native activity (cc/codex parity).
         let existingUpdated: number | undefined
         if (existing) {
-          const mimoSess = Database.use((db) =>
+          const fableSess = Database.use((db) =>
             db.select({ updated: SessionTable.time_updated }).from(SessionTable).where(eq(SessionTable.id, existing!.session_id)).get(),
           )
-          if (!mimoSess) {
+          if (!fableSess) {
             Database.use((db) =>
               db.delete(ExternalImportTable).where(and(eq(ExternalImportTable.source, "opencode"), eq(ExternalImportTable.source_key, sourceKey))).run(),
             )
             existing = undefined
           } else {
-            existingUpdated = mimoSess.updated
+            existingUpdated = fableSess.updated
           }
         }
 

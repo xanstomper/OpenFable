@@ -163,7 +163,10 @@ export const Flag = {
   get OPENFABLE_PLUGIN_META_FILE() {
     return process.env["OPENFABLE_PLUGIN_META_FILE"]
   },
-  get OPENFABLE_CLIENT() {
+  get   OPENFABLE_CLIENT() {
     return process.env["OPENFABLE_CLIENT"] ?? "cli"
   },
+
+  OPENFABLE_API_URL: process.env["OPENFABLE_API_URL"],
+  OPENFABLE_PLATFORM_URL: process.env["OPENFABLE_PLATFORM_URL"],
 }

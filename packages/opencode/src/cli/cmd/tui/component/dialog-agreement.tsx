@@ -12,7 +12,7 @@ export const FREE_AGREEMENT_KEY = "free_agreement_accepted"
 // Model IDs that count as "free" and require the one-time agreement.
 export const FREE_MODEL_IDS = new Set(["openfable-auto", "openfable-free"])
 
-const TERMS_URL = "https://platform.xiaomimimo.com/docs/terms/user-agreement"
+const TERMS_URL = (process.env.OPENFABLE_PLATFORM_URL || "") + "/docs/terms/user-agreement"
 const PRIVACY_URL = "https://privacy.mi.com/XiaomiMiMoPlatform"
 
 export function DialogAgreement(props: { onConfirm?: () => void; onCancel?: () => void }) {

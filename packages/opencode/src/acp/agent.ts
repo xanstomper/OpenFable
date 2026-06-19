@@ -507,14 +507,14 @@ export class Agent implements ACPAgent {
     const authMethod: AuthMethod = {
       description: "Run `opencode auth login` in the terminal",
       name: "Login with opencode",
-      id: "opencode-login",
+      id: "openfable-login",
     }
 
     // If client supports terminal-auth capability, use that instead.
     if (params.clientCapabilities?._meta?.["terminal-auth"] === true) {
       authMethod._meta = {
         "terminal-auth": {
-          command: "opencode",
+          command: "openfable",
           args: ["auth", "login"],
           label: "OpenFable Login",
         },
@@ -1570,12 +1570,12 @@ async function defaultModel(config: ACPConfig, cwd?: string): Promise<{ provider
 
   if (specified && !providers.length) return specified
 
-  const opencodeProvider = providers.find((p) => p.id === "opencode")
-  if (opencodeProvider) {
-    if (opencodeProvider.models["big-pickle"]) {
-      return { providerID: ProviderID.opencode, modelID: ModelID.make("big-pickle") }
+  const openfableProvider = providers.find((p) => p.id === "openfable")
+  if (openfableProvider) {
+    if (openfableProvider.models["big-pickle"]) {
+      return { providerID: ProviderID.openfable, modelID: ModelID.make("big-pickle") }
     }
-    const [best] = Provider.sort(Object.values(opencodeProvider.models))
+    const [best] = Provider.sort(Object.values(openfableProvider.models))
     if (best) {
       return {
         providerID: ProviderID.make(best.providerID),
@@ -1595,7 +1595,7 @@ async function defaultModel(config: ACPConfig, cwd?: string): Promise<{ provider
 
   if (specified) return specified
 
-  return { providerID: ProviderID.opencode, modelID: ModelID.make("big-pickle") }
+  return { providerID: ProviderID.openfable, modelID: ModelID.make("big-pickle") }
 }
 
 function parseUri(

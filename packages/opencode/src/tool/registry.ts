@@ -314,12 +314,12 @@ export const layer = Layer.effect(
         if (tool.id === CodeSearchTool.id || tool.id === WebSearchTool.id) {
           if (tool.id === WebSearchTool.id) {
             return (
-              input.providerID === ProviderID.opencode ||
+              input.providerID === ProviderID.openfable ||
               input.providerID === "openfable" ||
               Flag.OPENFABLE_ENABLE_EXA
             )
           }
-          return input.providerID === ProviderID.opencode || Flag.OPENFABLE_ENABLE_EXA
+          return input.providerID === ProviderID.openfable || Flag.OPENFABLE_ENABLE_EXA
         }
 
         const usePatch =

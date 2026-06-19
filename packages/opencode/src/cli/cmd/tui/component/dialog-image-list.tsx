@@ -12,8 +12,8 @@ import fs from "fs/promises"
 
 const BG_DIR = path.join(Global.Path.config, "backgrounds")
 const IMAGE_EXT = new Set([".png", ".jpg", ".jpeg"])
-const NONE_VALUE = "__mimocode_image_none__"
-const IMPORT_VALUE = "__mimocode_image_import__"
+const NONE_VALUE = "__openfable_image_none__"
+const IMPORT_VALUE = "__openfable_image_import__"
 
 async function listBackgrounds() {
   await fs.mkdir(BG_DIR, { recursive: true }).catch(() => {})

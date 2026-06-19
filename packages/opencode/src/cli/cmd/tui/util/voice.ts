@@ -26,7 +26,7 @@ export function resolveCredentials(
   if (!apiKey) return { error: "no_key", providerID: config.providerID, model: config.model }
   const baseUrl = (provider.options?.baseURL as string)
     || Object.values(provider.models)[0]?.api?.url
-    || (config.providerID === "openfable" ? "https://api.xiaomimimo.com/v1" : undefined)
+    || (config.providerID === "openfable" ? (process.env.OPENFABLE_API_URL || undefined) : undefined)
   if (!baseUrl) return { error: "no_url", providerID: config.providerID, model: config.model }
   return { apiKey, baseUrl }
 }

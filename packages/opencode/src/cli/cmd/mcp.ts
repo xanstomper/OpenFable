@@ -60,7 +60,7 @@ function configuredServers(config: Config.Info) {
 
 function sourceLabel(config: Config.Info, name: string) {
   const origin = config.mcp_origins?.[name]
-  if (!origin) return "opencode"
+  if (!origin) return "openfable"
   const home = Global.Path.home
   const source = origin.source === home ? "~" : origin.source.startsWith(home + path.sep) ? "~" + origin.source.slice(home.length) : origin.source
   return `${origin.type}:${source}`

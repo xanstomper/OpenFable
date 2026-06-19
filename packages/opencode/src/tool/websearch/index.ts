@@ -9,7 +9,7 @@ import { Provider } from "@/provider"
 import DESCRIPTION from "./websearch.txt"
 
 const WEBFETCH_FALLBACK =
-  "Web search unavailable. Use `webfetch` with a relevant URL instead, or enable the Web Search plugin at https://platform.xiaomimimo.com/console/plugin."
+  "Web search unavailable. Use `webfetch` with a relevant URL instead, or enable the Web Search plugin."
 const MAX_TIMEOUT = 120 * 1000 // 2 minutes
 
 const Parameters = z.object({

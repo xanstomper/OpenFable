@@ -598,7 +598,7 @@ export const ProvidersLoginCommand = cmd({
           )
         }
 
-        if (provider === "opencode") {
+        if (provider === "openfable") {
           prompts.log.info("Create an api key at https://github.com/xanstomper/OpenFable-Code")
         }
 

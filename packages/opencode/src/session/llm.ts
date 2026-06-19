@@ -501,12 +501,12 @@ const live: Layer.Layer<
         maxOutputTokens: params.maxOutputTokens,
         abortSignal: input.abort,
         headers: {
-          ...(input.model.providerID.startsWith("opencode")
+          ...(input.model.providerID.startsWith("openfable")
             ? {
-                "x-opencode-project": Instance.project.id,
-                "x-opencode-session": input.sessionID,
-                "x-opencode-request": input.user.id,
-                "x-opencode-client": Flag.OPENFABLE_CLIENT,
+                "x-openfable-project": Instance.project.id,
+                "x-openfable-session": input.sessionID,
+                "x-openfable-request": input.user.id,
+                "x-openfable-client": Flag.OPENFABLE_CLIENT,
               }
             : {
                 "x-session-affinity": input.sessionID,

@@ -16,8 +16,8 @@ import { useToast, type ToastContext } from "../ui/toast"
 import { isConsoleManagedProvider } from "@tui/util/provider-origin"
 
 const PROVIDER_PRIORITY: Record<string, number> = {
-  opencode: 0,
-  "opencode-go": 1,
+  openfable: 0,
+  "openfable-go": 1,
   openai: 2,
   "github-copilot": 3,
   anthropic: 4,
@@ -42,10 +42,10 @@ export function createDialogProviderOptions() {
           title: provider.name,
           value: provider.id,
           description: {
-            opencode: "(Recommended)",
+            openfable: "(Recommended)",
             anthropic: "(API key)",
             openai: "(ChatGPT Plus/Pro or API key)",
-            "opencode-go": "Low cost subscription for everyone",
+            "openfable-go": "Low cost subscription for everyone",
           }[provider.id],
           footer: consoleManaged ? sync.data.console_state.activeOrgName : undefined,
           category: provider.id in PROVIDER_PRIORITY ? "Popular" : "Other",
@@ -174,7 +174,7 @@ export async function runCustomProviderWizard(opts: {
     return DialogPrompt.show(dialog, `${title} (${n}/${total})`, { placeholder, value })
   }
 
-  const providerIDRaw = await step(1, 6, "Provider id", "e.g. mimorouter")
+  const providerIDRaw = await step(1, 6, "Provider id", "e.g. my-router")
   if (providerIDRaw === null) return
   const providerID = providerIDRaw.trim()
   if (!providerID) return
@@ -361,7 +361,7 @@ function ApiMethod(props: ApiMethodProps) {
       placeholder="API key"
       description={
         {
-          opencode: (
+          openfable: (
             <box gap={1}>
               <text fg={theme.textMuted}>
                 OpenFable provides access to a wide range of coding models. Configure your provider in the settings.
@@ -371,7 +371,7 @@ function ApiMethod(props: ApiMethodProps) {
               </text>
             </box>
           ),
-          "opencode-go": (
+          "openfable-go": (
             <box gap={1}>
               <text fg={theme.textMuted}>
                 OpenFable supports 75+ providers and multiple model backends. Connect your preferred provider to get

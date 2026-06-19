@@ -103,9 +103,9 @@ export async function reconcileMemory(
   roots: { openfable: string; cc?: string },
   opts?: { entityStore?: EntityStore },
 ): Promise<{ indexed: number; pruned: number }> {
-  const mimoFiles = new Set(await walkMemoryDir(roots.openfable))
+  const fableFiles = new Set(await walkMemoryDir(roots.openfable))
   const ccFiles = roots.cc ? new Set(await walkCcRoot(roots.cc)) : new Set<string>()
-  const diskPaths = new Set<string>([...mimoFiles, ...ccFiles])
+  const diskPaths = new Set<string>([...fableFiles, ...ccFiles])
 
   const indexed = new Map<string, string>(
     Database.use((db) =>
@@ -126,7 +126,7 @@ export async function reconcileMemory(
   }
 
   let indexedCount = 0
-  for (const p of mimoFiles) {
+  for (const p of fableFiles) {
     const loc = parsePath(p)
     if (!loc) {
       log.warn("path outside memory layout, skipping", { path: p })
