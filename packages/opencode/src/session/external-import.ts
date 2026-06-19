@@ -12,8 +12,8 @@ import { OpencodeImport, DEFAULT_DB_PATH } from "./opencode-import"
 
 const log = Log.create({ service: "external-import" })
 
-export type Source = "cc" | "codex" | "opencode"
-export const ALL_SOURCES: readonly Source[] = ["cc", "codex", "opencode"] as const
+export type Source = "cc" | "codex" | "openfable"
+export const ALL_SOURCES: readonly Source[] = ["cc", "codex", "openfable"] as const
 
 export type ImportStats = {
   scanned: number
@@ -47,7 +47,7 @@ export async function scan(): Promise<ScanResult> {
   const result: ScanResult = {
     cc: { available: false, sessions: 0, imported: 0 },
     codex: { available: false, sessions: 0, imported: 0 },
-    opencode: { available: false, sessions: 0, imported: 0 },
+    openfable: { available: false, sessions: 0, imported: 0 },
   }
 
   // 每源独立 try:单源失败(权限/坏文件)不让整个 scan 端点 500,降级为 available:false
@@ -76,12 +76,12 @@ export async function scan(): Promise<ScanResult> {
       const db = openReadonly(DEFAULT_DB_PATH)
       try {
         const row = db.get("SELECT count(*) AS n FROM session") as { n: number } | null
-        result.opencode = { available: true, sessions: row?.n ?? 0, imported: importedBySource("opencode") }
+        result.openfable = { available: true, sessions: row?.n ?? 0, imported: importedBySource("openfable") }
       } finally {
         db.close()
       }
     } catch (e) {
-      log.warn("opencode scan failed", { error: String(e) })
+      log.warn("openfable scan failed", { error: String(e) })
     }
   }
 
@@ -101,7 +101,7 @@ export async function runAll(opts?: {
   const result: RunAllResult = {
     cc: emptyStats(),
     codex: emptyStats(),
-    opencode: emptyStats(),
+    openfable: emptyStats(),
   }
 
   for (const source of ALL_SOURCES) {
@@ -112,7 +112,7 @@ export async function runAll(opts?: {
       } else if (source === "codex") {
         result.codex = await CodexImport.run({ force: opts?.force })
       } else {
-        result.opencode = await OpencodeImport.run({ force: opts?.force })
+        result.openfable = await OpencodeImport.run({ force: opts?.force })
       }
     } catch (e) {
       log.warn(`${source} import failed`, { error: String(e) })
@@ -121,10 +121,10 @@ export async function runAll(opts?: {
   }
 
   const totals = {
-    scanned: result.cc.scanned + result.codex.scanned + result.opencode.scanned,
-    imported: result.cc.imported + result.codex.imported + result.opencode.imported,
-    resynced: result.cc.resynced + result.codex.resynced + result.opencode.resynced,
-    errors: result.cc.errors.length + result.codex.errors.length + result.opencode.errors.length,
+    scanned: result.cc.scanned + result.codex.scanned + result.openfable.scanned,
+    imported: result.cc.imported + result.codex.imported + result.openfable.imported,
+    resynced: result.cc.resynced + result.codex.resynced + result.openfable.resynced,
+    errors: result.cc.errors.length + result.codex.errors.length + result.openfable.errors.length,
   }
   if (totals.imported + totals.resynced > 0 || totals.errors > 0) {
     log.info("external import", totals)

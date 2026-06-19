@@ -6,12 +6,12 @@ describe("external-import", () => {
   test("ALL_SOURCES contains all three sources", () => {
     expect(ALL_SOURCES).toContain("cc")
     expect(ALL_SOURCES).toContain("codex")
-    expect(ALL_SOURCES).toContain("opencode")
+    expect(ALL_SOURCES).toContain("openfable")
     expect(ALL_SOURCES).toHaveLength(3)
   })
 
   test("Source type accepts valid values", () => {
-    const valid: Source[] = ["cc", "codex", "opencode"]
+    const valid: Source[] = ["cc", "codex", "openfable"]
     expect(valid).toEqual([...ALL_SOURCES])
   })
 })

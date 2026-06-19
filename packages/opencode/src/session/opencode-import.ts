@@ -9,12 +9,12 @@ import { SessionTable, MessageTable, PartTable } from "./session.sql"
 import { ExternalImportTable } from "./external-import.sql"
 import type { SessionID, MessageID, PartID } from "./schema"
 
-const log = Log.create({ service: "opencode-import" })
+const log = Log.create({ service: "openfable-import" })
 
 export const DEFAULT_DB_PATH = (() => {
   const xdg = process.env.XDG_DATA_HOME
   const base = xdg || `${process.env.HOME || process.env.USERPROFILE}/.local/share`
-  return `${base}/opencode/opencode.db`
+  return `${base}/openfable/openfable.db`
 })()
 
 function resolveProject(cwd: string): { id: ProjectID; worktree: string; vcs: string | null } {
@@ -102,11 +102,11 @@ export async function run(opts?: { force?: boolean; dbPath?: string }): Promise<
           db
             .select()
             .from(ExternalImportTable)
-            .where(and(eq(ExternalImportTable.source, "opencode"), eq(ExternalImportTable.source_key, sourceKey)))
+            .where(and(eq(ExternalImportTable.source, "openfable"), eq(ExternalImportTable.source_key, sourceKey)))
             .get(),
         )
         // Skip only when the source session is unchanged since last import. We
-        // store time_updated as source_mtime, so a re-edited opencode session
+        // store time_updated as source_mtime, so a re-edited openfable session
         // (newer time_updated) is picked up automatically — matching the cc/codex
         // mtime-based resync behavior. force overrides the staleness check.
         if (existing && existing.source_mtime === sess.time_updated && !opts?.force) {
@@ -126,7 +126,7 @@ export async function run(opts?: { force?: boolean; dbPath?: string }): Promise<
           )
           if (!fableSess) {
             Database.use((db) =>
-              db.delete(ExternalImportTable).where(and(eq(ExternalImportTable.source, "opencode"), eq(ExternalImportTable.source_key, sourceKey))).run(),
+              db.delete(ExternalImportTable).where(and(eq(ExternalImportTable.source, "openfable"), eq(ExternalImportTable.source_key, sourceKey))).run(),
             )
             existing = undefined
           } else {
@@ -248,7 +248,7 @@ export async function run(opts?: { force?: boolean; dbPath?: string }): Promise<
 
           tx.insert(ExternalImportTable)
             .values({
-              source: "opencode",
+              source: "openfable",
               source_key: sourceKey,
               session_id: sess.id as SessionID,
               source_path: dbPath,

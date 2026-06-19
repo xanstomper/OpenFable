@@ -309,7 +309,7 @@ export const GlobalRoutes = lazy(() =>
               "application/json": {
                 schema: resolver(
                   z.record(
-                    z.enum(["cc", "codex", "opencode"]),
+                    z.enum(["cc", "codex", "openfable"]),
                     z.object({ available: z.boolean(), sessions: z.number(), imported: z.number() }),
                   ),
                 ),
@@ -336,7 +336,7 @@ export const GlobalRoutes = lazy(() =>
               "application/json": {
                 schema: resolver(
                   z.record(
-                    z.enum(["cc", "codex", "opencode"]),
+                    z.enum(["cc", "codex", "openfable"]),
                     z.object({
                       scanned: z.number(),
                       imported: z.number(),
@@ -355,7 +355,7 @@ export const GlobalRoutes = lazy(() =>
       validator(
         "json",
         z.object({
-          sources: z.array(z.enum(["cc", "codex", "opencode"])).optional(),
+          sources: z.array(z.enum(["cc", "codex", "openfable"])).optional(),
           force: z.boolean().optional(),
         }),
       ),
