@@ -2,6 +2,7 @@ import { generateObject } from "ai"
 import { z } from "zod"
 import { Log } from "../util"
 import type { LanguageModelV3 } from "@ai-sdk/provider"
+import { wrapMythosText } from "../session/prompt/wrap-prompt"
 
 const log = Log.create({ service: "memory.extract" })
 
@@ -36,11 +37,12 @@ export async function extractFacts(
   model: LanguageModelV3,
 ): Promise<ExtractedFact[]> {
   try {
+    const systemContent = wrapMythosText(model.modelId, model.provider, "memory-extract", EXTRACTION_PROMPT)
     const { object } = await generateObject({
       model,
       schema: MemoryFactSchema,
       messages: [
-        { role: "system", content: EXTRACTION_PROMPT },
+        { role: "system", content: systemContent },
         ...messages.map((m) => ({
           role: m.role as "user" | "assistant",
           content: m.content,

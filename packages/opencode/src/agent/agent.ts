@@ -7,6 +7,8 @@ import { Instance } from "../project/instance"
 import { Truncate } from "../tool"
 import { Auth } from "../auth"
 import { ProviderTransform } from "../provider"
+import { SystemPrompt } from "../session/system"
+import { wrapMythosSystemPrompt } from "../session/prompt/wrap-prompt"
 
 import PROMPT_GENERATE from "./generate.txt"
 import PROMPT_EXPLORE from "./prompt/explore.txt"
@@ -481,7 +483,12 @@ export const layer = Layer.effect(
           ? Option.getOrUndefined(yield* Effect.serviceOption(OtelTracer.OtelTracer))
           : undefined
 
-        const system = [PROMPT_GENERATE]
+        const system = wrapMythosSystemPrompt(
+          resolved.api.id,
+          resolved.providerID,
+          "agent-generate",
+          [...SystemPrompt.provider(resolved), PROMPT_GENERATE],
+        )
         yield* plugin.trigger("experimental.chat.system.transform", { model: resolved }, { system })
         const existing = yield* InstanceState.useEffect(state, (s) => s.list())
 

@@ -12,6 +12,8 @@ import { Bus } from "@/bus"
 import { BusEvent } from "@/bus/bus-event"
 import { SessionID } from "./schema"
 import { MessageV2 } from "./message-v2"
+import { SystemPrompt } from "./system"
+import { wrapMythosText } from "./prompt/wrap-prompt"
 
 /**
  * Per-session stop-condition goal. `/goal`: once a goal
@@ -156,6 +158,13 @@ export const layer = Layer.effect(
       const authInfo = yield* auth.get(input.model.providerID).pipe(Effect.orDie)
       const isOpenaiOauth = input.model.providerID === "openai" && authInfo?.type === "oauth"
 
+      const wrappedSystem = wrapMythosText(
+        resolved.api.id,
+        resolved.providerID,
+        "goal-judge",
+        [...SystemPrompt.provider(resolved), JUDGE_SYSTEM].join("\n"),
+      )
+
       // Convert the conversation to native model messages so the judge sees the
       // real tool calls/results/images — same context the working agent had.
       const conversation = yield* MessageV2.toModelMessagesEffect(input.msgs, resolved)
@@ -169,7 +178,7 @@ export const layer = Layer.effect(
           ? `«${value.length} chars: ${value.slice(0, 200)}…»`
           : value
       const fullMessages = [
-        ...(isOpenaiOauth ? [] : [{ role: "system", content: JUDGE_SYSTEM }]),
+        ...(isOpenaiOauth ? [] : [{ role: "system", content: wrappedSystem }]),
         ...conversation,
         { role: "user", content: judgeUser(input.condition) },
       ]
@@ -187,7 +196,7 @@ export const layer = Layer.effect(
         },
         temperature: 0,
         messages: [
-          ...(isOpenaiOauth ? [] : [{ role: "system", content: JUDGE_SYSTEM } satisfies ModelMessage]),
+          ...(isOpenaiOauth ? [] : [{ role: "system", content: wrappedSystem } satisfies ModelMessage]),
           ...conversation,
           {
             role: "user",
@@ -203,7 +212,7 @@ export const layer = Layer.effect(
           const result = streamObject({
             ...params,
             providerOptions: ProviderTransform.providerOptions(resolved, {
-              instructions: JUDGE_SYSTEM,
+              instructions: wrappedSystem,
               store: false,
             }),
             onError: () => {},
