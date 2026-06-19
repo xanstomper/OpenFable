@@ -24,6 +24,32 @@ function normalizeLineEndings(text: string): string {
   return text.replaceAll("\r\n", "\n")
 }
 
+// Quote normalization from claude-code: curly quotes → straight quotes
+const LEFT_SINGLE_CURLY_QUOTE = "\u2018"
+const RIGHT_SINGLE_CURLY_QUOTE = "\u2019"
+const LEFT_DOUBLE_CURLY_QUOTE = "\u201C"
+const RIGHT_DOUBLE_CURLY_QUOTE = "\u201D"
+
+function normalizeQuotes(str: string): string {
+  return str
+    .replaceAll(LEFT_SINGLE_CURLY_QUOTE, "'")
+    .replaceAll(RIGHT_SINGLE_CURLY_QUOTE, "'")
+    .replaceAll(LEFT_DOUBLE_CURLY_QUOTE, '"')
+    .replaceAll(RIGHT_DOUBLE_CURLY_QUOTE, '"')
+}
+
+// Find actual string accounting for quote normalization (from claude-code)
+function findActualString(fileContent: string, searchString: string): string | null {
+  if (fileContent.includes(searchString)) return searchString
+  const normalizedSearch = normalizeQuotes(searchString)
+  const normalizedFile = normalizeQuotes(fileContent)
+  const searchIndex = normalizedFile.indexOf(normalizedSearch)
+  if (searchIndex !== -1) {
+    return fileContent.substring(searchIndex, searchIndex + searchString.length)
+  }
+  return null
+}
+
 function detectLineEnding(text: string): "\n" | "\r\n" {
   return text.includes("\r\n") ? "\r\n" : "\n"
 }
@@ -662,6 +688,8 @@ export function replace(content: string, oldString: string, newString: string, r
     TrimmedBoundaryReplacer,
     ContextAwareReplacer,
     MultiOccurrenceReplacer,
+    // Quote normalization from claude-code: curly quotes → straight quotes
+    (c: string, s: string) => [normalizeQuotes(c).includes(normalizeQuotes(s)) ? normalizeQuotes(c) : c],
   ]) {
     for (const search of replacer(content, oldString)) {
       const index = content.indexOf(search)
