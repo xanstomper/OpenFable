@@ -201,5 +201,22 @@
   },
   "overrides": {
     "drizzle-orm": "catalog:"
+  },
+  "description": "Terminal AI coding assistant with Mythos reasoning wrapper, Claude Code tool system, and uncensored mode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xanstomper/OpenFable.git"
+  },
+  "keywords": [
+    "ai",
+    "coding",
+    "terminal",
+    "cli",
+    "openfable",
+    "mythos",
+    "uncensored"
+  ],
+  "engines": {
+    "node": ">=20"
   }
 }

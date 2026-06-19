@@ -1,0 +1,8 @@
+src/
+test/
+docs/
+*.md
+.git/
+.turbo/
+dist/
+node_modules/
