@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import yaml from "js-yaml"
 import { Log } from "@/util"
 
 const log = Log.create({ service: "skill-macro" })
@@ -43,8 +44,10 @@ export class SkillMacroFramework {
 
   constructor(skillsDir: string, opts?: { autoLoad?: boolean }) {
     this.skillsDir = skillsDir
-    this.ensureDir()
-    if (opts?.autoLoad !== false) {
+    if (skillsDir) {
+      this.ensureDir()
+    }
+    if (opts?.autoLoad !== false && skillsDir) {
       this.loadSkills()
     }
   }
@@ -58,7 +61,7 @@ export class SkillMacroFramework {
   static parseFile(filePath: string): SkillDefinition {
     const content = fs.readFileSync(filePath, "utf-8")
     if (filePath.endsWith(".json")) return JSON.parse(content)
-    return new SkillMacroFramework("", { autoLoad: false }).parseYaml(content)
+    return yaml.load(content) as SkillDefinition
   }
 
   private ensureDir(): void {
@@ -77,7 +80,7 @@ export class SkillMacroFramework {
           if (file.endsWith(".json")) {
             skill = JSON.parse(content)
           } else {
-            skill = this.parseYaml(content)
+            skill = yaml.load(content) as SkillDefinition
           }
           this.skills.set(skill.name, skill)
           log.info(`Loaded skill: ${skill.name}`)
@@ -108,6 +111,12 @@ export class SkillMacroFramework {
   async execute(skillName: string, context: SkillContext): Promise<{ output: string; context: SkillContext }> {
     const skill = this.skills.get(skillName)
     if (!skill) throw new Error(`Skill not found: ${skillName}`)
+
+    for (const variable of skill.variables) {
+      if (context.variables[variable.name] === undefined && variable.default !== undefined) {
+        context.variables[variable.name] = variable.default
+      }
+    }
 
     log.info(`Executing skill: ${skillName}`)
     let currentStepId = skill.steps[0]?.id

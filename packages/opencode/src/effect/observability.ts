@@ -21,6 +21,19 @@ const headers = Flag.OTEL_EXPORTER_OTLP_HEADERS
     )
   : undefined
 
+const langfuseBase = Flag.LANGFUSE_OTEL_ENDPOINT
+const langfuseEnabled = !!langfuseBase
+const langfuseHeaders = Flag.LANGFUSE_OTEL_HEADERS
+  ? Flag.LANGFUSE_OTEL_HEADERS.split(",").reduce<Record<string, string>>(
+      (acc, x) => {
+        const [key, ...value] = x.split("=")
+        acc[key] = value.join("=")
+        return acc
+      },
+      {}
+    )
+  : undefined
+
 export function resource(): { serviceName: string; serviceVersion: string; attributes: Record<string, string> } {
   const processMetadata = ensureProcessMetadata("main")
   const attributes: Record<string, string> = (() => {
@@ -95,12 +108,31 @@ const traces = async () => {
   }))
 }
 
+const langfuseTraces = async () => {
+  if (!langfuseEnabled) return Layer.empty
+
+  const NodeSdk = await import("@effect/opentelemetry/NodeSdk")
+  const OTLP = await import("@opentelemetry/exporter-trace-otlp-http")
+  const SdkBase = await import("@opentelemetry/sdk-trace-base")
+
+  return NodeSdk.layer(() => ({
+    resource: resource(),
+    spanProcessor: new SdkBase.BatchSpanProcessor(
+      new OTLP.OTLPTraceExporter({
+        url: `${langfuseBase}/v1/traces`,
+        headers: langfuseHeaders,
+      }),
+    ),
+  }))
+}
+
 export const layer = !base
   ? EffectLogger.layer
   : Layer.unwrap(
       Effect.gen(function* () {
         const trace = yield* Effect.promise(traces)
-        return Layer.mergeAll(trace, logs())
+        const langfuseTrace = yield* Effect.promise(langfuseTraces)
+        return Layer.mergeAll(trace, langfuseTrace, logs())
       }),
     )
 

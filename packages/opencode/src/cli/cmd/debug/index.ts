@@ -9,6 +9,7 @@ import { ScrapCommand } from "./scrap"
 import { SkillCommand } from "./skill"
 import { SnapshotCommand } from "./snapshot"
 import { AgentCommand } from "./agent"
+import { GraphCommand } from "./graph"
 
 export const DebugCommand = cmd({
   command: "debug",
@@ -23,6 +24,7 @@ export const DebugCommand = cmd({
       .command(SkillCommand)
       .command(SnapshotCommand)
       .command(AgentCommand)
+      .command(GraphCommand)
       .command(PathsCommand)
       .command({
         command: "wait",

@@ -15,6 +15,11 @@ Fork maintained by xanstomper. Full rebrand from MiMoCode → OpenFable complete
 - `openfable` binary launches with OPENFABLE branding; `openfable debug config` shows the `openfable` provider wired (`api: https://api.xiaomimimo.com/v1`)
 - Mythos framework modules exist on disk but are not yet imported from `src/index.ts` — they are wired only through `src/session/llm.ts` (prompt wrapper, specialized-agent + token-budget injection) and `src/storage/schema.ts` (table exports)
 - Aider-style repo-map context is injected into the system prompt for large-context models (`limit.context >= 200k`), including Claude Opus 4.8, via `src/session/repo-map-context.ts` → `src/session/llm.ts`
+- YAML/JSON macro skills (fabric/CrewAI-style) wired into live Skill service via `src/skill/macro/` → `src/skill/index.ts` → `src/tool/skill.ts`
+- Graph workflow engine (LangGraph-style) wired into agent loop via `src/workflow/graph/service.ts` → `src/effect/app-runtime.ts` → `src/cli/cmd/debug/graph.ts`
+- SWE-bench harness runner added at `script/swebench-runner.ts` for measurable eval
+- Langfuse OTLP observability hook added in `src/effect/observability.ts` with `LANGFUSE_OTEL_ENDPOINT` config
+- Claude Opus 4.8 runtime config limits updated to full 1M context / 128k output / adaptive thinking
 
 ## External References
 

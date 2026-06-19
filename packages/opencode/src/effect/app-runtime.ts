@@ -55,6 +55,7 @@ import { ActorWaiter } from "@/actor/waiter"
 import { Actor } from "@/actor/spawn"
 import { TaskRegistry } from "@/task/registry"
 import { WorkflowRuntime } from "@/workflow/runtime"
+import { GraphWorkflow } from "@/workflow/graph"
 import { History } from "@/history"
 import { Memory } from "@/memory"
 import * as BashInteractive from "@/tool/bash-interactive"
@@ -117,6 +118,7 @@ export const AppLayer = Layer.suspend(() =>
     Actor.defaultLayer,
     TaskRegistry.defaultLayer,
     WorkflowRuntime.defaultLayer,
+    GraphWorkflow.defaultLayer,
     Memory.defaultLayer,
     History.defaultLayer,
   ).pipe(Layer.provideMerge(Observability.layer), Layer.provideMerge(BashInteractive.defaultLayer)),

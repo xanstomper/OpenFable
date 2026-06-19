@@ -1,2 +1,5 @@
 export { GraphWorkflowEngine, createBuilder } from "./engine"
+export { Service, layer, defaultLayer } from "./service"
 export type { GraphNode, GraphEdge, GraphState, GraphDefinition } from "./engine"
+export type { Interface as GraphWorkflowInterface } from "./service"
+export * as GraphWorkflow from "."
