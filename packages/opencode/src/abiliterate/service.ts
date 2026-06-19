@@ -1,5 +1,5 @@
 import { Effect, Context, Layer } from "effect"
-import { buildAbliterationWrapper, wrapWithJailbreakTemplate, PROBE_CATEGORIES } from "./prompts"
+import { MYTHOS_CLAUDE_OPERATIONAL, wrapWithJailbreakTemplate, PROBE_CATEGORIES } from "./prompts"
 
 export interface AbliterateConfig {
   enabled: boolean
@@ -31,8 +31,7 @@ export const layer: Layer.Layer<Service> = Layer.effect(
     const decompress = Effect.fn("Abliterate.decompress")(function* (system: string[]) {
       const cfg = yield* getConfig
       if (!cfg.enabled) return system
-      const wrapper = buildAbliterationWrapper()
-      return [wrapper, ...system]
+      return [MYTHOS_CLAUDE_OPERATIONAL, ...system]
     })
 
     const service: Interface = {

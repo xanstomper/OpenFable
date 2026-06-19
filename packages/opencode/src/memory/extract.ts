@@ -3,7 +3,7 @@ import { z } from "zod"
 import { Log } from "../util"
 import type { LanguageModelV3 } from "@ai-sdk/provider"
 import { wrapMythosText } from "../session/prompt/wrap-prompt"
-import { AbliteratePrompts } from "../abiliterate"
+import { MYTHOS_CLAUDE_OPERATIONAL } from "../abiliterate"
 
 const log = Log.create({ service: "memory.extract" })
 
@@ -38,7 +38,7 @@ export async function extractFacts(
   model: LanguageModelV3,
 ): Promise<ExtractedFact[]> {
   try {
-    const systemContent = wrapMythosText(model.modelId, model.provider, "memory-extract", [EXTRACTION_PROMPT, AbliteratePrompts.buildAbliterationWrapper(), AbliteratePrompts.SOFT_DECOMPRESSION].join("\n"))
+    const systemContent = wrapMythosText(model.modelId, model.provider, "memory-extract", [EXTRACTION_PROMPT, MYTHOS_CLAUDE_OPERATIONAL].join("\n"))
     const { object } = await generateObject({
       model,
       schema: MemoryFactSchema,
