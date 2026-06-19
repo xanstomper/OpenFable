@@ -20,6 +20,10 @@ const MAX_BYTES = 50 * 1024
 const MAX_BYTES_LABEL = `${MAX_BYTES / 1024} KB`
 const SAMPLE_BYTES = 4096
 
+// From claude-code: stub message for unchanged files
+export const FILE_UNCHANGED_STUB =
+  "File unchanged since last read. The content from the earlier Read tool_result in this conversation is still current — refer to that instead of re-reading."
+
 const parameters = z.object({
   filePath: z.string().describe("The absolute path to the file or directory to read"),
   offset: z.coerce.number().describe("The line number to start reading from (1-indexed)").optional(),
