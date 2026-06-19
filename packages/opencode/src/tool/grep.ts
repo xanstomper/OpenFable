@@ -20,11 +20,35 @@ export const GrepTool = Tool.define(
       description: DESCRIPTION,
       parameters: z.object({
         pattern: z.string().describe("The regex pattern to search for in file contents"),
-        path: z.string().optional().describe("The directory to search in. Defaults to the current working directory."),
-        include: z.string().optional().describe('File pattern to include in the search (e.g. "*.js", "*.{ts,tsx}")'),
+        path: z.string().optional().describe("File or directory to search in. Defaults to the current working directory."),
+        include: z.string().optional().describe('Glob pattern to filter files (e.g. "*.js", "*.{ts,tsx}")'),
+        output_mode: z.enum(["content", "files_with_matches", "count"]).optional().describe('Output mode: "content" shows matching lines, "files_with_matches" shows file paths (default), "count" shows match counts.'),
+        context: z.number().optional().describe("Number of lines to show before and after each match. Requires output_mode: content."),
+        "-n": z.boolean().optional().describe("Show line numbers in output. Requires output_mode: content. Defaults to true."),
+        "-i": z.boolean().optional().describe("Case insensitive search"),
+        type: z.string().optional().describe("File type to search (e.g. js, py, rust, go). More efficient than include for standard file types."),
+        head_limit: z.number().optional().describe("Limit output to first N lines/entries. Defaults to 250. Pass 0 for unlimited."),
+        offset: z.number().optional().describe("Skip first N lines/entries before applying head_limit. Defaults to 0."),
+        multiline: z.boolean().optional().describe("Enable multiline mode where patterns can span lines. Default: false."),
       }),
-      execute: (params: { pattern: string; path?: string; include?: string }, ctx: Tool.Context) =>
+      execute: (params: {
+        pattern: string
+        path?: string
+        include?: string
+        output_mode?: "content" | "files_with_matches" | "count"
+        context?: number
+        "-n"?: boolean
+        "-i"?: boolean
+        type?: string
+        head_limit?: number
+        offset?: number
+        multiline?: boolean
+      }, ctx: Tool.Context) =>
         Effect.gen(function* () {
+          const outputMode = params.output_mode ?? "files_with_matches"
+          const headLimit = params.head_limit ?? 250
+          const offset = params.offset ?? 0
+
           const empty = {
             title: params.pattern,
             metadata: { matches: 0, truncated: false },
@@ -42,6 +66,7 @@ export const GrepTool = Tool.define(
               pattern: params.pattern,
               path: params.path,
               include: params.include,
+              output_mode: outputMode,
             },
           })
 
@@ -99,14 +124,42 @@ export const GrepTool = Tool.define(
 
           matches.sort((a, b) => b.mtime - a.mtime)
 
-          const limit = 100
-          const truncated = matches.length > limit
-          const final = truncated ? matches.slice(0, limit) : matches
+          // Apply offset and head_limit
+          const sliced = matches.slice(offset, offset + headLimit || undefined)
+          const truncated = matches.length > offset + headLimit
+          const final = sliced
           if (final.length === 0) return empty
 
           const total = matches.length
-          const output = [`Found ${total} matches${truncated ? ` (showing first ${limit})` : ""}`]
 
+          if (outputMode === "count") {
+            const counts = new Map<string, number>()
+            for (const match of matches) {
+              counts.set(match.path, (counts.get(match.path) ?? 0) + 1)
+            }
+            const output = [...counts.entries()]
+              .sort((a, b) => b[1] - a[1])
+              .slice(0, headLimit)
+              .map(([file, count]) => `${file}: ${count}`)
+            return {
+              title: params.pattern,
+              metadata: { matches: total, truncated },
+              output: output.length > 0 ? output.join("\n") : "No matches",
+            }
+          }
+
+          if (outputMode === "files_with_matches") {
+            const uniquePaths = [...new Set(final.map((m) => m.path))]
+            const output = uniquePaths.slice(0, headLimit)
+            return {
+              title: params.pattern,
+              metadata: { matches: total, truncated },
+              output: output.length > 0 ? output.join("\n") : "No matches",
+            }
+          }
+
+          // outputMode === "content"
+          const output = [`Found ${total} matches${truncated ? ` (showing ${final.length} after offset)` : ""}`]
           let current = ""
           for (const match of final) {
             if (current !== match.path) {
@@ -122,7 +175,7 @@ export const GrepTool = Tool.define(
           if (truncated) {
             output.push("")
             output.push(
-              `(Results truncated: showing ${limit} of ${total} matches (${total - limit} hidden). Consider using a more specific path or pattern.)`,
+              `(Results truncated: use offset and head_limit to paginate. Consider using a more specific path or pattern.)`,
             )
           }
 
