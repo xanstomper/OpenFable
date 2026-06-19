@@ -42,8 +42,9 @@ export const { use: useLocal, provider: LocalProvider } = createSimpleContext({
     }
 
     const agent = iife(() => {
-      const agents = createMemo(() => sync.data.agent.filter((x) => x.mode !== "subagent" && !x.hidden))
-      const visibleAgents = createMemo(() => sync.data.agent.filter((x) => !x.hidden))
+      const serverAgents = createMemo(() => sync.data.agent.filter((x) => x.mode !== "subagent" && !x.hidden))
+      const visible = serverAgents
+      const allVisible = createMemo(() => sync.data.agent.filter((x) => !x.hidden))
       const [agentStore, setAgentStore] = createStore({
         current: undefined as string | undefined,
       })
@@ -59,13 +60,13 @@ export const { use: useLocal, provider: LocalProvider } = createSimpleContext({
       ])
       return {
         list() {
-          return agents()
+          return allVisible()
         },
         current() {
-          return agents().find((x) => x.name === agentStore.current) ?? agents().at(0)
+          return allVisible().find((x) => x.name === agentStore.current) ?? allVisible().at(0)
         },
         set(name: string) {
-          if (!agents().some((x) => x.name === name))
+          if (!allVisible().some((x) => x.name === name))
             return toast.show({
               variant: "warning",
               message: `Agent not found: ${name}`,
@@ -77,22 +78,21 @@ export const { use: useLocal, provider: LocalProvider } = createSimpleContext({
           batch(() => {
             const current = this.current()
             if (!current) return
-            let next = agents().findIndex((x) => x.name === current.name) + direction
-            if (next < 0) next = agents().length - 1
-            if (next >= agents().length) next = 0
-            const value = agents()[next]
+            let next = allVisible().findIndex((x) => x.name === current.name) + direction
+            if (next < 0) next = allVisible().length - 1
+            if (next >= allVisible().length) next = 0
+            const value = allVisible()[next]
             setAgentStore("current", value.name)
           })
         },
         color(name: string) {
-          const index = visibleAgents().findIndex((x) => x.name === name)
+          const index = allVisible().findIndex((x) => x.name === name)
           if (index === -1) return colors()[0]
-          const agent = visibleAgents()[index]
+          const agent = allVisible()[index]
 
           if (agent?.color) {
             const color = agent.color
             if (color.startsWith("#")) return RGBA.fromHex(color)
-            // already validated by config, just satisfying TS here
             return theme[color as keyof typeof theme] as RGBA
           }
           return colors()[index % colors().length]

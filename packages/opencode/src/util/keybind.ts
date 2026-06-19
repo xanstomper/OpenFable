@@ -54,7 +54,8 @@ export function toString(info: Info | undefined): string {
 }
 
 export function parse(key: string): Info[] {
-  if (key === "none") return []
+  if (!key || key === "none") return []
+  if (typeof key !== "string") return []
 
   return key.split(",").map((combo) => {
     // Handle <leader> syntax by replacing with leader+

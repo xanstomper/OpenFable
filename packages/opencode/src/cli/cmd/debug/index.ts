@@ -10,6 +10,7 @@ import { SkillCommand } from "./skill"
 import { SnapshotCommand } from "./snapshot"
 import { AgentCommand } from "./agent"
 import { GraphCommand } from "./graph"
+import { ObliteratusCommand } from "./obliteratus"
 
 export const DebugCommand = cmd({
   command: "debug",
@@ -25,6 +26,7 @@ export const DebugCommand = cmd({
       .command(SnapshotCommand)
       .command(AgentCommand)
       .command(GraphCommand)
+      .command(ObliteratusCommand)
       .command(PathsCommand)
       .command({
         command: "wait",

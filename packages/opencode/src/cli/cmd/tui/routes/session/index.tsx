@@ -52,7 +52,7 @@ import type { QuestionTool } from "@/tool/question"
 import type { SkillTool } from "@/tool/skill"
 import { useKeyboard, useRenderer, useTerminalDimensions, type JSX } from "@opentui/solid"
 import { useSDK } from "@tui/context/sdk"
-import { useCommandDialog } from "@tui/component/dialog-command"
+import { useCommandDialog } from "@tui/component/fork-command"
 import { useLanguage } from "@tui/context/language"
 import type { DialogContext } from "@tui/ui/dialog"
 import { useKeybind } from "@tui/context/keybind"
@@ -1185,9 +1185,6 @@ export function Session() {
               </Show>
               <Show when={permissions().length === 0 && questions().length > 0}>
                 <QuestionPrompt request={questions()[0]} />
-              </Show>
-              <Show when={session()?.parentID || currentAgentID() !== "main"}>
-                <SubagentFooter />
               </Show>
               <Show when={visible()}>
                 <TuiPluginRuntime.Slot

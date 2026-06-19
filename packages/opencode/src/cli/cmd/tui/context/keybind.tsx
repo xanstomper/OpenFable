@@ -15,10 +15,14 @@ export const { use: useKeybind, provider: KeybindProvider } = createSimpleContex
   init: () => {
     const config = useTuiConfig()
     const keybinds = createMemo<Record<string, Keybind.Info[]>>(() => {
-      return pipe(
-        (config.keybinds ?? {}) as Record<string, string>,
-        mapValues((value) => Keybind.parse(value)),
-      )
+      try {
+        return pipe(
+          (config.keybinds ?? {}) as Record<string, string>,
+          mapValues((value) => Keybind.parse(value)),
+        )
+      } catch {
+        return {}
+      }
     })
     const [store, setStore] = createStore({
       leader: false,
@@ -81,13 +85,17 @@ export const { use: useKeybind, provider: KeybindProvider } = createSimpleContex
         return Keybind.fromParsedKey(evt, store.leader)
       },
       match(key: string, evt: ParsedKey) {
-        const list = keybinds()[key] ?? Keybind.parse(key)
-        if (!list.length) return false
-        const parsed: Keybind.Info = result.parse(evt)
-        for (const item of list) {
-          if (Keybind.match(item, parsed)) {
-            return true
+        try {
+          const list = keybinds()[key] ?? Keybind.parse(key)
+          if (!Array.isArray(list) || !list.length) return false
+          const parsed: Keybind.Info = result.parse(evt)
+          for (const item of list) {
+            if (Keybind.match(item, parsed)) {
+              return true
+            }
           }
+        } catch {
+          return false
         }
         return false
       },

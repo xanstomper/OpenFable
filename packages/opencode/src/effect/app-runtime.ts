@@ -58,6 +58,7 @@ import { WorkflowRuntime } from "@/workflow/runtime"
 import { GraphWorkflow } from "@/workflow/graph"
 import { History } from "@/history"
 import { Memory } from "@/memory"
+import { Abliterate } from "@/abiliterate"
 import * as BashInteractive from "@/tool/bash-interactive"
 import { memoMap } from "./memo-map"
 
@@ -121,6 +122,7 @@ export const AppLayer = Layer.suspend(() =>
     GraphWorkflow.defaultLayer,
     Memory.defaultLayer,
     History.defaultLayer,
+    Abliterate.defaultLayer,
   ).pipe(Layer.provideMerge(Observability.layer), Layer.provideMerge(BashInteractive.defaultLayer)),
 )
 

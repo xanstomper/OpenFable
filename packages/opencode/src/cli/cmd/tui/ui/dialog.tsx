@@ -139,13 +139,15 @@ function init() {
       for (const item of store.stack) {
         if (item.onClose) item.onClose()
       }
-      setStore("size", "medium")
-      setStore("stack", [
-        {
-          element: input,
-          onClose,
-        },
-      ])
+      batch(() => {
+        setStore("size", "medium")
+        setStore("stack", [
+          {
+            element: input,
+            onClose,
+          },
+        ])
+      })
     },
     get stack() {
       return store.stack

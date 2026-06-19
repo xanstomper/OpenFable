@@ -35,7 +35,7 @@ import { DialogThemeList } from "@tui/component/dialog-theme-list"
 import { DialogImageList } from "@tui/component/dialog-image-list"
 import { DialogLogoDesign } from "@tui/component/dialog-logo-design"
 import { DialogHelp } from "./ui/dialog-help"
-import { CommandProvider, useCommandDialog } from "@tui/component/dialog-command"
+import { CommandProvider, useCommandDialog } from "@tui/component/fork-command"
 import { DialogAgent } from "@tui/component/dialog-agent"
 import { DialogSessionList } from "@tui/component/dialog-session-list"
 import { DialogWorkflows } from "@tui/component/dialog-workflows"
@@ -917,13 +917,6 @@ function App(props: { onSnapshot?: () => Promise<string[]> }) {
       message: evt.properties.message,
       variant: evt.properties.variant,
       duration: evt.properties.duration,
-    })
-  })
-
-  event.on(TuiEvent.InstructionsLoaded.type, (evt) => {
-    toast.show({
-      message: t("tui.toast.instructions_loaded", { files: evt.properties.files.join(", ") }),
-      variant: "info",
     })
   })
 

@@ -1,7 +1,7 @@
 import { useDialog } from "@tui/ui/dialog"
 import { type DialogSelectOption } from "@tui/ui/dialog-select"
 import { isEditBufferRenderable } from "@opentui/core"
-import { ForkPalette } from "./fork-palette"
+import { CommandPalette } from "./command-palette"
 import {
   createContext,
   createMemo,
@@ -148,8 +148,6 @@ function init() {
 
       let list: Accessor<CommandOption[]> | undefined
 
-      // TUI plugins now register commands via an async store that runs outside an active reactive scope.
-      // runWithOwner attaches createMemo/onCleanup to this owner so plugin registrations stay reactive and dispose correctly.
       runWithOwner(owner, () => {
         list = createMemo(cb)
         const ref = list
@@ -196,7 +194,7 @@ export function CommandProvider(props: ParentProps) {
       try {
         value.show()
       } catch {
-        // Ignore rendering errors — error boundary handles them
+        // Ignore rendering errors
       }
       return
     }
@@ -208,5 +206,5 @@ export function CommandProvider(props: ParentProps) {
 function DialogCommand(props: { options: CommandOption[]; suggestedOptions: CommandOption[] }) {
   const lang = useLanguage()
   const opts = () => [...props.suggestedOptions, ...props.options]
-  return <ForkPalette title={lang.t("tui.command.palette.title")} options={opts()} />
+  return <CommandPalette title={lang.t("tui.command.palette.title")} options={opts()} />
 }

@@ -416,6 +416,13 @@ const InfoSchema = Schema.Struct({
       }),
     }),
   ).annotate({ description: "Dynamic workflow runtime settings." }),
+  mythos: Schema.optional(
+    Schema.Struct({
+      enabled: Schema.optional(Schema.Boolean).annotate({
+        description: "Enable mythos framework wrapping (default: true)",
+      }),
+    }),
+  ).annotate({ description: "Mythos framework configuration" }),
 })
 
 // Schema.Struct produces readonly types by default, but the service code

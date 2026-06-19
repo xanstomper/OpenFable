@@ -59,6 +59,10 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
   const tuiConfig = useTuiConfig()
   const t = useLanguage().t
   const scrollAcceleration = createMemo(() => getScrollAcceleration(tuiConfig))
+  const safeOptions = createMemo<DialogSelectOption<T>[]>(() => {
+    const opts = props.options
+    return Array.isArray(opts) ? opts : []
+  })
 
   const [store, setStore] = createStore({
     selected: 0,
@@ -83,10 +87,11 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
   let input: InputRenderable
 
   const filtered = createMemo(() => {
-    if (props.skipFilter) return props.options.filter((x) => x.disabled !== true)
+    const opts = safeOptions()
+    if (props.skipFilter) return opts.filter((x) => x.disabled !== true)
     const needle = store.filter.toLowerCase()
     const options = pipe(
-      props.options,
+      opts,
       filter((x) => x.disabled !== true),
     )
     if (!needle) return options
@@ -115,13 +120,17 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
 
   const grouped = createMemo<[string, DialogSelectOption<T>[]][]>(() => {
     if (flatten()) return [["", filtered()]]
-    const result = pipe(
-      filtered(),
-      groupBy((x) => x.category ?? ""),
-      // mapValues((x) => x.sort((a, b) => a.title.localeCompare(b.title))),
-      entries(),
-    )
-    return result
+    try {
+      const result = pipe(
+        filtered(),
+        groupBy((x) => x.category ?? ""),
+        entries(),
+      )
+      if (!Array.isArray(result)) return []
+      return result.filter(([, options]) => Array.isArray(options)) as [string, DialogSelectOption<T>[]][]
+    } catch {
+      return []
+    }
   })
 
   const flat = createMemo(() => {
@@ -160,7 +169,8 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
   )
 
   function move(direction: number) {
-    if (flat().length === 0) return
+    const opts = flat()
+    if (!Array.isArray(opts) || opts.length === 0) return
     let next = store.selected + direction
     if (next < 0) next = flat().length - 1
     if (next >= flat().length) next = 0
@@ -197,12 +207,16 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
   useKeyboard((evt) => {
     setStore("input", "keyboard")
 
-    if (evt.name === "up" || (evt.ctrl && evt.name === "p")) move(-1)
-    if (evt.name === "down" || (evt.ctrl && evt.name === "n")) move(1)
-    if (evt.name === "pageup") move(-10)
-    if (evt.name === "pagedown") move(10)
-    if (evt.name === "home") moveTo(0)
-    if (evt.name === "end") moveTo(flat().length - 1)
+    try {
+      if (evt.name === "up") move(-1)
+      if (evt.name === "down" || (evt.ctrl && evt.name === "n")) move(1)
+      if (evt.name === "pageup") move(-10)
+      if (evt.name === "pagedown") move(10)
+      if (evt.name === "home") moveTo(0)
+      if (evt.name === "end") moveTo(flat().length - 1)
+    } catch {
+      // guard: flat() may not be ready during initial render
+    }
 
     if (evt.name === "return") {
       const option = selected()
