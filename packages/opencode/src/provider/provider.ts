@@ -1715,9 +1715,9 @@ const layer: Layer.Layer<
         return { providerID: entry.providerID, modelID: entry.modelID }
       }
 
-      const openfableProvider = s.providers[ProviderID.make("openfable")]
-      if (openfableProvider?.models[ModelID.make("openfable-auto")]) {
-        return { providerID: openfableProvider.id, modelID: ModelID.make("openfable-auto") }
+      const openfableProvider = s.providers[ProviderID.make("opencode")]
+      if (openfableProvider?.models[ModelID.make("openfable-v2-pro-free")]) {
+        return { providerID: openfableProvider.id, modelID: ModelID.make("openfable-v2-pro-free") }
       }
 
       const provider = Object.values(s.providers).find((p) => !cfg.provider || Object.keys(cfg.provider).includes(p.id))

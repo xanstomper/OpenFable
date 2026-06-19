@@ -673,7 +673,7 @@ export const ProvidersWhoamiCommand = cmd({
     const info = await AppRuntime.runPromise(
       Effect.gen(function* () {
         const auth = yield* Auth.Service
-        return yield* auth.get("openfable")
+        return yield* auth.get("xiaomi")
       }),
     )
     if (!info) {

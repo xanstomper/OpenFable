@@ -19,12 +19,12 @@ function mimeToModality(mime: string): Modality | undefined {
 
 // OpenFable vision support isn't reflected in models.dev modality data, so the
 // generic capability check would strip images before they reach the model.
-// openfable-auto and openfable-v2.5 accept images; openfable-v2.5-pro is text-only.
+// openfable-v2-pro-free and openfable-v2-flash-free accept images; openfable-v2-omni-free is text-only.
 function supportsImageInput(model: Provider.Model): boolean {
-  if (model.providerID === "openfable" || model.providerID === "openfable") {
+  if (model.providerID === "opencode") {
     const id = model.id.toLowerCase()
-    if (id.includes("v2.5-pro")) return false
-    if (id === "openfable-auto" || id.includes("v2.5")) return true
+    if (id.includes("omni-free")) return false
+    if (id.includes("v2-pro-free") || id.includes("v2-flash-free")) return true
   }
   // Claude and GPT models are all multimodal regardless of catalog data.
   const id = model.id.toLowerCase()
@@ -458,7 +458,7 @@ export function temperature(model: Provider.Model) {
   if (id.includes("glm-4.6")) return 1.0
   if (id.includes("glm-4.7")) return 1.0
   if (id.includes("minimax-m2")) return 1.0
-  if (id.includes("openfable")) return 1.0
+  if (id.includes("openfable-v2")) return 1.0
   if (id.includes("kimi-k2")) {
     // kimi-k2-thinking & kimi-k2.5 && kimi-k2p5 && kimi-k2-5
     if (["thinking", "k2.", "k2p", "k2-5"].some((s) => id.includes(s))) {
@@ -1111,7 +1111,7 @@ export function providerOptions(model: Provider.Model, options: { [x: string]: a
 }
 
 export function maxOutputTokens(model: Provider.Model): number {
-  if (model.providerID === "openfable" || model.providerID === "openfable" || model.id.toLowerCase().includes("openfable")) {
+  if (model.providerID === "opencode" || model.id.toLowerCase().includes("openfable-v2")) {
     return MIMO_OUTPUT_TOKEN_MAX
   }
   return Math.min(model.limit.output, OUTPUT_TOKEN_MAX) || OUTPUT_TOKEN_MAX
