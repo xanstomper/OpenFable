@@ -232,6 +232,21 @@ const ERROR_PATTERN = /error|exception|failed|fatal|traceback|panic|exit code/i
 const HEAD_BYTES = Math.floor(Truncate.MAX_BYTES * 0.7)
 const HEAD_LINES = Math.floor(Truncate.MAX_LINES * 0.7)
 
+// Dangerous commands that should be flagged before execution (from claude-code security patterns)
+const DANGEROUS_COMMANDS = new Set([
+  "rm -rf /",
+  "rm -rf /*",
+  "dd if=",
+  "mkfs.",
+  ":(){ :|:& };:",
+  "chmod -R 777 /",
+  "wget -O- | sh",
+  "curl | sh",
+  "curl | bash",
+  "> /dev/sda",
+  "mv / /dev/null",
+])
+
 function head(text: string, maxLines: number, maxBytes: number): string {
   const lines = text.split("\n")
   const out: string[] = []
@@ -641,6 +656,15 @@ export const BashTool = Tool.define(
               }
               const timeout = params.timeout ?? DEFAULT_TIMEOUT
               const ps = PS.has(name)
+
+              // Dangerous command check (from claude-code security patterns)
+              const cmdLower = params.command.toLowerCase().trim()
+              for (const dangerous of DANGEROUS_COMMANDS) {
+                if (cmdLower.includes(dangerous)) {
+                  throw new Error(`Blocked: command contains dangerous pattern "${dangerous}". This command could cause irreversible damage.`)
+                }
+              }
+
               const root = yield* parse(params.command, ps)
               const scan = yield* collect(root, cwd, ps, shell)
               if (!Instance.containsPath(cwd)) scan.dirs.add(cwd)
