@@ -391,18 +391,18 @@ triage → navigate → edit → verify → [critic] → done / escalate
 ```
 
 - **Adaptive**: simple tasks skip navigation, risky changes get critic review
-- **Risk scoring**: from file count, line count, test coverage
-- **Event history**: full replay and debugging support
+- **Risk scoring**: computed from file count, line count, and test coverage
+- **Event history**: full replay and debugging support for every state transition
 - **Escalation**: when max attempts exhausted, leaves repo untouched (no broken state)
 
 ### 4-Layer Memory
 
-| Layer | Purpose | Lifetime |
-|-------|---------|----------|
-| **Working** | In-RAM session context with TTL and LRU eviction | Session |
-| **Episodic** | Past sessions: what happened, what worked, what failed | Persistent |
-| **Semantic** | Repo knowledge: symbols, call graph, dependencies | Persistent |
-| **Procedural** | Learned preferences from user corrections | Persistent |
+| Layer | Purpose | Lifetime | How It Helps |
+|-------|---------|----------|--------------|
+| **Working** | In-RAM session context with TTL and LRU eviction | Session | Fast access to recent decisions and context |
+| **Episodic** | Past sessions: what happened, what worked, what failed | Persistent | Avoids repeating failed approaches across sessions |
+| **Semantic** | Repo knowledge: symbols, call graph, dependencies | Persistent | Understands codebase structure without re-reading files |
+| **Procedural** | Learned preferences from user corrections | Persistent | Adapts to your coding style over time |
 
 Memory is reconciled on every session start — stale entries are pruned, new code is indexed, and cross-session knowledge accumulates automatically.
 
@@ -411,7 +411,7 @@ Memory is reconciled on every session start — stale entries are pruned, new co
 A greedy knapsack algorithm packs the highest-value context into the model's context window:
 
 - Treats cached content as nearly free (1/10th cost)
-- Sorts by value-per-token
+- Sorts by value-per-token for optimal packing
 - Reports savings estimates per model
 - Automatically handles models from 8k to 1M context windows
 
