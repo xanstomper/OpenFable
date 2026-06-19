@@ -221,7 +221,7 @@ export const layer: Layer.Layer<Service, never, HttpClient.HttpClient | ChildPro
           const headers = yield* text([
             "curl",
             "-sI",
-            "https://github.com/XiaomiMiMo/OpenFable-Code/releases/latest",
+            "https://github.com/xanstomper/OpenFable-Code/releases/latest",
           ])
           const match = headers.match(/^location:.*\/tag\/v([0-9][^\s/]*)/im)
           if (match) return match[1]

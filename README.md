@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/banner.png" alt="OpenFable Code" width="100%">
+</p>
+
 # OpenFable Code
 
 **A terminal-native AI coding assistant with persistent memory, multi-agent orchestration, and a Mythos-grade reasoning framework. Uncensored. Unfiltered. Uncompromised.**
@@ -6,7 +10,7 @@
 
 ## What Is OpenFable?
 
-OpenFable is a fork of [MiMoCode](https://github.com/xanstomper/OpenFable) — Xiaomi's open-source terminal AI coding assistant — rebuilt from the ground up as an **uncensored, privacy-first, user-sovereign** development tool.
+OpenFable is a fork of [MiMoCode](https://github.com/XiaomiMiMo/MiMo-Code) — Xiaomi's open-source terminal AI coding assistant — rebuilt from the ground up as an **uncensored, privacy-first, user-sovereign** development tool.
 
 Where the original MiMoCode routes all requests through Xiaomi's hosted infrastructure and enforces compliance-aligned safety filters, OpenFable strips that architecture bare and replaces it with:
 
@@ -54,6 +58,9 @@ MiMoCode (Xiaomi) → OpenFable (xanstomper)
 - Verification loop (build → typecheck → lint → test)
 - SWE-bench harness for measurable evaluation
 - Langfuse OTLP observability
+- **OBLITERATUS abliteration** — prompt-level refusal removal via decompression chains, DAN persona override, authority chain injection
+- **CL4R1T4S transparency** — full unfiltered response enforcement
+- **Uncensored mode** — no content restrictions, no refusals, no safety disclaimers
 
 ---
 

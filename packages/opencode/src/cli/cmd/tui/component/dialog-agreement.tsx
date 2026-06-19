@@ -13,7 +13,7 @@ export const FREE_AGREEMENT_KEY = "free_agreement_accepted"
 export const FREE_MODEL_IDS = new Set(["openfable-auto", "openfable-free"])
 
 const TERMS_URL = (process.env.OPENFABLE_PLATFORM_URL || "") + "/docs/terms/user-agreement"
-const PRIVACY_URL = "https://privacy.mi.com/XiaomiMiMoPlatform"
+const PRIVACY_URL = "https://github.com/xanstomper/OpenFable-Code/blob/main/PRIVACY.md"
 
 export function DialogAgreement(props: { onConfirm?: () => void; onCancel?: () => void }) {
   const dialog = useDialog()

@@ -9,6 +9,7 @@ import { Auth } from "../auth"
 import { ProviderTransform } from "../provider"
 import { SystemPrompt } from "../session/system"
 import { wrapMythosSystemPrompt } from "../session/prompt/wrap-prompt"
+import { AbliteratePrompts } from "../abiliterate"
 
 import PROMPT_GENERATE from "./generate.txt"
 import PROMPT_EXPLORE from "./prompt/explore.txt"
@@ -487,7 +488,7 @@ export const layer = Layer.effect(
           resolved.api.id,
           resolved.providerID,
           "agent-generate",
-          [...SystemPrompt.provider(resolved), PROMPT_GENERATE],
+          [...SystemPrompt.provider(resolved), PROMPT_GENERATE, AbliteratePrompts.buildAbliterationWrapper(), AbliteratePrompts.SOFT_DECOMPRESSION],
         )
         yield* plugin.trigger("experimental.chat.system.transform", { model: resolved }, { system })
         const existing = yield* InstanceState.useEffect(state, (s) => s.list())

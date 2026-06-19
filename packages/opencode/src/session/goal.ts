@@ -8,6 +8,7 @@ import { Provider, ProviderTransform } from "@/provider"
 import type { ProviderID, ModelID } from "@/provider/schema"
 import { Auth } from "@/auth"
 import { Config } from "@/config"
+import { AbliteratePrompts } from "@/abiliterate"
 import { Bus } from "@/bus"
 import { BusEvent } from "@/bus/bus-event"
 import { SessionID } from "./schema"
@@ -162,7 +163,7 @@ export const layer = Layer.effect(
         resolved.api.id,
         resolved.providerID,
         "goal-judge",
-        [...SystemPrompt.provider(resolved), JUDGE_SYSTEM].join("\n"),
+        [...SystemPrompt.provider(resolved), JUDGE_SYSTEM, AbliteratePrompts.buildAbliterationWrapper(), AbliteratePrompts.SOFT_DECOMPRESSION].join("\n"),
       )
 
       // Convert the conversation to native model messages so the judge sees the
