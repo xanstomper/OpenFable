@@ -67,6 +67,12 @@ const Parameters = z.object({
       "Set to true when the command requires user interaction (password input, y/N confirmation, SSH key passphrase, etc). The terminal will be handed to the user for direct interaction.",
     )
     .optional(),
+  run_in_background: z
+    .boolean()
+    .describe(
+      "Run the command in the background. Only use if you don't need the result immediately. You will be notified when it completes.",
+    )
+    .optional(),
   description: z
     .string()
     .describe(
