@@ -597,28 +597,31 @@ function generateSystem(colors: TerminalColors, mode: "dark" | "light"): ThemeJs
     greenBright: col(10),
   }
 
-  const diffAlpha = isDark ? 0.22 : 0.14
+  const diffAlpha = isDark ? 0.28 : 0.18
   const diffAddedBg = tint(bg, ansiColors.green, diffAlpha)
   const diffRemovedBg = tint(bg, ansiColors.red, diffAlpha)
   const diffContextBg = grays[2]
-  const diffAddedLineNumberBg = tint(diffContextBg, ansiColors.green, diffAlpha)
-  const diffRemovedLineNumberBg = tint(diffContextBg, ansiColors.red, diffAlpha)
+  const diffAddedLineNumberBg = tint(diffContextBg, ansiColors.green, diffAlpha * 0.6)
+  const diffRemovedLineNumberBg = tint(diffContextBg, ansiColors.red, diffAlpha * 0.6)
   const diffLineNumber = textMuted
 
   const openfableBlue = RGBA.fromInts(66, 135, 245)
+  const openfableCyan = RGBA.fromInts(0, 200, 220)
+  const openfableGreen = RGBA.fromInts(34, 197, 94)
+  const openfableAmber = RGBA.fromInts(245, 158, 11)
 
   return {
     theme: {
       // Primary colors using OpenFable Blue
       primary: openfableBlue,
-      secondary: openfableBlue,
-      accent: openfableBlue,
+      secondary: openfableCyan,
+      accent: openfableAmber,
 
-      // Status colors using ANSI
+      // Status colors - distinct and vibrant
       error: ansiColors.red,
-      warning: ansiColors.yellow,
-      success: openfableBlue,
-      info: openfableBlue,
+      warning: openfableAmber,
+      success: openfableGreen,
+      info: openfableCyan,
 
       // Text colors
       text: fg,
@@ -636,11 +639,11 @@ function generateSystem(colors: TerminalColors, mode: "dark" | "light"): ThemeJs
       border: grays[7],
       borderActive: grays[8],
 
-      // Diff colors
-      diffAdded: ansiColors.green,
+      // Diff colors - vibrant and high-contrast
+      diffAdded: openfableGreen,
       diffRemoved: ansiColors.red,
-      diffContext: grays[7],
-      diffHunkHeader: grays[7],
+      diffContext: grays[6],
+      diffHunkHeader: openfableCyan,
       diffHighlightAdded: ansiColors.greenBright,
       diffHighlightRemoved: ansiColors.redBright,
       diffAddedBg,

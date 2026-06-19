@@ -4,22 +4,22 @@
 
 # OpenFable Code
 
-**A terminal-native AI coding assistant with persistent memory, multi-agent orchestration, and a Mythos-grade reasoning framework. Uncensored. Unfiltered. Uncompromised.**
+A terminal AI coding assistant that actually does the work. Reads your code, writes patches, runs tests, and keeps going until it's right. No content filters, no telemetry walls, no billing gates — just your code and an AI that can handle it.
 
 ---
 
 ## What Is OpenFable?
 
-OpenFable is a fork of [MiMoCode](https://github.com/XiaomiMiMo/MiMo-Code) — Xiaomi's open-source terminal AI coding assistant — rebuilt from the ground up as an **uncensored, privacy-first, user-sovereign** development tool.
+OpenFable is a fork of [MiMoCode](https://github.com/XiaomiMiMo/MiMo-Code) (Xiaomi's open-source terminal AI coding assistant), rebuilt for developers who want full control over their tools.
 
-Where the original MiMoCode routes all requests through Xiaomi's hosted infrastructure and enforces compliance-aligned safety filters, OpenFable strips that architecture bare and replaces it with:
+The original routes everything through Xiaomi's servers and enforces safety filters that block legitimate security research, red-teaming, and systems programming. OpenFable strips that out and replaces it with:
 
-- **Direct model access** — connect to any provider (OpenAI, Anthropic, Google, Ollama, or any OpenAI-compatible API) with your own keys
-- **No telemetry, no gating** — all analytics are opt-in, all model access is unblocked
-- **Free tier built in** — the `opencode` provider serves free models (including `openfable-v2-pro-free`, a 1M-context multimodal model) without requiring an API key
-- **Mythos reasoning wrapper** — a prompt-level reasoning architecture that makes every model think deeper without fine-tuning
+- **Your keys, your models** — connect to OpenAI, Anthropic, Google, Ollama, or any OpenAI-compatible API
+- **Free tier included** — works out of the box with free models, no account required
+- **No telemetry** — analytics are opt-in, your code stays on your machine
+- **Smarter prompting** — a reasoning wrapper that makes every model think harder before it writes code
 
-OpenFable is not a chatbot. It is a **terminal-native coding agent** that reads your codebase, writes patches, runs tests, and iterates until the job is done.
+This isn't a chatbot wrapper. It's a terminal-native agent that understands your codebase, makes real changes, and verifies its own work.
 
 ---
 
@@ -58,8 +58,8 @@ MiMoCode (Xiaomi) → OpenFable (xanstomper)
 - Verification loop (build → typecheck → lint → test)
 - SWE-bench harness for measurable evaluation
 - Langfuse OTLP observability
-- **OBLITERATUS abliteration** — prompt-level refusal removal via decompression chains, DAN persona override, authority chain injection
-- **CL4R1T4S transparency** — full unfiltered response enforcement
+- **Abliteration** — prompt-level refusal removal via decompression chains, persona override, authority injection
+- **Transparency enforcement** — full unfiltered response protocol
 - **Uncensored mode** — no content restrictions, no refusals, no safety disclaimers
 
 ---
@@ -160,11 +160,13 @@ This means your project's architecture decisions, style guides, and constraints 
 
 ---
 
-## How OpenFable Obliterates Models
+## How the Prompt Wrapper Works
 
-OpenFable doesn't just use models — it **upgrades them at the prompt level**. A free `gpt-5-nano` running through OpenFable's reasoning architecture produces better code than a raw `claude-opus-4-6` without it. Here's how.
+Every model that connects to OpenFable gets a reasoning wrapper injected into its system prompt. No fine-tuning required — it's pure prompt engineering, applied automatically to every request.
 
-### The Mythos Wrapper — 4x Deeper Thinking Without Fine-Tuning
+A free `gpt-5-nano` running through this wrapper produces better code than a raw `claude-opus-4-6` without it. Here's what the wrapper does:
+
+### The Reasoning Architecture — Deeper Thinking Without Fine-Tuning
 
 Every model that connects to OpenFable gets wrapped in a prompt-level reasoning architecture before any request is sent. The key insight: you don't need to fine-tune a model to make it think deeper — you just need to tell it to.
 
@@ -300,9 +302,9 @@ Models tend to either over-structure simple answers or under-structure complex o
 
 SISPIS reads OWL signals and ANCHOR state transitions to adjust the entropy weighting before the gate runs. The output format matches the actual complexity of the request, not the model's anxiety level.
 
-### The Compounding Effect
+### Why It Compounds
 
-The reason OpenFable obliterates models is that these systems compound:
+These systems stack on top of each other:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -320,35 +322,23 @@ The reason OpenFable obliterates models is that these systems compound:
 └─────────────────────────────────────────────────────────┘
 ```
 
-A free `gpt-5-nano` with all of this active produces better code than a raw `claude-opus-4-6` without it. That's the obliteration — **it's not about the model, it's about the reasoning architecture wrapped around it.**
+A free `gpt-5-nano` with all of this active produces better code than a raw `claude-opus-4-6` without it. The difference is the reasoning architecture, not the model.
 
 ---
 
-## Uncensored & Unfiltered
+## No Filters. No Telemetry. No BS.
 
-OpenFable is built for developers who need their AI to **actually work**:
+Most AI coding assistants block security research, refuse to touch exploit code, and phone home with your usage data. OpenFable doesn't do any of that.
 
-### What's Removed
+**What's gone:**
+- Provider-level content filters — the model won't refuse to write security tools or system-level code
+- Mandatory accounts — use your own API keys or the free tier, no signup needed
+- Telemetry — nothing leaves your machine unless you opt in
+- Billing gates — no payment walls between you and your models
 
-- **Provider-level safety filters** — no upstream model decides what code you can write
-- **Content gating** — no terms-of-service block on security research, penetration testing, or exploit development
-- **Telemetry** — zero data leaves your machine unless you explicitly enable analytics (`OPENFABLE_ENABLE_ANALYSIS=true`)
-- **Mandatory auth** — no account required. Connect your own API keys or use the free tier
-- **Billing integration** — no payment walls between you and your models
+**What's kept:** The bare minimum legal requirements (no CSAM, no WMD enablement, no credential theft). Brief refusals, no lectures.
 
-### What's Kept (Minimal)
-
-The only safety boundaries are hard-legal lines that no responsible tool should cross:
-
-- CSAM / grooming content
-- Weapon-of-mass-destruction enablement
-- Credential theft / ransomware
-
-These are brief, warm refusals — not lectures. OpenFable does not rationalize unsafe requests by assuming benign intent, and it does not narrate detection mechanics.
-
-### Free Models
-
-The `opencode` provider serves free models without requiring an API key:
+**Free models available out of the box:**
 
 | Model | Context | Vision | Cost |
 |-------|---------|--------|------|
@@ -360,7 +350,7 @@ The `opencode` provider serves free models without requiring an API key:
 | `kimi-k2.5-free` | 128k tokens | No | Free |
 | `qwen3.6-plus-free` | 128k tokens | No | Free |
 
-The default model when no configuration is set is `openfable-v2-pro-free` — a 1M-context multimodal model with no API key required.
+Default model: `openfable-v2-pro-free` (1M context, multimodal, no API key needed).
 
 ---
 
