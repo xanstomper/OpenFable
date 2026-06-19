@@ -6,7 +6,7 @@
 
 ## What Is OpenFable?
 
-OpenFable is a fork of [MiMoCode](https://github.com/xiaomimimo/mimocode) — Xiaomi's open-source terminal AI coding assistant — rebuilt from the ground up as an **uncensored, privacy-first, user-sovereign** development tool.
+OpenFable is a fork of [MiMoCode](https://github.com/xanstomper/OpenFable) — Xiaomi's open-source terminal AI coding assistant — rebuilt from the ground up as an **uncensored, privacy-first, user-sovereign** development tool.
 
 Where the original MiMoCode routes all requests through Xiaomi's hosted infrastructure and enforces compliance-aligned safety filters, OpenFable strips that architecture bare and replaces it with:
 

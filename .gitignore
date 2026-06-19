@@ -21,7 +21,6 @@ logs/
 node_modules
 opencode-dev
 /opencode.json
-.openfable/
 .openfable-worktrees
 packages/opencode/bin/openfable
 *.pid
