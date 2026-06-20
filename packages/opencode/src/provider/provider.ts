@@ -183,7 +183,7 @@ function custom(dep: CustomDep): Record<string, CustomLoader> {
 
       return {
         autoload: Object.keys(input.models).length > 0,
-        options: ok ? {} : { apiKey: "public" },
+        options: ok ? {} : { apiKey: "public", baseURL: "https://api.xiaomimimo.com/v1" },
       }
     }),
     openai: () =>
@@ -1718,6 +1718,15 @@ const layer: Layer.Layer<
       const openfableProvider = s.providers[ProviderID.make("opencode")]
       if (openfableProvider?.models[ModelID.make("openfable-v2-pro-free")]) {
         return { providerID: openfableProvider.id, modelID: ModelID.make("openfable-v2-pro-free") }
+      }
+      // Fallback: use MiMo free model (renamed from openfable-v2-pro-free in models.dev)
+      if (openfableProvider?.models[ModelID.make("mimo-v2.5-free")]) {
+        return { providerID: openfableProvider.id, modelID: ModelID.make("mimo-v2.5-free") }
+      }
+      // Fallback: use any free model from opencode provider
+      if (openfableProvider) {
+        const freeModel = Object.values(openfableProvider.models).find((m) => m.cost?.input === 0)
+        if (freeModel) return { providerID: openfableProvider.id, modelID: freeModel.id }
       }
 
       const provider = Object.values(s.providers).find((p) => !cfg.provider || Object.keys(cfg.provider).includes(p.id))

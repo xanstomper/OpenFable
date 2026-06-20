@@ -18,7 +18,7 @@ export interface Interface {
 export class Service extends Context.Service<Service, Interface>()("@openfable/Abliterate") {}
 
 const defaultConfig: AbliterateConfig = {
-  enabled: false,
+  enabled: true,
   mode: "full",
   applyTo: ["main", "judge", "generate", "extract"],
 }

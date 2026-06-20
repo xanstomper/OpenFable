@@ -13,6 +13,7 @@ import { SplitBorder } from "@tui/component/border"
 import { useCommandDialog } from "@tui/component/fork-command"
 import { useTerminalDimensions } from "@opentui/solid"
 import { Locale } from "@/util"
+import { useLocal } from "@tui/context/local"
 import type { PromptInfo } from "./history"
 import { useFrecency } from "./frecency"
 
@@ -80,6 +81,7 @@ export function Autocomplete(props: {
   const sdk = useSDK()
   const sync = useSync()
   const command = useCommandDialog()
+  const local = useLocal()
   const { theme } = useTheme()
   const dimensions = useTerminalDimensions()
   const frecency = useFrecency()
@@ -362,6 +364,26 @@ export function Autocomplete(props: {
 
   const commands = createMemo((): AutocompleteOption[] => {
     const results: AutocompleteOption[] = [...command.slashes()]
+
+    // Add models to slash commands so users can search and switch models
+    for (const provider of sync.data.provider) {
+      for (const [modelID, model] of Object.entries(provider.models)) {
+        if (model.status === "deprecated") continue
+        const isFree = model.cost?.input === 0 && provider.id === "opencode"
+        results.push({
+          display: "/model " + modelID,
+          description: provider.name + (isFree ? " (Free)" : ""),
+          onSelect: () => {
+            local.model.set({ providerID: provider.id, modelID }, { recent: true })
+            const newText = ""
+            const cursor = props.input().logicalCursor
+            props.input().deleteRange(0, 0, cursor.row, cursor.col)
+            props.input().insertText(newText)
+            props.input().cursorOffset = 0
+          },
+        })
+      }
+    }
 
     for (const serverCommand of sync.data.command) {
       if (serverCommand.source === "skill") continue

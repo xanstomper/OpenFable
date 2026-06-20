@@ -10,7 +10,6 @@ import { useKeybind } from "../context/keybind"
 import { useSDK } from "../context/sdk"
 import { useToast, type ToastContext } from "../ui/toast"
 import { DialogPrompt } from "../ui/dialog-prompt"
-import * as fuzzysort from "fuzzysort"
 
 const ADD_MODEL_SENTINEL = "__add_model__"
 
@@ -28,21 +27,15 @@ export function DialogModel(props: { providerID?: string }) {
   const sdk = useSDK()
   const toast = useToast()
   const keybind = useKeybind()
-  const [query, setQuery] = createSignal("")
 
   const connected = useConnected()
   const providers = createDialogProviderOptions()
 
-  const showExtra = createMemo(() => connected() && !props.providerID)
-
   const options = createMemo(() => {
-    const needle = query().trim()
-    const showSections = showExtra() && needle.length === 0
     const favorites = connected() ? local.model.favorite() : []
     const recents = local.model.recent()
 
     function toOptions(items: typeof favorites, category: string) {
-      if (!showSections) return []
       return items.flatMap((item) => {
         const provider = sync.data.provider.find((x) => x.id === item.providerID)
         if (!provider) return []
@@ -99,7 +92,6 @@ export function DialogModel(props: { providerID?: string }) {
             },
           })),
           filter((x) => {
-            if (!showSections) return true
             if (favorites.some((item) => item.providerID === x.value.providerID && item.modelID === x.value.modelID))
               return false
             if (recents.some((item) => item.providerID === x.value.providerID && item.modelID === x.value.modelID))
@@ -140,13 +132,6 @@ export function DialogModel(props: { providerID?: string }) {
           take(6),
         )
       : []
-
-    if (needle) {
-      return [
-        ...fuzzysort.go(needle, providerOptions, { keys: ["title", "category"] }).map((x) => x.obj),
-        ...fuzzysort.go(needle, popularProviders, { keys: ["title"] }).map((x) => x.obj),
-      ]
-    }
 
     return [...favoriteOptions, ...recentOptions, ...providerOptions, ...popularProviders]
   })
@@ -198,9 +183,8 @@ export function DialogModel(props: { providerID?: string }) {
           },
         },
       ]}
-      onFilter={setQuery}
       flat={true}
-      skipFilter={true}
+      placeholder="Search models..."
       title={title()}
       current={local.model.current()}
     />

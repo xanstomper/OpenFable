@@ -45,7 +45,7 @@ export function resolveVoiceConfig(voiceConfig?: { asr_model?: string; control_m
 
 function parseModelID(modelID: string): VoiceProviderConfig {
   const slashIndex = modelID.indexOf("/")
-  if (slashIndex < 1) return { providerID: "xiaomi", model: modelID }
+  if (slashIndex < 1) return { providerID: "openfable", model: modelID }
   return { providerID: modelID.slice(0, slashIndex), model: modelID.slice(slashIndex + 1) }
 }
 

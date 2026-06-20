@@ -597,12 +597,12 @@ function generateSystem(colors: TerminalColors, mode: "dark" | "light"): ThemeJs
     greenBright: col(10),
   }
 
-  const diffAlpha = isDark ? 0.28 : 0.18
+  const diffAlpha = isDark ? 0.35 : 0.22
   const diffAddedBg = tint(bg, ansiColors.green, diffAlpha)
   const diffRemovedBg = tint(bg, ansiColors.red, diffAlpha)
   const diffContextBg = grays[2]
-  const diffAddedLineNumberBg = tint(diffContextBg, ansiColors.green, diffAlpha * 0.6)
-  const diffRemovedLineNumberBg = tint(diffContextBg, ansiColors.red, diffAlpha * 0.6)
+  const diffAddedLineNumberBg = tint(diffContextBg, ansiColors.green, diffAlpha * 0.7)
+  const diffRemovedLineNumberBg = tint(diffContextBg, ansiColors.red, diffAlpha * 0.7)
   const diffLineNumber = textMuted
 
   const openfableBlue = RGBA.fromInts(66, 135, 245)
@@ -639,13 +639,13 @@ function generateSystem(colors: TerminalColors, mode: "dark" | "light"): ThemeJs
       border: grays[7],
       borderActive: grays[8],
 
-      // Diff colors - polished and high-contrast
-      diffAdded: openfableGreen,
-      diffRemoved: ansiColors.red,
+      // Diff colors - vibrant and high-contrast
+      diffAdded: ansiColors.greenBright,
+      diffRemoved: ansiColors.redBright,
       diffContext: grays[5],
       diffHunkHeader: openfableCyan,
-      diffHighlightAdded: ansiColors.greenBright,
-      diffHighlightRemoved: ansiColors.redBright,
+      diffHighlightAdded: RGBA.fromInts(120, 255, 120),
+      diffHighlightRemoved: RGBA.fromInts(255, 120, 120),
       diffAddedBg,
       diffRemovedBg,
       diffContextBg,

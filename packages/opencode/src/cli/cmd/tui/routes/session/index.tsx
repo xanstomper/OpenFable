@@ -1971,6 +1971,7 @@ function BlockTool(props: {
   const renderer = useRenderer()
   const [hover, setHover] = createSignal(false)
   const error = createMemo(() => (props.part?.state.status === "error" ? props.part.state.error : undefined))
+  const isError = createMemo(() => props.part?.state.status === "error")
   return (
     <box
       border={["left"]}
@@ -1980,8 +1981,11 @@ function BlockTool(props: {
       marginTop={1}
       gap={1}
       backgroundColor={hover() ? theme.backgroundMenu : theme.backgroundPanel}
-      customBorderChars={SplitBorder.customBorderChars}
-      borderColor={theme.background}
+      customBorderChars={{
+        ...SplitBorder.customBorderChars,
+        vertical: isError() ? "┃" : "┃",
+      }}
+      borderColor={isError() ? theme.error : theme.diffHunkHeader}
       onMouseOver={() => props.onClick && setHover(true)}
       onMouseOut={() => setHover(false)}
       onMouseUp={() => {
@@ -1992,12 +1996,12 @@ function BlockTool(props: {
       <Show
         when={props.spinner}
         fallback={
-          <text paddingLeft={3} fg={theme.textMuted}>
+          <text paddingLeft={3} fg={theme.diffHunkHeader}>
             {props.title}
           </text>
         }
       >
-        <Spinner color={theme.textMuted}>{props.title.replace(/^# /, "")}</Spinner>
+        <Spinner color={theme.diffHunkHeader}>{props.title.replace(/^# /, "")}</Spinner>
       </Show>
       {props.children}
       <Show when={error()}>
@@ -2320,7 +2324,6 @@ function Edit(props: ToolProps<typeof EditTool>) {
   const view = createMemo(() => {
     const diffStyle = ctx.tui.diff_style
     if (diffStyle === "stacked") return "unified"
-    // Default to "auto" behavior
     return ctx.width > 120 ? "split" : "unified"
   })
 
@@ -2328,10 +2331,29 @@ function Edit(props: ToolProps<typeof EditTool>) {
 
   const diffContent = createMemo(() => props.metadata.diff)
 
+  const ext = createMemo(() => {
+    const p = props.input.filePath ?? ""
+    const dot = p.lastIndexOf(".")
+    return dot >= 0 ? p.slice(dot + 1).toLowerCase() : ""
+  })
+
+  const fileName = createMemo(() => {
+    const p = props.input.filePath ?? ""
+    return p.split("/").pop() ?? p
+  })
+
   return (
     <Switch>
       <Match when={props.metadata.diff !== undefined}>
         <BlockTool title={"← Edit " + normalizePath(props.input.filePath!)} part={props.part}>
+          <box flexDirection="row" paddingLeft={1} gap={1} marginBottom={1}>
+            <text fg={theme.diffHunkHeader}>●</text>
+            <text fg={theme.textMuted}>{fileName()}</text>
+            <text fg={theme.diffHunkHeader}>{ext() ? `.${ext()}` : ""}</text>
+            {props.input.replaceAll && (
+              <text fg={theme.warning}> [replace all]</text>
+            )}
+          </box>
           <box paddingLeft={1}>
             <diff
               diff={diffContent()}
@@ -2411,6 +2433,20 @@ function ApplyPatch(props: ToolProps<typeof ApplyPatchTool>) {
     return "← Patched " + file.relativePath
   }
 
+  function fileIcon(file: { type: string }) {
+    if (file.type === "delete") return "✗"
+    if (file.type === "add") return "+"
+    if (file.type === "move") return "→"
+    return "●"
+  }
+
+  function fileIconColor(file: { type: string }) {
+    if (file.type === "delete") return theme.diffRemoved
+    if (file.type === "add") return theme.diffAdded
+    if (file.type === "move") return theme.diffHunkHeader
+    return theme.diffHunkHeader
+  }
+
   function toggle(filePath: string) {
     setExpanded((prev) => (prev.includes(filePath) ? prev.filter((item) => item !== filePath) : [...prev, filePath]))
   }
@@ -2430,6 +2466,16 @@ function ApplyPatch(props: ToolProps<typeof ApplyPatchTool>) {
                 part={props.part}
                 onClick={file.type !== "delete" && collapsed() ? () => toggle(file.filePath) : undefined}
               >
+                <box flexDirection="row" paddingLeft={1} gap={1} marginBottom={1}>
+                  <text fg={fileIconColor(file)}>{fileIcon(file)}</text>
+                  <text fg={theme.textMuted}>{file.relativePath}</text>
+                  {file.additions > 0 && (
+                    <text fg={theme.diffAdded}>+{file.additions}</text>
+                  )}
+                  {file.deletions > 0 && (
+                    <text fg={theme.diffRemoved}>-{file.deletions}</text>
+                  )}
+                </box>
                 <Show
                   when={file.type !== "delete"}
                   fallback={

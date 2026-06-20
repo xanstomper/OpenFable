@@ -161,6 +161,20 @@ const getCopyMethod = lazy(async () => {
         await proc.exited.catch(() => {})
       }
     }
+    if (which("xsel")) {
+      console.log("clipboard: using xsel")
+      return async (text: string) => {
+        const proc = Process.spawn(["xsel", "--clipboard", "--input"], {
+          stdin: "pipe",
+          stdout: "ignore",
+          stderr: "ignore",
+        })
+        if (!proc.stdin) return
+        proc.stdin.write(text)
+        proc.stdin.end()
+        await proc.exited.catch(() => {})
+      }
+    }
   }
 
   if (os === "win32") {
@@ -189,10 +203,10 @@ const getCopyMethod = lazy(async () => {
     }
   }
 
-  console.log("clipboard: no native support")
+  console.log("clipboard: using clipboardy")
   return async (text: string) => {
     const clipboardy = await getClipboardy()
-    await clipboardy.write(text).catch(() => {})
+    await clipboardy.write(text)
   }
 })
 

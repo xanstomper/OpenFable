@@ -259,7 +259,7 @@ async function openfableLogin() {
 
     if (raceResult.source === "browser") {
       if (raceResult.data.type === "success" && "key" in raceResult.data) {
-        await put("xiaomi", {
+        await put("openfable", {
           type: "api",
           key: raceResult.data.key,
           ...(raceResult.data.metadata ? { metadata: raceResult.data.metadata } : {}),
@@ -275,7 +275,7 @@ async function openfableLogin() {
 
     const callbackResult = await authorize.callback(raceResult.input)
     if (callbackResult.type === "success" && "key" in callbackResult) {
-      await put("xiaomi", {
+      await put("openfable", {
         type: "api",
         key: callbackResult.key,
         ...(callbackResult.metadata ? { metadata: callbackResult.metadata } : {}),
@@ -673,7 +673,7 @@ export const ProvidersWhoamiCommand = cmd({
     const info = await AppRuntime.runPromise(
       Effect.gen(function* () {
         const auth = yield* Auth.Service
-        return yield* auth.get("xiaomi")
+        return yield* auth.get("openfable")
       }),
     )
     if (!info) {
