@@ -489,7 +489,42 @@ OpenFable is a fork of MiMoCode. See the original license for upstream terms. Op
 
 ## Contributors
 
+### OpenFable
 - **[xanstomper](https://github.com/xanstomper)** — Project lead, fork maintainer
+
+### MiMoCode (Upstream)
+- **[MiMoHardFather](https://github.com/MiMoHardFather)** — Core developer
+- **[yanyihan-xiaomi](https://github.com/yanyihan-xiaomi)** — Core developer
+- **[qiaozongming](https://github.com/qiaozongming)** — Core developer
+- **[bwshen-mi](https://github.com/bwshen-mi)** — Contributor
+- **[ChuanfengZhang](https://github.com/ChuanfengZhang)** — Contributor
+
+### Claude Code (Tool System)
+- **Anthropic** — Original tool architecture and prompts
+
+### aider (Repo-Map)
+- **[paul-gauthier](https://github.com/paul-gauthier)** — Creator of aider, repo-map patterns
+
+### SWE-agent / OpenHands (ACI)
+- **[princeton-nlp](https://github.com/princeton-nlp)** — SWE-agent research team
+- **[All-Hands-AI](https://github.com/All-Hands-AI)** — OpenHands agent framework
+
+### LangGraph (Workflow)
+- **[langchain-ai](https://github.com/langchain-ai)** — LangGraph framework
+
+### fabric / CrewAI (Skills)
+- **[danielmiessler](https://github.com/danielmiessler)** — Fabric prompt patterns
+- **[joaomdmoura](https://github.com/joaomdmoura)** — CrewAI framework
+
+### E2B / bubblewrap (Sandbox)
+- **[e2b-dev](https://github.com/e2b-dev)** — E2B sandbox execution
+- **[containers](https://github.com/containers)** — bubblewrap sandbox
+
+### Langfuse (Observability)
+- **[langfuse](https://github.com/langfuse)** — LLM observability platform
+
+### OBLITERATUS (Abliteration)
+- **[nrimsky](https://github.com/nrimsky)** — OBLITERATUS abliteration research
 
 ---
 
