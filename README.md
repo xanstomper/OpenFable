@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/banner.png" alt="OpenFable Code" width="100%">
+</p>
+
 <h1 align="center">OpenFable Code</h1>
 
 <p align="center">
